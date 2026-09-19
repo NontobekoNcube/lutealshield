@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>LutealShield • The digital seatbelt for PMDD</title>
+  <meta name="description" content="A digital seatbelt for PMDD — proactive safety plans, grounding anchors, and cycle-aligned support." />
+  <meta property="og:title" content="LutealShield • The digital seatbelt for PMDD" />
+  <meta property="og:description" content="Proactive PMDD safety plans, grounding anchors, and cycle-aligned support." />
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <meta name="theme-color" content="#2D1B4E" />
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <a href="/index.html" class="brand-wrapper">
+        <div class="brand-icon">
+          <img src="/icon.svg" alt="LutealShield Logo" style="width: 32px; height: 32px;" />
+        </div>
+        <div class="brand-text-col">
+          <span class="brand-title">LutealShield</span>
+          <span class="brand-sub">Digital Seatbelt</span>
+        </div>
+      </a>
+
+      <div class="header-actions">
+        <span class="safe-space-badge">
+          <span class="pulse-dot"></span> Safe Space
+        </span>
+        <a href="/bloomy.html" class="bloomy-avatar-btn" title="Talk to Bloomy">
+          <img src="/bloomy.svg" alt="Bloomy Mascot" />
+        </a>
+        <a href="/settings.html" class="icon-btn" aria-label="Settings & PMDD Profile">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+        </a>
+      </div>
+    </header>
+
+    <!-- Amber Zone Only Banner (Rose Amber Glow Active) -->
+    <div id="amberBanner" class="amber-banner" style="display: none;">
+      <div class="amber-banner-left">
+        <span>🌅</span>
+        <span><strong>72h Early Warning</strong> • Luteal shift detected. Muting blue light.</span>
+      </div>
+      <a href="/plan.html" style="color: inherit; font-size: 0.76rem; font-weight: 700; text-decoration: underline;">Review Plan</a>
+    </div>
+
+    <!-- PWA Install Banner -->
+    <div id="pwa-install-banner" class="pwa-banner" style="display: none; margin: 12px 20px 0 20px;">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <img src="/icon.svg" style="width: 28px; height: 28px;" alt="Install Icon" />
+        <div style="font-size: 0.8rem; font-weight: 600;">Install LutealShield for offline safety</div>
+      </div>
+      <button onclick="installPWA()" class="btn-primary" style="width: auto; padding: 6px 14px; font-size: 0.78rem;">Install</button>
+    </div>
+
+    <main class="app-content">
+
+      <!-- DEMO SIMULATOR -->
+      <section class="simulator-card">
+        <div class="simulator-header">
+          <span class="simulator-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+            DEMO SIMULATOR
+          </span>
+          <span class="badge-tag">Interactive</span>
+        </div>
+        <div class="zone-buttons-grid">
+          <button class="zone-btn" data-zone-val="green" onclick="handleZoneSwitch('green')">
+            <span style="font-size: 1.1rem;">🟢</span>
+            <span class="zone-btn-title">Green</span>
+            <span class="zone-btn-desc">Steady Baseline</span>
+          </button>
+          <button class="zone-btn" data-zone-val="amber" onclick="handleZoneSwitch('amber')">
+            <span style="font-size: 1.1rem;">🟡</span>
+            <span class="zone-btn-title">72h Prep</span>
+            <span class="zone-btn-desc">Early Warning</span>
+          </button>
+          <button class="zone-btn" data-zone-val="red" onclick="handleZoneSwitch('red')">
+            <span style="font-size: 1.1rem;">🔴</span>
+            <span class="zone-btn-title">Red Zone</span>
+            <span class="zone-btn-desc">Crisis Shield</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- CYCLE SAFETY RADAR -->
+      <section class="card radar-card">
+        <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+          <span style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted);">
+            Cycle Safety Radar
+          </span>
+          <span id="radarZoneBadge" class="radar-phase-badge badge-green">
+            Green Zone
+          </span>
+        </div>
+
+        <div class="radar-circle-wrap">
+          <svg class="radar-svg" viewBox="0 0 100 100">
+            <!-- Background Cycle Ring -->
+            <circle cx="50" cy="50" r="42" fill="none" stroke="var(--border)" stroke-width="8" stroke-dasharray="2 3" opacity="0.8" />
+            <!-- Active Progress Arc -->
+            <circle id="radarCircleProgress" cx="50" cy="50" r="42" fill="none" stroke="#4A8C6E" stroke-width="8.5" stroke-linecap="round" stroke-dasharray="264" stroke-dashoffset="100" style="transition: all 0.5s ease;" />
+          </svg>
+          <div class="radar-center-info">
+            <span class="radar-day-label">Cycle Rhythm</span>
+            <span id="radarDayText" class="radar-day-number">Day 12</span>
+            <span id="radarPhaseText" style="font-size: 0.76rem; font-weight: 600; color: var(--text);">Follicular Phase</span>
+          </div>
+        </div>
+
+        <!-- Prep Countdown Box -->
+        <div class="radar-countdown-box">
+          <span id="countdownLabel" style="display: flex; align-items: center; gap: 6px;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <span id="countdownText">Steady baseline • 4 days to ovulation</span>
+          </span>
+          <a href="/onboarding.html?force=1" style="font-size: 0.72rem; color: var(--primary); font-weight: 700; text-decoration: none;">Edit rhythm</a>
+        </div>
+      </section>
+
+      <!-- BLOOMY CARD -->
+      <a href="/bloomy.html" class="bloomy-card">
+        <div class="bloomy-card-avatar">
+          <img src="/bloomy.svg" alt="Bloomy" />
+        </div>
+        <div class="bloomy-card-content">
+          <div class="bloomy-card-name-row">
+            <span class="bloomy-name">Bloomy</span>
+            <span class="bloomy-status-badge">Holding space</span>
+          </div>
+          <p id="bloomyHomeGreeting" class="bloomy-message-preview">
+            "I'm keeping watch over your cycle rhythm. Remember: any heaviness you feel is chemical, never personal."
+          </p>
+        </div>
+        <div style="color: var(--primary); font-size: 1.2rem; align-self: center;">→</div>
+      </a>
+
+      <!-- DAILY CHECK-IN -->
+      <section class="card checkin-card">
+        <div class="checkin-title-row">
+          <span style="font-weight: 700; font-size: 0.9rem;">Daily Somatic Check-In</span>
+          <span id="checkinStatus" style="font-size: 0.72rem; color: var(--text-muted);">Tap your current state</span>
+        </div>
+        <div class="mood-buttons-grid">
+          <button class="mood-btn" data-mood="steady" onclick="recordMood('Steady', '🌿', 'Grounded and steady today.')">
+            <span class="mood-emoji">🌿</span>
+            <span class="mood-label">Steady</span>
+          </button>
+          <button class="mood-btn" data-mood="sensitive" onclick="recordMood('Sensitive', '🌤️', 'Nervous system feels receptive.')">
+            <span class="mood-emoji">🌤️</span>
+            <span class="mood-label">Sensitive</span>
+          </button>
+          <button class="mood-btn" data-mood="irritable" onclick="recordMood('Irritable', '⚡', 'Early warning signals detected.')">
+            <span class="mood-emoji">⚡</span>
+            <span class="mood-label">Irritable</span>
+          </button>
+          <button class="mood-btn" data-mood="exhausted" onclick="recordMood('Exhausted', '🌧️', 'Brain fog and sensory fatigue.')">
+            <span class="mood-emoji">🌧️</span>
+            <span class="mood-label">Exhausted</span>
+          </button>
+          <button class="mood-btn" data-mood="storm" onclick="recordMood('Storm', '🌪️', 'Luteal crash / Red Zone emergency.')">
+            <span class="mood-emoji">🌪️</span>
+            <span class="mood-label">In Storm</span>
+          </button>
+        </div>
+        <div id="checkinFeedback" class="checkin-feedback"></div>
+      </section>
+
+      <!-- 2X2 ACTION GRID -->
+      <section class="action-grid">
+        <!-- Safety Plan -->
+        <a href="/plan.html" class="action-card">
+          <div class="action-card-top">
+            <div class="action-icon-wrap" style="background: rgba(142, 68, 173, 0.12); color: #8E44AD;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            </div>
+            <span id="planBadgeCount" style="font-size: 0.68rem; font-weight: 700; background: rgba(74, 140, 110, 0.15); color: #4A8C6E; padding: 2px 7px; border-radius: 999px;">85% Ready</span>
+          </div>
+          <div>
+            <div class="action-title">Safety Plan</div>
+            <div class="action-subtitle">Pre-arranged storm protocols</div>
+          </div>
+        </a>
+
+        <!-- Affirmations Pocket -->
+        <a href="/pocket.html" class="action-card">
+          <div class="action-card-top">
+            <div class="action-icon-wrap" style="background: rgba(196, 122, 58, 0.12); color: #C47A3A;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"></circle><line x1="12" y1="22" x2="12" y2="8"></line><path d="M5 12H2a10 10 0 0 0 20 0h-3"></path></svg>
+            </div>
+            <span id="pocketBadgeCount" style="font-size: 0.68rem; font-weight: 700; background: rgba(196, 122, 58, 0.15); color: #C47A3A; padding: 2px 7px; border-radius: 999px;">6 Anchors</span>
+          </div>
+          <div>
+            <div class="action-title">Affirmations Pocket</div>
+            <div class="action-subtitle">Proof & grounding reminders</div>
+          </div>
+        </a>
+
+        <!-- Safe Tether Support -->
+        <a href="/support.html" class="action-card">
+          <div class="action-card-top">
+            <div class="action-icon-wrap" style="background: rgba(74, 140, 110, 0.12); color: #4A8C6E;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            </div>
+            <span id="tetherBadgeCount" style="font-size: 0.68rem; font-weight: 700; background: rgba(74, 140, 110, 0.15); color: #4A8C6E; padding: 2px 7px; border-radius: 999px;">3 Ready</span>
+          </div>
+          <div>
+            <div class="action-title">Safe Tether</div>
+            <div class="action-subtitle">Zero-demand message templates</div>
+          </div>
+        </a>
+
+        <!-- Settings & PMDD Profile -->
+        <a href="/settings.html" class="action-card">
+          <div class="action-card-top">
+            <div class="action-icon-wrap" style="background: rgba(225, 190, 231, 0.25); color: var(--primary);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"></path></svg>
+            </div>
+            <span style="font-size: 0.68rem; font-weight: 700; background: rgba(142, 68, 173, 0.15); color: #8E44AD; padding: 2px 7px; border-radius: 999px;">POPIA</span>
+          </div>
+          <div>
+            <div class="action-title">PMDD Profile</div>
+            <div class="action-subtitle">Sensory & symptom controls</div>
+          </div>
+        </a>
+      </section>
+
+    </main>
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="bottom-nav">
+      <a href="/index.html" class="nav-item active">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        <span>Home</span>
+      </a>
+      <a href="/plan.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        <span>Plan</span>
+      </a>
+      <a href="/bloomy.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        <span>Bloomy</span>
+      </a>
+      <a href="/pocket.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"></circle><line x1="12" y1="22" x2="12" y2="8"></line><path d="M5 12H2a10 10 0 0 0 20 0h-3"></path></svg>
+        <span>Pocket</span>
+      </a>
+      <a href="/support.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        <span>Support</span>
+      </a>
+    </nav>
+  </div>
+
+  <script src="/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // First-time visitor check: if not onboarded, redirect to onboarding.html
+      if (localStorage.getItem('lutealshield_onboarded') !== 'true') {
+        window.location.href = '/onboarding.html';
+        return;
+      }
+
+      updateHomeView();
+      loadTodayCheckin();
+    });
+
+    function handleZoneSwitch(zone) {
+      setZone(zone);
+      updateHomeView();
+    }
+
+    function updateHomeView() {
+      const zone = localStorage.getItem('lutealshield_zone') || 'green';
+      const cycle = getCycleData();
+
+      // Amber banner visibility
+      const amberBanner = document.getElementById('amberBanner');
+      if (amberBanner) {
+        amberBanner.style.display = zone === 'amber' ? 'flex' : 'none';
+      }
+
+      // Radar text and progress circle
+      const radarDay = document.getElementById('radarDayText');
+      const radarPhase = document.getElementById('radarPhaseText');
+      const countdown = document.getElementById('countdownText');
+      const zoneBadge = document.getElementById('radarZoneBadge');
+      const progressCircle = document.getElementById('radarCircleProgress');
+
+      if (radarDay) {
+        // Adjust simulated day based on chosen zone for clear visual clarity
+        let dayNum = cycle.currentDay;
+        if (zone === 'amber') dayNum = 18;
+        if (zone === 'red') dayNum = 23;
+        if (zone === 'green' && dayNum > 14) dayNum = 8;
+
+        radarDay.textContent = `Day ${dayNum}`;
+
+        if (zone === 'green') {
+          radarPhase.textContent = 'Follicular Phase';
+          zoneBadge.textContent = 'Green Zone';
+          zoneBadge.className = 'radar-phase-badge badge-green';
+          countdown.textContent = `Steady baseline • Ovulation in ~6 days`;
+          progressCircle.setAttribute('stroke', '#4A8C6E');
+          // 264 is approx circumference (2 * pi * 42)
+          progressCircle.style.strokeDashoffset = '180';
+        } else if (zone === 'amber') {
+          radarPhase.textContent = 'Pre-Luteal Warning';
+          zoneBadge.textContent = 'Amber Zone';
+          zoneBadge.className = 'radar-phase-badge badge-amber';
+          countdown.textContent = `72h Early Warning • Red Zone starts in 3 days`;
+          progressCircle.setAttribute('stroke', '#C47A3A');
+          progressCircle.style.strokeDashoffset = '100';
+        } else if (zone === 'red') {
+          radarPhase.textContent = 'Late Luteal Storm';
+          zoneBadge.textContent = 'Red Zone Active';
+          zoneBadge.className = 'radar-phase-badge badge-red';
+          countdown.textContent = `Crisis Shield Active • ~3 days until bleeding reset`;
+          progressCircle.setAttribute('stroke', '#8B2A2A');
+          progressCircle.style.strokeDashoffset = '40';
+        }
+      }
+
+      // Bloomy Greeting depending on zone
+      const greeting = document.getElementById('bloomyHomeGreeting');
+      if (greeting) {
+        const pocket = JSON.parse(localStorage.getItem('lutealshield_pocket') || '[]');
+        if (zone === 'red') {
+          greeting.innerHTML = `“I'm holding space with you. Remember: the storm is chemical, not factual. You have <strong>${pocket.length} anchors</strong> safely stored.”`;
+        } else if (zone === 'amber') {
+          greeting.innerHTML = `“Progesterone is dipping soon. Put on low-sensory mode, delay big decisions for 72 hours, and be exceptionally gentle with yourself.”`;
+        } else {
+          greeting.innerHTML = `“You are in your steady baseline window. This is a wonderful time to add comforting memories or rules to your Affirmations Pocket.”`;
+        }
+      }
+
+      // Badge counts
+      const pocket = JSON.parse(localStorage.getItem('lutealshield_pocket') || '[]');
+      const tether = JSON.parse(localStorage.getItem('lutealshield_tether') || '[]');
+      const pCount = document.getElementById('pocketBadgeCount');
+      if (pCount) pCount.textContent = `${pocket.length} Anchors`;
+      const tCount = document.getElementById('tetherBadgeCount');
+      if (tCount) tCount.textContent = `${tether.length} Ready`;
+    }
+
+    // Daily Mood Checkin
+    function recordMood(moodName, emoji, message) {
+      const todayKey = 'lutealshield_checkin_' + new Date().toISOString().split('T')[0];
+      localStorage.setItem(todayKey, JSON.stringify({ mood: moodName, emoji, time: new Date().toLocaleTimeString() }));
+
+      document.querySelectorAll('.mood-btn').forEach(btn => btn.classList.remove('selected'));
+      const activeBtn = Array.from(document.querySelectorAll('.mood-btn')).find(b => b.textContent.includes(moodName));
+      if (activeBtn) activeBtn.classList.add('selected');
+
+      const fb = document.getElementById('checkinFeedback');
+      fb.style.display = 'block';
+      fb.innerHTML = `<strong>Logged ${emoji} ${moodName}:</strong> ${message}`;
+
+      // Play soft grounding chime
+      playCalmTone(1.2);
+    }
+
+    function loadTodayCheckin() {
+      const todayKey = 'lutealshield_checkin_' + new Date().toISOString().split('T')[0];
+      const saved = localStorage.getItem(todayKey);
+      if (saved) {
+        try {
+          const data = JSON.parse(saved);
+          const activeBtn = Array.from(document.querySelectorAll('.mood-btn')).find(b => b.textContent.includes(data.mood));
+          if (activeBtn) activeBtn.classList.add('selected');
+        } catch(e) {}
+      }
+    }
+  </script>
+</body>
+</html>

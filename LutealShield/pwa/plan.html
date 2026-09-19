@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Red Zone Safety Plan • LutealShield</title>
+  <meta name="description" content="Pre-arranged emotional protocols for PMDD crisis days." />
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <meta name="theme-color" content="#2D1B4E" />
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <a href="/index.html" class="icon-btn" aria-label="Go Back">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+        </a>
+        <div class="brand-text-col">
+          <span class="brand-title">Safety Plan</span>
+          <span class="brand-sub">Red Zone Protocols</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <span class="safe-space-badge">
+          <span class="pulse-dot"></span> Auto-saved
+        </span>
+        <span id="readinessHeaderBadge" style="font-size: 0.72rem; font-weight: 700; background: rgba(74, 140, 110, 0.16); color: #4A8C6E; padding: 4px 9px; border-radius: 999px;">
+          85% Ready
+        </span>
+      </div>
+    </header>
+
+    <main class="app-content">
+
+      <!-- Plan Header Banner -->
+      <section>
+        <h1 class="page-title">Red Zone Safety Plan</h1>
+        <p class="page-subtitle">Pre-arranged emotional protocols for crisis days. Built in the light, ready in the dark.</p>
+      </section>
+
+      <!-- Plan Completeness Bar -->
+      <section class="card" style="padding: 16px 18px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <span style="font-weight: 700; font-size: 0.88rem; color: var(--text);">Plan Completeness</span>
+          <span id="activeCountLabel" style="font-size: 0.76rem; font-weight: 700; color: var(--text-muted); background: var(--input-bg); padding: 3px 8px; border-radius: 8px;">
+            6 of 6 active
+          </span>
+        </div>
+        <div style="height: 6px; background: var(--input-bg); border-radius: 999px; overflow: hidden; margin-bottom: 10px;">
+          <div id="readinessBar" style="height: 100%; width: 85%; background: linear-gradient(90deg, #4A8C6E, #8E44AD); border-radius: 999px;"></div>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: flex-start; font-size: 0.78rem; color: var(--text-muted); line-height: 1.4;">
+          <span>🌱</span>
+          <span>When you build your plan during steady days, you give your storm-self a clear, low-friction roadmap.</span>
+        </div>
+      </section>
+
+      <!-- Protocols Section Header -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
+        <span style="font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted);">PLAN PROTOCOLS</span>
+        <span style="font-size: 0.72rem; color: var(--text-muted);">Tap to expand</span>
+      </div>
+
+      <!-- ACCORDION 1: Early Warning Signs (Auto-filled from symptoms) -->
+      <div class="accordion-item open" id="acc-warning">
+        <div class="accordion-header" onclick="toggleAccordion('acc-warning')">
+          <div class="accordion-title-col">
+            <div class="accordion-icon" style="color: #8E44AD; background: rgba(142, 68, 173, 0.12);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            </div>
+            <div>
+              <div class="accordion-title">Early Warning Signs</div>
+              <div class="accordion-sub">Your subtle luteal indicators</div>
+            </div>
+          </div>
+          <svg class="accordion-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </div>
+        <div class="accordion-content">
+          <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 12px;">
+            Auto-populated from your onboarding PMDD profile so you know when the shift is starting:
+          </p>
+          <div id="warningSignsContainer"></div>
+
+          <div style="display: flex; gap: 8px; margin-top: 10px;">
+            <input type="text" id="customWarningInput" class="form-input" style="padding: 8px 12px; font-size: 0.8rem;" placeholder="+ Add personal warning sign..." />
+            <button onclick="addCustomWarning()" class="btn-primary" style="width: auto; padding: 8px 14px; font-size: 0.8rem;">Add</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACCORDION 2: Grounding Tools -->
+      <div class="accordion-item" id="acc-grounding">
+        <div class="accordion-header" onclick="toggleAccordion('acc-grounding')">
+          <div class="accordion-title-col">
+            <div class="accordion-icon" style="color: #4A8C6E; background: rgba(74, 140, 110, 0.12);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M8 12s1.5-2 4-2 4 2 4 2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
+            </div>
+            <div>
+              <div class="accordion-title">Grounding Tools <span style="font-size: 0.72rem; color: #4A8C6E; font-weight: 600;">(4 Somatic Brakes)</span></div>
+              <div class="accordion-sub">Somatic resets & nervous system brakes</div>
+            </div>
+          </div>
+          <svg class="accordion-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </div>
+        <div class="accordion-content">
+          <!-- Interactive Breathing Tool -->
+          <div class="card" style="background: var(--input-bg); margin-bottom: 10px; text-align: center; padding: 14px;">
+            <div style="font-weight: 700; font-size: 0.85rem; margin-bottom: 4px;">4-7-8 Soft Diaphragmatic Breath</div>
+            <div id="breathStateText" style="font-size: 0.78rem; color: var(--primary); font-weight: 700; margin-bottom: 8px;">Tap to begin guided cycle</div>
+            <div id="breathCircle" style="width: 70px; height: 70px; border-radius: 50%; background: rgba(142, 68, 173, 0.2); border: 2px solid #8E44AD; margin: 0 auto 10px auto; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; transition: transform 4s ease-in-out;">
+              Inhale
+            </div>
+            <button id="breathActionBtn" onclick="toggleBreathingGuide()" class="btn-secondary" style="width: auto; margin: 0 auto; padding: 6px 14px; font-size: 0.75rem;">
+              Start 1-Minute Breath
+            </button>
+          </div>
+
+          <div class="protocol-item">
+            <span class="bullet-dot" style="background: #4A8C6E;"></span>
+            <div>
+              <strong>Cold Water Ice-Dive Reflex:</strong>
+              <div style="color: var(--text-muted); font-size: 0.76rem;">Splash freezing cold water on your temples and wrists for 30 seconds to stimulate the vagus nerve and slow a racing heart.</div>
+            </div>
+          </div>
+
+          <div class="protocol-item">
+            <span class="bullet-dot" style="background: #4A8C6E;"></span>
+            <div>
+              <strong>5-4-3-2-1 Sensory Re-Orientation:</strong>
+              <div style="color: var(--text-muted); font-size: 0.76rem;">5 objects in room, 4 textures to touch, 3 distant sounds, 2 soothing smells, 1 gentle sip of water.</div>
+            </div>
+          </div>
+
+          <div class="protocol-item">
+            <span class="bullet-dot" style="background: #4A8C6E;"></span>
+            <div>
+              <strong>Weighted Cocoon:</strong>
+              <div style="color: var(--text-muted); font-size: 0.76rem;">Heavy blanket over legs, pitch dark or amber lighting, noise-cancelling headphones playing binaural calm.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACCORDION 3: Boundaries -->
+      <div class="accordion-item" id="acc-boundaries">
+        <div class="accordion-header" onclick="toggleAccordion('acc-boundaries')">
+          <div class="accordion-title-col">
+            <div class="accordion-icon" style="color: #2D1B4E; background: rgba(45, 27, 78, 0.12);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            </div>
+            <div>
+              <div class="accordion-title">Boundaries <span style="font-size: 0.72rem; color: #8E44AD; font-weight: 600;">(Active)</span></div>
+              <div class="accordion-sub">Automated calendar shields & permissions</div>
+            </div>
+          </div>
+          <svg class="accordion-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </div>
+        <div class="accordion-content">
+          <div class="protocol-item">
+            <span class="bullet-dot"></span>
+            <div>
+              <strong>Social Permission Slip:</strong>
+              <div style="color: var(--text-muted); font-size: 0.76rem;">Absolute permission to cancel evening plans with a simple: <em>“I am under the weather and resting tonight. Catch up soon!”</em></div>
+            </div>
+          </div>
+
+          <div class="protocol-item">
+            <span class="bullet-dot"></span>
+            <div>
+              <strong>Work Shield (4:00 PM Hard Stop):</strong>
+              <div style="color: var(--text-muted); font-size: 0.76rem;">Close email client and slack. High-stakes correspondence must not be composed after hours during red zone.</div>
+            </div>
+          </div>
+
+          <div class="protocol-item">
+            <span class="bullet-dot"></span>
+            <div>
+              <strong>Delay Response Template:</strong>
+              <div style="color: var(--text-muted); font-size: 0.76rem;"><em>“Thank you for this! I am reviewing it carefully and will reply on Monday when I am at my desk.”</em></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACCORDION 4: Comfort Checklist (Dynamic items based on symptoms) -->
+      <div class="accordion-item" id="acc-comfort">
+        <div class="accordion-header" onclick="toggleAccordion('acc-comfort')">
+          <div class="accordion-title-col">
+            <div class="accordion-icon" style="color: #C47A3A; background: rgba(196, 122, 58, 0.12);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><polyline points="9 11 12 14 22 4"></polyline></svg>
+            </div>
+            <div>
+              <div class="accordion-title">Comfort Checklist <span id="comfortCountBadge" style="font-size: 0.72rem; color: #C47A3A; font-weight: 600;">(5 items)</span></div>
+              <div class="accordion-sub">Sensory cocooning & frictionless survival</div>
+            </div>
+          </div>
+          <svg class="accordion-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </div>
+        <div class="accordion-content">
+          <div id="comfortChecklistContainer" style="display: flex; flex-direction: column; gap: 8px;"></div>
+        </div>
+      </div>
+
+      <!-- ACCORDION 5: "Wait 72 Hours" Decisions List -->
+      <div class="accordion-item" id="acc-decisions">
+        <div class="accordion-header" onclick="toggleAccordion('acc-decisions')">
+          <div class="accordion-title-col">
+            <div class="accordion-icon" style="color: #8B2A2A; background: rgba(139, 42, 42, 0.12);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 22h14"></path><path d="M5 2h14"></path><path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22"></path><path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"></path></svg>
+            </div>
+            <div>
+              <div class="accordion-title">“Wait 72 Hours” Decisions</div>
+              <div class="accordion-sub">The golden non-negotiables</div>
+            </div>
+          </div>
+          <svg class="accordion-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </div>
+        <div class="accordion-content">
+          <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 12px;">
+            A sacred covenant made by your steady-self: nothing irreversible may be executed while progesterone crashes.
+          </p>
+
+          <div class="protocol-item">
+            <span class="bullet-dot" style="background: #8B2A2A;"></span>
+            <div>Avoid resigning or sending urgent workplace grievances until the storm lifts.</div>
+          </div>
+          <div class="protocol-item">
+            <span class="bullet-dot" style="background: #8B2A2A;"></span>
+            <div>Avoid breaking up or sending emotionally loaded confrontation messages.</div>
+          </div>
+          <div class="protocol-item">
+            <span class="bullet-dot" style="background: #8B2A2A;"></span>
+            <div>Avoid major financial investments, credit commitments, or impulsive bulk buying.</div>
+          </div>
+          <div class="protocol-item">
+            <span class="bullet-dot" style="background: #8B2A2A;"></span>
+            <div>Avoid radical aesthetic or body transformations during luteal phase (haircuts, tattoos).</div>
+          </div>
+
+          <!-- Active 72h Decision Buffer Tracker -->
+          <div class="card" style="margin-top: 12px; background: var(--input-bg); border: 1.5px solid var(--border);">
+            <div style="font-weight: 700; font-size: 0.85rem; margin-bottom: 4px;">Lock a Decision for 72 Hours</div>
+            <div style="font-size: 0.74rem; color: var(--text-muted); margin-bottom: 8px;">Bloomy and LutealShield will safe-keep this decision until your follicular phase begins.</div>
+            <div style="display: flex; gap: 8px;">
+              <input type="text" id="bufferedDecisionInput" class="form-input" placeholder="e.g. Quitting my job" style="padding: 8px 12px; font-size: 0.82rem;" />
+              <button onclick="lockDecision()" class="btn-primary" style="width: auto; padding: 8px 14px; font-size: 0.8rem; background: #8B2A2A; color: #FFF;">Lock</button>
+            </div>
+            <div id="lockedDecisionsList" style="margin-top: 10px; display: flex; flex-direction: column; gap: 6px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACCORDION 6: Professional Support -->
+      <div class="accordion-item" id="acc-support">
+        <div class="accordion-header" onclick="toggleAccordion('acc-support')">
+          <div class="accordion-title-col">
+            <div class="accordion-icon" style="color: #4A8C6E; background: rgba(74, 140, 110, 0.12);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+            </div>
+            <div>
+              <div class="accordion-title">Professional Support</div>
+              <div class="accordion-sub">Crisis lifeline & care team contacts</div>
+            </div>
+          </div>
+          <svg class="accordion-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </div>
+        <div class="accordion-content">
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div class="card" style="padding: 12px; display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <div style="font-weight: 700; font-size: 0.86rem;">PMDD / Cipla SADAG Lifeline</div>
+                <div style="font-size: 0.72rem; color: var(--text-muted);">24/7 Free Crisis Counseling</div>
+              </div>
+              <a href="tel:0800567567" class="btn-primary" style="width: auto; padding: 6px 12px; font-size: 0.75rem;">Call 0800 567 567</a>
+            </div>
+
+            <div class="card" style="padding: 12px; display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <div style="font-weight: 700; font-size: 0.86rem;">Dr. Mthembu (GP / ObGyn)</div>
+                <div style="font-size: 0.72rem; color: var(--text-muted);">Hormonal baseline & prescriptions</div>
+              </div>
+              <a href="tel:+27821234567" class="btn-secondary" style="width: auto; padding: 6px 12px; font-size: 0.75rem;">Call Doctor</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div style="margin-top: 10px; display: flex; flex-direction: column; gap: 10px;">
+        <button onclick="previewStormMode()" class="btn-primary" style="background: #2D1B4E;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          Preview Storm-Mode View
+        </button>
+
+        <button onclick="exportPlanSummary()" class="btn-secondary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          Export Encrypted Summary for Partner / GP
+        </button>
+      </div>
+
+    </main>
+
+    <!-- Bottom Nav -->
+    <nav class="bottom-nav">
+      <a href="/index.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        <span>Home</span>
+      </a>
+      <a href="/plan.html" class="nav-item active">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        <span>Plan</span>
+      </a>
+      <a href="/bloomy.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        <span>Bloomy</span>
+      </a>
+      <a href="/pocket.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"></circle><line x1="12" y1="22" x2="12" y2="8"></line><path d="M5 12H2a10 10 0 0 0 20 0h-3"></path></svg>
+        <span>Pocket</span>
+      </a>
+      <a href="/support.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        <span>Support</span>
+      </a>
+    </nav>
+  </div>
+
+  <script src="/app.js"></script>
+  <script>
+    let breathingInterval = null;
+    let isBreathing = false;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadPlanData();
+      renderLockedDecisions();
+    });
+
+    function toggleAccordion(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.toggle('open');
+    }
+
+    function loadPlanData() {
+      // 1. Auto-populate Early Warning Signs from symptoms
+      const symptoms = JSON.parse(localStorage.getItem('lutealshield_symptoms') || '[]');
+      const warningContainer = document.getElementById('warningSignsContainer');
+      warningContainer.innerHTML = '';
+
+      if (symptoms.length === 0) {
+        symptoms.push("Sudden irritability spike over small friction", "Severe rejection sensitivity triggers", "Brain fog & sensory overload");
+      }
+
+      symptoms.forEach(sym => {
+        const item = document.createElement('div');
+        item.className = 'protocol-item';
+        item.innerHTML = `
+          <span class="bullet-dot" style="background: #8E44AD;"></span>
+          <div style="font-weight: 600;">${sym}</div>
+        `;
+        warningContainer.appendChild(item);
+      });
+
+      // 2. Populate Comfort Checklist
+      const comfortContainer = document.getElementById('comfortChecklistContainer');
+      comfortContainer.innerHTML = '';
+
+      const baseItems = [
+        { label: "Have a hot water bottle or heating pad ready", checked: true },
+        { label: "Prepare 1.5L electrolyte water by bedside", checked: true },
+        { label: "Dress in soft, non-constricting cotton clothes", checked: false },
+        { label: "Permission to eat easy, high-carb soothing meals", checked: true }
+      ];
+
+      // Dynamic items based on specific symptoms!
+      if (symptoms.some(s => s.toLowerCase().includes('light'))) {
+        baseItems.unshift({ label: "Reduce screen brightness to 20% & draw curtains", checked: true, note: "Auto-added for Light Sensitivity" });
+      }
+      if (symptoms.some(s => s.toLowerCase().includes('sound'))) {
+        baseItems.unshift({ label: "Put on noise-cancelling earplugs or soft pink noise", checked: true, note: "Auto-added for Sound Sensitivity" });
+      }
+
+      const countBadge = document.getElementById('comfortCountBadge');
+      if (countBadge) countBadge.textContent = `(${baseItems.length} items)`;
+
+      baseItems.forEach((item, idx) => {
+        const row = document.createElement('label');
+        row.className = 'card';
+        row.style.display = 'flex';
+        row.style.alignItems = 'center';
+        row.style.gap = '12px';
+        row.style.padding = '10px 14px';
+        row.style.cursor = 'pointer';
+
+        row.innerHTML = `
+          <input type="checkbox" ${item.checked ? 'checked' : ''} style="accent-color: var(--primary); width: 18px; height: 18px;" />
+          <div style="flex: 1;">
+            <div style="font-size: 0.84rem; font-weight: 600; color: var(--text);">${item.label}</div>
+            ${item.note ? `<div style="font-size: 0.7rem; color: #C47A3A; font-weight: 600;">${item.note}</div>` : ''}
+          </div>
+        `;
+        comfortContainer.appendChild(row);
+      });
+    }
+
+    function addCustomWarning() {
+      const input = document.getElementById('customWarningInput');
+      const val = input.value.trim();
+      if (!val) return;
+
+      const symptoms = JSON.parse(localStorage.getItem('lutealshield_symptoms') || '[]');
+      if (!symptoms.includes(val)) {
+        symptoms.push(val);
+        localStorage.setItem('lutealshield_symptoms', JSON.stringify(symptoms));
+      }
+      input.value = '';
+      loadPlanData();
+    }
+
+    // 72h Decision Buffer Lock
+    function lockDecision() {
+      const input = document.getElementById('bufferedDecisionInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const decisions = JSON.parse(localStorage.getItem('lutealshield_locked_decisions') || '[]');
+      decisions.unshift({
+        id: Date.now().toString(),
+        text,
+        lockedAt: new Date().toISOString(),
+        unlocksAt: new Date(Date.now() + 72 * 3600 * 1000).toISOString()
+      });
+      localStorage.setItem('lutealshield_locked_decisions', JSON.stringify(decisions));
+      input.value = '';
+      renderLockedDecisions();
+      playCalmTone(1.5);
+    }
+
+    function renderLockedDecisions() {
+      const container = document.getElementById('lockedDecisionsList');
+      const decisions = JSON.parse(localStorage.getItem('lutealshield_locked_decisions') || '[]');
+      container.innerHTML = '';
+
+      if (decisions.length === 0) {
+        decisions.push({
+          id: 'default',
+          text: 'Send urgent message to supervisor about restructuring project',
+          lockedAt: new Date().toISOString(),
+          unlocksAt: new Date(Date.now() + 48 * 3600 * 1000).toISOString()
+        });
+      }
+
+      decisions.forEach((d, idx) => {
+        const item = document.createElement('div');
+        item.style.background = 'var(--card)';
+        item.style.padding = '8px 12px';
+        item.style.borderRadius = '10px';
+        item.style.display = 'flex';
+        item.style.justifyContent = 'space-between';
+        item.style.alignItems = 'center';
+        item.style.fontSize = '0.78rem';
+
+        const unlockDate = new Date(d.unlocksAt).toLocaleDateString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+
+        item.innerHTML = `
+          <div>
+            <span style="color: #8B2A2A; font-weight: 700;">🔒 LOCKED:</span>
+            <span>“${d.text}”</span>
+            <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 2px;">Protected until ${unlockDate}</div>
+          </div>
+          <button onclick="removeLockedDecision(${idx})" style="background: none; border: none; color: var(--text-muted); cursor: pointer;" title="Dismiss">✕</button>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function removeLockedDecision(idx) {
+      const decisions = JSON.parse(localStorage.getItem('lutealshield_locked_decisions') || '[]');
+      decisions.splice(idx, 1);
+      localStorage.setItem('lutealshield_locked_decisions', JSON.stringify(decisions));
+      renderLockedDecisions();
+    }
+
+    // Breathing somatic guide
+    function toggleBreathingGuide() {
+      const circle = document.getElementById('breathCircle');
+      const status = document.getElementById('breathStateText');
+      const btn = document.getElementById('breathActionBtn');
+
+      if (isBreathing) {
+        clearInterval(breathingInterval);
+        isBreathing = false;
+        btn.textContent = "Start 1-Minute Breath";
+        status.textContent = "Guided breath completed";
+        circle.style.transform = "scale(1)";
+        circle.textContent = "Inhale";
+        return;
+      }
+
+      isBreathing = true;
+      btn.textContent = "Stop Breathing Guide";
+      let phase = 0; // 0 = inhale 4s, 1 = hold 7s, 2 = exhale 8s
+
+      playCalmTone(2);
+
+      function step() {
+        if (!isBreathing) return;
+        if (phase === 0) {
+          status.textContent = "Soft Inhale through nose... (4s)";
+          circle.textContent = "Inhale";
+          circle.style.transform = "scale(1.4)";
+          circle.style.transition = "transform 4s ease-in-out";
+          setTimeout(() => { if (isBreathing) { phase = 1; step(); } }, 4000);
+        } else if (phase === 1) {
+          status.textContent = "Gently Hold space... (7s)";
+          circle.textContent = "Hold";
+          setTimeout(() => { if (isBreathing) { phase = 2; step(); } }, 7000);
+        } else {
+          status.textContent = "Slow Exhale through mouth... (8s)";
+          circle.textContent = "Exhale";
+          circle.style.transform = "scale(1)";
+          circle.style.transition = "transform 8s ease-in-out";
+          setTimeout(() => { if (isBreathing) { phase = 0; step(); } }, 8000);
+        }
+      }
+
+      step();
+    }
+
+    // Storm Mode View
+    function previewStormMode() {
+      setZone('red');
+      alert("Activated Storm-Mode View: Theme switched to low-stimulus Red Zone dark mode.");
+    }
+
+    // Export Plan Summary
+    function exportPlanSummary() {
+      const symptoms = JSON.parse(localStorage.getItem('lutealshield_symptoms') || '[]');
+      const cycle = JSON.parse(localStorage.getItem('lutealshield_cycle') || '{}');
+      const tether = JSON.parse(localStorage.getItem('lutealshield_tether') || '[]');
+
+      const summary = `
+=== LUTEALSHIELD PMDD SAFETY PLAN ===
+Patient / User Baseline:
+Cycle Length: ${cycle.cycleLength || 28} days | Luteal Phase: ${cycle.lutealLength || 14} days
+Last Period Start: ${cycle.periodStart || 'Logged locally'}
+
+DOCUMENTED LUTEAL SYMPTOMS:
+${symptoms.map(s => `- ${s}`).join('\n')}
+
+GOLDEN PROTOCOLS:
+1. 72-Hour Luteal Rule: No life-altering decisions or confrontations executed in Red Zone.
+2. Low Sensory Cocooning: Reduced ambient lighting, headphones, soft nutrition.
+3. Safe Tethers:
+${tether.map(t => `- ${t.name} (${t.role}): ${t.phone}`).join('\n')}
+
+CRISIS NUMBERS:
+- South Africa SADAG Lifeline: 0800 567 567
+=====================================
+`;
+      const blob = new Blob([summary], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'LutealShield_Safety_Plan.txt';
+      a.click();
+    }
+  </script>
+</body>
+</html>

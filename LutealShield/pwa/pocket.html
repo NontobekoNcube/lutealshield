@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Affirmations Pocket • LutealShield</title>
+  <meta name="description" content="Grounding anchors and proof of your steady baseline stored safely in your pocket." />
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <meta name="theme-color" content="#2D1B4E" />
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <a href="/index.html" class="icon-btn" aria-label="Go Back">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+        </a>
+        <div class="brand-text-col">
+          <span class="brand-title">Affirmations Pocket</span>
+          <span class="brand-sub">Grounding Anchors</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <span class="safe-space-badge">
+          <span class="pulse-dot"></span> Private & Local
+        </span>
+        <button onclick="openNewAnchorModal()" class="icon-btn" style="background: var(--primary); color: #FFF;" title="Add Anchor">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="app-content">
+
+      <!-- Header description -->
+      <section>
+        <h1 class="page-title">Affirmations Pocket</h1>
+        <p class="page-subtitle">
+          Tangible reminders created by your steady-self to anchor you when hormonal shifts try to convince you otherwise.
+        </p>
+      </section>
+
+      <!-- Key Survival Stat Hero Card -->
+      <section class="card" style="background: linear-gradient(135deg, rgba(225, 190, 231, 0.2), rgba(74, 140, 110, 0.1)); border: 1.5px solid rgba(45, 27, 78, 0.12); padding: 18px 20px;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+          <span style="font-size: 1.3rem;">🛡️</span>
+          <span style="font-size: 0.76rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--primary);">
+            PROVEN SURVIVAL RECORD
+          </span>
+        </div>
+        <div style="font-size: 1.5rem; font-weight: 800; color: var(--text); margin-bottom: 4px;">
+          100% Historic Cycle Survival
+        </div>
+        <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.4;">
+          Every painful, overwhelming luteal crash you have ever experienced in your life has ended. The calm always returned.
+        </p>
+      </section>
+
+      <!-- Filter Chips -->
+      <section class="chips-wrap" style="margin-bottom: 4px;">
+        <button class="symptom-chip selected" data-filter="all" onclick="filterAnchors('all', this)">All Anchors</button>
+        <button class="symptom-chip" data-filter="voice_note" onclick="filterAnchors('voice_note', this)">🎙️ Voice Notes</button>
+        <button class="symptom-chip" data-filter="rule" onclick="filterAnchors('rule', this)">⏳ Covenants & Rules</button>
+        <button class="symptom-chip" data-filter="memory" onclick="filterAnchors('memory', this)">🌤️ Memories</button>
+        <button class="symptom-chip" data-filter="affirmation" onclick="filterAnchors('affirmation', this)">⚓ Baseline Truths</button>
+      </section>
+
+      <!-- Search Input -->
+      <div style="margin-bottom: 12px;">
+        <input type="text" id="pocketSearchInput" class="form-input" placeholder="Search anchors..." oninput="searchAnchors()" style="padding: 10px 14px; font-size: 0.84rem;" />
+      </div>
+
+      <!-- Anchors List -->
+      <section id="pocketList" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;"></section>
+
+      <!-- Add Anchor CTA Button -->
+      <button onclick="openNewAnchorModal()" class="btn-primary" style="margin-bottom: 24px;">
+        <span style="font-size: 1.1rem;">+</span> Add Anchor to Pocket
+      </button>
+
+    </main>
+
+    <!-- Modal for adding anchor -->
+    <div id="addAnchorModal" style="display: none; position: fixed; inset: 0; background: rgba(13, 10, 18, 0.6); z-index: 1000; align-items: flex-end; justify-content: center; backdrop-filter: blur(4px);">
+      <div class="card" style="width: 100%; max-width: 480px; border-bottom-left-radius: 0; border-bottom-right-radius: 0; padding: 22px; max-height: 90vh; overflow-y: auto;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <h2 style="font-size: 1.1rem; font-weight: 700; color: var(--text);">Add to Affirmations Pocket</h2>
+          <button onclick="closeNewAnchorModal()" class="icon-btn" style="border: none;">✕</button>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Anchor Category</label>
+          <select id="modalAnchorType" class="form-select">
+            <option value="voice_note">🎙️ Voice Note / Audio Audio</option>
+            <option value="rule">⏳ Rule or Covenant (e.g. 72h Delay)</option>
+            <option value="proof">🛡️ Survival Proof & Data</option>
+            <option value="memory">🌤️ Peaceful Memory</option>
+            <option value="affirmation">⚓ Baseline Affirmation</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Anchor Title</label>
+          <input type="text" id="modalAnchorTitle" class="form-input" placeholder="e.g. Mom's Voice Note or Coffee by the Sea" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Steady Reminder / Quote</label>
+          <textarea id="modalAnchorDesc" class="form-textarea" rows="3" placeholder="What does your steady baseline want your storm self to remember?"></textarea>
+        </div>
+
+        <button onclick="saveNewAnchorFromModal()" class="btn-primary" style="margin-top: 8px;">
+          Save Anchor to Pocket
+        </button>
+      </div>
+    </div>
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="bottom-nav">
+      <a href="/index.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        <span>Home</span>
+      </a>
+      <a href="/plan.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        <span>Plan</span>
+      </a>
+      <a href="/bloomy.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        <span>Bloomy</span>
+      </a>
+      <a href="/pocket.html" class="nav-item active">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"></circle><line x1="12" y1="22" x2="12" y2="8"></line><path d="M5 12H2a10 10 0 0 0 20 0h-3"></path></svg>
+        <span>Pocket</span>
+      </a>
+      <a href="/support.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        <span>Support</span>
+      </a>
+    </nav>
+  </div>
+
+  <script src="/app.js"></script>
+  <script>
+    let activeFilter = 'all';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderAnchors();
+    });
+
+    function getAnchors() {
+      return JSON.parse(localStorage.getItem('lutealshield_pocket') || '[]');
+    }
+
+    function renderAnchors(filter = activeFilter, query = '') {
+      const container = document.getElementById('pocketList');
+      const anchors = getAnchors();
+      container.innerHTML = '';
+
+      let filtered = anchors.filter(item => {
+        if (filter !== 'all' && item.type !== filter) return false;
+        if (query) {
+          const matchTitle = (item.title || '').toLowerCase().includes(query.toLowerCase());
+          const matchDesc = (item.desc || '').toLowerCase().includes(query.toLowerCase());
+          return matchTitle || matchDesc;
+        }
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="card" style="text-align: center; padding: 30px 20px;">
+            <div style="font-size: 2rem; margin-bottom: 8px;">🕊️</div>
+            <div style="font-weight: 700; font-size: 0.95rem; color: var(--text);">No anchors found</div>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">Tap "+ Add Anchor to Pocket" to create your first anchor.</p>
+          </div>
+        `;
+        return;
+      }
+
+      filtered.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.style.padding = '16px 18px';
+
+        let badgeBg = 'rgba(74, 140, 110, 0.12)';
+        let badgeColor = '#4A8C6E';
+        let typeEmoji = '⚓';
+        let typeLabel = 'Grounding Anchor';
+
+        if (item.type === 'voice_note') {
+          badgeBg = 'rgba(142, 68, 173, 0.12)';
+          badgeColor = '#8E44AD';
+          typeEmoji = '🎙️';
+          typeLabel = 'Voice Note';
+        } else if (item.type === 'rule') {
+          badgeBg = 'rgba(196, 122, 58, 0.12)';
+          badgeColor = '#C47A3A';
+          typeEmoji = '⏳';
+          typeLabel = '72h Covenant';
+        } else if (item.type === 'memory') {
+          badgeBg = 'rgba(230, 126, 34, 0.12)';
+          badgeColor = '#D35400';
+          typeEmoji = '🌤️';
+          typeLabel = 'Peaceful Memory';
+        } else if (item.type === 'proof') {
+          badgeBg = 'rgba(46, 204, 113, 0.12)';
+          badgeColor = '#27AE60';
+          typeEmoji = '🛡️';
+          typeLabel = 'Survival Proof';
+        }
+
+        const isVoice = item.type === 'voice_note';
+
+        card.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+            <span style="font-size: 0.72rem; font-weight: 800; background: ${badgeBg}; color: ${badgeColor}; padding: 3px 8px; border-radius: 999px;">
+              ${typeEmoji} ${typeLabel}
+            </span>
+            <button onclick="deleteAnchor('${item.id}')" style="background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 2px;" title="Remove anchor">
+              ✕
+            </button>
+          </div>
+
+          <h3 style="font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 6px;">
+            ${item.title}
+          </h3>
+
+          <p style="font-size: 0.84rem; color: var(--text-muted); line-height: 1.45; margin-bottom: 12px;">
+            “${item.desc}”
+          </p>
+
+          ${isVoice ? `
+            <div style="display: flex; align-items: center; justify-content: space-between; background: var(--input-bg); padding: 8px 12px; border-radius: 12px;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <button onclick="playVoiceAnchor(this, '${item.desc.replace(/'/g, "\\'")}')" class="icon-btn" style="width: 32px; height: 32px; background: var(--primary); color: #FFF;" title="Play audio">
+                  ▶
+                </button>
+                <span style="font-size: 0.76rem; font-weight: 600; color: var(--text);">Play Voice Recording</span>
+              </div>
+              <span style="font-size: 0.72rem; color: var(--text-muted); font-family: monospace;">${item.duration || '0:42'}</span>
+            </div>
+          ` : ''}
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    function filterAnchors(filter, btn) {
+      activeFilter = filter;
+      document.querySelectorAll('.chips-wrap .symptom-chip').forEach(c => c.classList.remove('selected'));
+      btn.classList.add('selected');
+      const q = document.getElementById('pocketSearchInput').value;
+      renderAnchors(filter, q);
+    }
+
+    function searchAnchors() {
+      const q = document.getElementById('pocketSearchInput').value;
+      renderAnchors(activeFilter, q);
+    }
+
+    function openNewAnchorModal() {
+      document.getElementById('addAnchorModal').style.display = 'flex';
+      document.getElementById('modalAnchorTitle').focus();
+    }
+
+    function closeNewAnchorModal() {
+      document.getElementById('addAnchorModal').style.display = 'none';
+    }
+
+    function saveNewAnchorFromModal() {
+      const title = document.getElementById('modalAnchorTitle').value.trim();
+      const desc = document.getElementById('modalAnchorDesc').value.trim();
+      const type = document.getElementById('modalAnchorType').value;
+
+      if (!title || !desc) {
+        alert("Please provide both a title and reminder for your anchor.");
+        return;
+      }
+
+      const anchors = getAnchors();
+      anchors.unshift({
+        id: Date.now().toString(),
+        title,
+        desc,
+        type,
+        quote: title,
+        duration: type === 'voice_note' ? '0:35' : undefined
+      });
+
+      localStorage.setItem('lutealshield_pocket', JSON.stringify(anchors));
+      closeNewAnchorModal();
+      document.getElementById('modalAnchorTitle').value = '';
+      document.getElementById('modalAnchorDesc').value = '';
+      renderAnchors();
+      playCalmTone(1.2);
+    }
+
+    function deleteAnchor(id) {
+      if (!confirm("Remove this anchor from your Affirmations Pocket?")) return;
+      let anchors = getAnchors();
+      anchors = anchors.filter(a => a.id !== id);
+      localStorage.setItem('lutealshield_pocket', JSON.stringify(anchors));
+      renderAnchors();
+    }
+
+    // Play soothing note with tone and text-to-speech if available
+    function playVoiceAnchor(btn, text) {
+      playCalmTone(3);
+      btn.textContent = '⏸';
+      btn.style.background = '#4A8C6E';
+
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.rate = 0.85; // Calming, gentle pace
+        utter.pitch = 1.0;
+        utter.onend = () => {
+          btn.textContent = '▶';
+          btn.style.background = 'var(--primary)';
+        };
+        utter.onerror = () => {
+          btn.textContent = '▶';
+          btn.style.background = 'var(--primary)';
+        };
+        window.speechSynthesis.speak(utter);
+      } else {
+        setTimeout(() => {
+          btn.textContent = '▶';
+          btn.style.background = 'var(--primary)';
+        }, 3000);
+      }
+    }
+  </script>
+</body>
+</html>

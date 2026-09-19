@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>PMDD Profile & Settings • LutealShield</title>
+  <meta name="description" content="Sensory accessibility, cycle controls, and on-device privacy settings." />
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <meta name="theme-color" content="#2D1B4E" />
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <a href="/index.html" class="icon-btn" aria-label="Go Back">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+        </a>
+        <div class="brand-text-col">
+          <span class="brand-title">PMDD Profile</span>
+          <span class="brand-sub">Sensory & Privacy</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <span class="safe-space-badge">
+          <span class="pulse-dot"></span> On-Device
+        </span>
+      </div>
+    </header>
+
+    <main class="app-content">
+
+      <!-- Title -->
+      <section>
+        <h1 class="page-title">Profile & Sensory Controls</h1>
+        <p class="page-subtitle">Configure sensory filters, cycle parameters, and privacy protections.</p>
+      </section>
+
+      <!-- Profile Summary Card -->
+      <section class="card" style="padding: 16px 18px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+          <div>
+            <span style="font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted);">
+              USER PROFILE
+            </span>
+            <div id="profileUserType" style="font-weight: 800; font-size: 1.05rem; color: var(--text); margin-top: 2px;">
+              I have PMDD
+            </div>
+          </div>
+          <a href="/onboarding.html?force=1" style="font-size: 0.75rem; font-weight: 700; color: var(--primary); text-decoration: none;">
+            Re-run Setup
+          </a>
+        </div>
+
+        <div style="display: flex; gap: 12px; font-size: 0.8rem; color: var(--text-muted); padding-top: 10px; border-top: 1px solid var(--border);">
+          <div>Cycle: <strong id="profileCycleLen" style="color: var(--text);">28 days</strong></div>
+          <div>•</div>
+          <div>Luteal: <strong id="profileLutealLen" style="color: var(--text);">14 days</strong></div>
+          <div>•</div>
+          <div>Zone: <strong id="profileCurrentZone" style="color: #4A8C6E; text-transform: capitalize;">Green</strong></div>
+        </div>
+      </section>
+
+      <!-- Active Symptoms Chips (Editable) -->
+      <section class="card" style="padding: 16px 18px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <span style="font-weight: 700; font-size: 0.88rem; color: var(--text);">Tracked Luteal Symptoms</span>
+          <span id="symptomsCountBadge" style="font-size: 0.7rem; color: var(--text-muted);">6 active</span>
+        </div>
+        <p style="font-size: 0.76rem; color: var(--text-muted); margin-bottom: 10px;">
+          Tap any symptom to toggle tracking in your Safety Plan and Bloomy grounding.
+        </p>
+        <div id="settingsSymptomsWrap" class="chips-wrap"></div>
+      </section>
+
+      <!-- Sensory & Accessibility Preferences -->
+      <section>
+        <div style="font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 10px;">
+          SENSORY & ACCESSIBILITY
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <!-- Rose Amber Glow -->
+          <div class="card" style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px;">
+            <div style="padding-right: 12px;">
+              <div style="font-weight: 700; font-size: 0.88rem; color: var(--text);">Rose Amber Glow Filter</div>
+              <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 2px;">
+                Mutes harsh blue light and warms screen during Amber early-warning phase.
+              </div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="toggleAmberGlow" onchange="updateSensorySettings()" />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <!-- Auto Dark Mode in Red Zone -->
+          <div class="card" style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px;">
+            <div style="padding-right: 12px;">
+              <div style="font-weight: 700; font-size: 0.88rem; color: var(--text);">Auto Dark Mode in Red Zone</div>
+              <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 2px;">
+                Automatically switches into low-sensory pitch dark mode when crisis shield is active.
+              </div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="toggleAutoDark" checked onchange="updateSensorySettings()" />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <!-- Reduce Motion -->
+          <div class="card" style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px;">
+            <div style="padding-right: 12px;">
+              <div style="font-weight: 700; font-size: 0.88rem; color: var(--text);">Reduce Motion & Pulsing</div>
+              <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 2px;">
+                Disables animated transitions and pulses for vestibular sensitivity.
+              </div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="toggleReduceMotion" onchange="updateSensorySettings()" />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <!-- Larger Text -->
+          <div class="card" style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px;">
+            <div style="padding-right: 12px;">
+              <div style="font-weight: 700; font-size: 0.88rem; color: var(--text);">Neuro-Gentle Larger Typography</div>
+              <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 2px;">
+                Enlarges interface text to reduce eye strain and brain fog effort.
+              </div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="toggleLargerText" onchange="updateSensorySettings()" />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <!-- Low Friction Language -->
+          <div class="card" style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px;">
+            <div style="padding-right: 12px;">
+              <div style="font-weight: 700; font-size: 0.88rem; color: var(--text);">Low-Friction Quiet Mode</div>
+              <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 2px;">
+                Bloomy uses ultra-concise, soft phrasing with zero unsolicited advice.
+              </div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="toggleLowFriction" checked onchange="updateSensorySettings()" />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- App Installation & Offline -->
+      <section class="card" style="padding: 16px 18px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <div>
+            <div style="font-weight: 700; font-size: 0.88rem; color: var(--text);">PWA Offline Installation</div>
+            <div style="font-size: 0.74rem; color: var(--text-muted);">Installable on Android & iOS home screens.</div>
+          </div>
+          <button onclick="installPWA()" class="btn-primary" style="width: auto; padding: 8px 14px; font-size: 0.78rem;">
+            Install App
+          </button>
+        </div>
+      </section>
+
+      <!-- Data & Privacy (POPIA / GDPR) -->
+      <section class="card" style="background: var(--input-bg); border-color: var(--border); padding: 16px 18px;">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+          <span style="font-size: 1.1rem;">🔒</span>
+          <span style="font-weight: 700; font-size: 0.88rem; color: var(--text);">POPIA & On-Device Data Protection</span>
+        </div>
+        <p style="font-size: 0.76rem; color: var(--text-muted); line-height: 1.45; margin-bottom: 14px;">
+          All sensitive health records, cycle estimates, tethers, and Affirmations Pocket entries remain stored strictly in your browser's private local storage. No trackers, no data mining.
+        </p>
+
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <button onclick="exportAllData()" class="btn-secondary" style="flex: 1; min-width: 140px; font-size: 0.76rem; padding: 8px 10px;">
+            Export My Shield Data
+          </button>
+          <button onclick="clearAllData()" class="btn-secondary" style="flex: 1; min-width: 140px; font-size: 0.76rem; padding: 8px 10px; color: #8B2A2A; border-color: rgba(139, 42, 42, 0.3);">
+            Reset All Shield Data
+          </button>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="bottom-nav">
+      <a href="/index.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        <span>Home</span>
+      </a>
+      <a href="/plan.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        <span>Plan</span>
+      </a>
+      <a href="/bloomy.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        <span>Bloomy</span>
+      </a>
+      <a href="/pocket.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"></circle><line x1="12" y1="22" x2="12" y2="8"></line><path d="M5 12H2a10 10 0 0 0 20 0h-3"></path></svg>
+        <span>Pocket</span>
+      </a>
+      <a href="/support.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        <span>Support</span>
+      </a>
+    </nav>
+  </div>
+
+  <script src="/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      loadProfileData();
+      loadSettingsToggles();
+      renderAllSymptoms();
+    });
+
+    function loadProfileData() {
+      const uType = localStorage.getItem('lutealshield_user_type') || 'I have PMDD';
+      const cycle = JSON.parse(localStorage.getItem('lutealshield_cycle') || '{}');
+      const zone = localStorage.getItem('lutealshield_zone') || 'green';
+
+      document.getElementById('profileUserType').textContent = uType;
+      document.getElementById('profileCycleLen').textContent = `${cycle.cycleLength || 28} days`;
+      document.getElementById('profileLutealLen').textContent = `${cycle.lutealLength || 14} days`;
+
+      const zoneEl = document.getElementById('profileCurrentZone');
+      zoneEl.textContent = zone;
+      if (zone === 'green') zoneEl.style.color = '#4A8C6E';
+      if (zone === 'amber') zoneEl.style.color = '#C47A3A';
+      if (zone === 'red') zoneEl.style.color = '#8B2A2A';
+    }
+
+    function loadSettingsToggles() {
+      const settings = JSON.parse(localStorage.getItem('lutealshield_settings') || '{}');
+      document.getElementById('toggleAmberGlow').checked = settings.amberGlow !== false;
+      document.getElementById('toggleAutoDark').checked = settings.autoDarkMode !== false;
+      document.getElementById('toggleReduceMotion').checked = !!settings.reduceMotion;
+      document.getElementById('toggleLargerText').checked = !!settings.largerText;
+      document.getElementById('toggleLowFriction').checked = settings.lowFrictionLanguage !== false;
+    }
+
+    function updateSensorySettings() {
+      const settings = {
+        amberGlow: document.getElementById('toggleAmberGlow').checked,
+        autoDarkMode: document.getElementById('toggleAutoDark').checked,
+        reduceMotion: document.getElementById('toggleReduceMotion').checked,
+        largerText: document.getElementById('toggleLargerText').checked,
+        lowFrictionLanguage: document.getElementById('toggleLowFriction').checked
+      };
+
+      localStorage.setItem('lutealshield_settings', JSON.stringify(settings));
+      initZone(); // Apply accessibility and filters immediately
+    }
+
+    function renderAllSymptoms() {
+      const container = document.getElementById('settingsSymptomsWrap');
+      let currentSymptoms = JSON.parse(localStorage.getItem('lutealshield_symptoms') || '[]');
+      container.innerHTML = '';
+
+      const allSymptoms = [
+        ...PMDD_SYMPTOMS_CATALOG.emotional,
+        ...PMDD_SYMPTOMS_CATALOG.physical,
+        ...PMDD_SYMPTOMS_CATALOG.behavioural
+      ];
+
+      document.getElementById('symptomsCountBadge').textContent = `${currentSymptoms.length} active`;
+
+      allSymptoms.forEach(sym => {
+        const chip = document.createElement('button');
+        const isSel = currentSymptoms.includes(sym);
+        chip.className = `symptom-chip ${isSel ? 'selected' : ''}`;
+        chip.innerHTML = `${isSel ? '✓ ' : '+ '}${sym}`;
+
+        chip.onclick = () => {
+          if (currentSymptoms.includes(sym)) {
+            currentSymptoms = currentSymptoms.filter(s => s !== sym);
+          } else {
+            currentSymptoms.push(sym);
+          }
+          localStorage.setItem('lutealshield_symptoms', JSON.stringify(currentSymptoms));
+          renderAllSymptoms();
+        };
+
+        container.appendChild(chip);
+      });
+    }
+
+    function exportAllData() {
+      const allData = {};
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && key.startsWith('lutealshield_')) {
+          try {
+            allData[key] = JSON.parse(localStorage.getItem(key));
+          } catch {
+            allData[key] = localStorage.getItem(key);
+          }
+        }
+      }
+
+      const blob = new Blob([JSON.stringify(allData, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `LutealShield_Backup_${new Date().toISOString().split('T')[0]}.json`;
+      a.click();
+    }
+
+    function clearAllData() {
+      if (!confirm("Are you sure you want to reset all LutealShield data? This will clear your pocket, contacts, and cycle history.")) {
+        return;
+      }
+      const keysToRemove = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && key.startsWith('lutealshield_')) {
+          keysToRemove.push(key);
+        }
+      }
+      keysToRemove.forEach(k => localStorage.removeItem(k));
+      alert("All data cleared.");
+      window.location.href = '/onboarding.html';
+    }
+  </script>
+</body>
+</html>

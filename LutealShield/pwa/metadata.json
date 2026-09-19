@@ -1,0 +1,6 @@
+{
+  "name": "LutealShield",
+  "description": "The digital seatbelt for PMDD — proactive safety plans, grounding anchors, and cycle-aligned support.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

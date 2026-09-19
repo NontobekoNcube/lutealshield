@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2D1645"/>
+      <stop offset="100%" stop-color="#0F0819"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFEAA7"/>
+      <stop offset="50%" stop-color="#FDCB6E"/>
+      <stop offset="100%" stop-color="#E17055"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+  
+  <!-- App Icon Base -->
+  <rect width="512" height="512" rx="115" fill="url(#bgGrad)"/>
+  
+  <!-- Outer Glow for Shield -->
+  <path d="M 256 100 C 330 100 375 140 375 220 C 375 320 285 390 256 415 C 227 390 137 320 137 220 C 137 140 182 100 256 100 Z" 
+        fill="none" stroke="#FDCB6E" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" opacity="0.3" filter="url(#glow)"/>
+
+  <!-- Shield Base -->
+  <path d="M 256 110 C 322 110 365 146 365 220 C 365 315 282 380 256 405 C 230 380 147 315 147 220 C 147 146 190 110 256 110 Z" 
+        fill="#231338" stroke="url(#goldGrad)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+        
+  <!-- Shield Right Facet Shadow -->
+  <path d="M 256 110 C 322 110 365 146 365 220 C 365 315 282 380 256 405 L 256 110 Z" 
+        fill="#321A52" opacity="0.8"/>
+
+  <!-- Golden Moon -->
+  <path d="M 248 185 C 215 185 190 215 190 252 C 190 292 222 322 262 322 C 285 322 305 312 318 296 C 275 304 235 272 235 228 C 235 210 240 195 248 185 Z" 
+        fill="url(#goldGrad)" filter="url(#glow)"/>
+
+  <!-- Stars -->
+  <!-- Star 1 -->
+  <path d="M 295 195 Q 295 208 308 208 Q 295 208 295 221 Q 295 208 282 208 Q 295 208 295 195 Z" fill="#FFEAA7"/>
+  <!-- Star 2 -->
+  <path d="M 270 230 Q 270 238 278 238 Q 270 238 270 246 Q 270 238 262 238 Q 270 238 270 230 Z" fill="#FFEAA7"/>
+  <!-- Star 3 -->
+  <path d="M 298 250 Q 298 256 304 256 Q 298 256 298 262 Q 298 256 292 256 Q 298 256 298 250 Z" fill="#FFEAA7"/>
+</svg>

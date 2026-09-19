@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Onboarding • LutealShield</title>
+  <meta name="description" content="Set up your PMDD safety plan and personalized rhythm with Bloomy." />
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <meta name="theme-color" content="#2D1B4E" />
+</head>
+<body>
+  <div class="app-container" style="padding-bottom: 30px;">
+    <!-- Top Bar with Back and Step indicator -->
+    <header class="app-header" style="border-bottom: none;">
+      <button id="backBtn" class="icon-btn" onclick="prevStep()" aria-label="Go Back" style="display: none;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+      </button>
+      <div id="stepCounter" style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin: 0 auto;">
+        Welcome
+      </div>
+      <a href="/index.html" class="safe-space-badge" style="text-decoration: none;">
+        <span class="pulse-dot"></span> Skip
+      </a>
+    </header>
+
+    <!-- Progress Track Bar -->
+    <div style="height: 4px; background: rgba(45, 27, 78, 0.08); width: 100%; position: relative;">
+      <div id="progressBar" style="height: 100%; width: 0%; background: var(--primary); transition: width 0.3s ease;"></div>
+    </div>
+
+    <main class="app-content">
+
+      <!-- WELCOME / INTRO SCREEN -->
+      <section id="screen-welcome" style="display: flex; flex-direction: column; align-items: center; text-align: center; padding-top: 10px;">
+        <div style="width: 88px; height: 88px; border-radius: 26px; background: #1C102C; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(45, 27, 78, 0.25); margin-bottom: 20px;">
+          <img src="/icon.svg" alt="LutealShield" style="width: 76px; height: 76px;" />
+        </div>
+        <h1 class="page-title" style="font-size: 1.85rem; margin-bottom: 6px;">LutealShield</h1>
+        <p style="font-size: 0.92rem; color: var(--text-muted); font-weight: 600; margin-bottom: 24px;">The digital seatbelt for PMDD</p>
+
+        <div class="card" style="margin-bottom: 26px; text-align: left; padding: 22px;">
+          <div style="width: 38px; height: 38px; border-radius: 50%; background: rgba(225, 190, 231, 0.3); display: flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2D1B4E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <p style="font-family: var(--font-serif); font-style: italic; font-size: 1.1rem; color: var(--primary); margin-bottom: 8px;">
+            “When biology shifts, you deserve a plan.”
+          </p>
+          <h2 style="font-size: 1.15rem; font-weight: 700; color: var(--text); margin-bottom: 8px;">A safety plan for your PMDD days.</h2>
+          <p style="font-size: 0.86rem; color: var(--text-muted); line-height: 1.45; margin-bottom: 18px;">
+            Prepare for difficult days with early warnings, personal grounding tools, sensory luteal lighting, and trusted support.
+          </p>
+
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <span class="safe-space-badge" style="background: rgba(74, 140, 110, 0.12); color: #4A8C6E; border-color: transparent;">🛡️ Zero Judgment</span>
+            <span class="safe-space-badge" style="background: rgba(196, 122, 58, 0.12); color: #C47A3A; border-color: transparent;">🌊 Low Friction</span>
+            <span class="safe-space-badge" style="background: rgba(142, 68, 173, 0.12); color: #8E44AD; border-color: transparent;">💜 Neuro-Gentle</span>
+          </div>
+        </div>
+
+        <button class="btn-primary" onclick="goToStep(1)" style="margin-bottom: 12px;">
+          Get started <span style="font-size: 1.1rem;">→</span>
+        </button>
+
+        <button class="btn-secondary" onclick="quickDemoStart()" style="margin-bottom: 18px;">
+          I already have an account
+        </button>
+
+        <p style="font-size: 0.74rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px; justify-content: center;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          Your most sensitive health and vault information stays encrypted on your device.
+        </p>
+      </section>
+
+      <!-- STEP 1: USER TYPE -->
+      <section id="screen-step1" style="display: none;">
+        <div style="margin-bottom: 16px;">
+          <span class="safe-space-badge" style="margin-bottom: 8px;"><span class="pulse-dot"></span> Safe Space • Bloomy is listening</span>
+          <h1 class="page-title" style="margin-top: 6px;">What brings you to LutealShield?</h1>
+          <p class="page-subtitle">LutealShield supports planning, grounding, and connection. It does not provide medical diagnosis.</p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px;">
+          <!-- Option 1 -->
+          <label class="card" style="display: flex; gap: 14px; align-items: flex-start; cursor: pointer; border-width: 1.5px;" id="lbl-type-1">
+            <input type="radio" name="user_type" value="I have PMDD" checked style="accent-color: var(--primary); margin-top: 4px; width: 18px; height: 18px;" onchange="updateRadioStyles()" />
+            <div>
+              <div style="font-weight: 700; font-size: 0.95rem; color: var(--text);">I have PMDD</div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 3px;">You have a diagnosis and want a proactive emotional seatbelt.</div>
+            </div>
+          </label>
+          <!-- Option 2 -->
+          <label class="card" style="display: flex; gap: 14px; align-items: flex-start; cursor: pointer; border-width: 1.5px;" id="lbl-type-2">
+            <input type="radio" name="user_type" value="I think I may have PMDD" style="accent-color: var(--primary); margin-top: 4px; width: 18px; height: 18px;" onchange="updateRadioStyles()" />
+            <div>
+              <div style="font-weight: 700; font-size: 0.95rem; color: var(--text);">I think I may have PMDD</div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 3px;">You experience severe luteal mood crashes and need grounding.</div>
+            </div>
+          </label>
+          <!-- Option 3 -->
+          <label class="card" style="display: flex; gap: 14px; align-items: flex-start; cursor: pointer; border-width: 1.5px;" id="lbl-type-3">
+            <input type="radio" name="user_type" value="I support someone with PMDD" style="accent-color: var(--primary); margin-top: 4px; width: 18px; height: 18px;" onchange="updateRadioStyles()" />
+            <div>
+              <div style="font-weight: 700; font-size: 0.95rem; color: var(--text);">I support someone with PMDD</div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 3px;">You want to understand their cycle and be a safe tether.</div>
+            </div>
+          </label>
+          <!-- Option 4 -->
+          <label class="card" style="display: flex; gap: 14px; align-items: flex-start; cursor: pointer; border-width: 1.5px;" id="lbl-type-4">
+            <input type="radio" name="user_type" value="I want to explore more shield apps" style="accent-color: var(--primary); margin-top: 4px; width: 18px; height: 18px;" onchange="updateRadioStyles()" />
+            <div>
+              <div style="font-weight: 700; font-size: 0.95rem; color: var(--text);">I want to explore more shield apps</div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 3px;">You are curious about cycle-based emotional safety and grounding toolkits.</div>
+            </div>
+          </label>
+        </div>
+
+        <button class="btn-primary" onclick="saveStep1()">Continue →</button>
+      </section>
+
+      <!-- STEP 2: CYCLE PATTERN -->
+      <section id="screen-step2" style="display: none;">
+        <div style="margin-bottom: 16px;">
+          <span class="safe-space-badge" style="margin-bottom: 8px;"><span class="pulse-dot"></span> Safe Space • Bloomy is listening</span>
+          <h1 class="page-title" style="margin-top: 6px;">Map your rhythm for proactive safety</h1>
+          <p class="page-subtitle">Predictions are calculated estimates and can be edited anytime. Your lived experience always takes priority.</p>
+        </div>
+
+        <!-- Last Period Date Picker -->
+        <div class="card" style="margin-bottom: 14px;">
+          <div style="font-weight: 700; font-size: 0.9rem; margin-bottom: 8px;">Last period start date</div>
+          <div style="display: flex; align-items: center; gap: 12px; background: var(--input-bg); padding: 12px 14px; border-radius: 14px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            <input type="date" id="periodStartDate" class="form-input" style="border: none; padding: 0; background: transparent; font-weight: 600;" />
+          </div>
+        </div>
+
+        <!-- Average Cycle Length -->
+        <div class="card" style="margin-bottom: 14px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <span style="font-weight: 700; font-size: 0.9rem;">Average cycle length</span>
+            <span id="cycleLengthDisplay" style="font-weight: 800; font-size: 1.1rem; color: var(--primary);">28 days</span>
+          </div>
+          <input type="range" id="cycleLengthSlider" min="21" max="40" value="28" style="width: 100%; accent-color: var(--primary); margin: 8px 0;" oninput="updateCycleSliders()" />
+          <div style="font-size: 0.75rem; color: var(--text-muted);">Typical range: 24–35 days</div>
+        </div>
+
+        <!-- Average Luteal Phase -->
+        <div class="card" style="margin-bottom: 14px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <span style="font-weight: 700; font-size: 0.9rem;">Average luteal phase</span>
+            <span id="lutealLengthDisplay" style="font-weight: 800; font-size: 1.1rem; color: var(--primary);">14 days</span>
+          </div>
+          <input type="range" id="lutealLengthSlider" min="10" max="18" value="14" style="width: 100%; accent-color: var(--primary); margin: 8px 0;" oninput="updateCycleSliders()" />
+          <div style="font-size: 0.75rem; color: var(--text-muted);">Standard luteal phase is usually 12–14 days before bleeding.</div>
+        </div>
+
+        <!-- Google Health Connect -->
+        <div class="card" style="margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
+          <div style="padding-right: 12px;">
+            <div style="font-weight: 700; font-size: 0.88rem;">Sync Google Health Connect</div>
+            <div style="font-size: 0.74rem; color: var(--text-muted);">Optional: automatically pull logged cycle dates locally.</div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="syncHealthToggle" />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <!-- Predicted Windows Card -->
+        <div class="card" style="background: #251438; color: #F0EBF8; border: 1px solid rgba(212, 184, 224, 0.2); margin-bottom: 20px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 0.76rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #D4B8E0; margin-bottom: 12px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+            PREDICTED WINDOWS
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.84rem;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="width: 8px; height: 8px; border-radius: 50%; background: #4A8C6E;"></span>
+              <span>Current Phase: <strong id="predPhase">Follicular / Green Zone</strong></span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="width: 8px; height: 8px; border-radius: 50%; background: #C47A3A;"></span>
+              <span>72h Early Warning: <strong id="predEarly">Starts in 6 days</strong></span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="width: 8px; height: 8px; border-radius: 50%; background: #8B2A2A;"></span>
+              <span>Predicted Red Zone: <strong id="predRed">Days 22–28 of cycle</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-primary" onclick="saveStep2()">Continue to Symptoms →</button>
+      </section>
+
+      <!-- STEP 3: PMDD SYMPTOMS (NEW SPEC) -->
+      <section id="screen-step3" style="display: none;">
+        <div style="margin-bottom: 16px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+            <span class="safe-space-badge"><span class="pulse-dot"></span> Safe Space • Personalised Care</span>
+            <span style="font-size: 0.72rem; background: rgba(142, 68, 173, 0.15); color: #8E44AD; padding: 3px 8px; border-radius: 999px; font-weight: 600;">Non-diagnostic</span>
+          </div>
+          <h1 class="page-title" style="margin-top: 6px;">Which symptoms do you experience during your luteal phase?</h1>
+          <p class="page-subtitle">Helps us personalise your safety plan and Bloomy's responses. Not diagnostic.</p>
+        </div>
+
+        <!-- Emotional Group -->
+        <div class="symptom-group-title">
+          <span>💖</span> EMOTIONAL
+        </div>
+        <div class="chips-wrap" id="chips-emotional"></div>
+
+        <!-- Physical Group -->
+        <div class="symptom-group-title">
+          <span>✨</span> PHYSICAL & SENSORY
+        </div>
+        <div class="chips-wrap" id="chips-physical"></div>
+
+        <!-- Behavioural Group -->
+        <div class="symptom-group-title">
+          <span>💡</span> BEHAVIOURAL & EXECUTIVE
+        </div>
+        <div class="chips-wrap" id="chips-behavioural"></div>
+
+        <!-- Zero Judgment Rule Card -->
+        <div class="card" style="background: var(--input-bg); border-color: var(--border); margin: 20px 0 24px 0; display: flex; gap: 12px; align-items: flex-start;">
+          <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--card); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            🛡️
+          </div>
+          <div>
+            <div style="font-weight: 700; font-size: 0.88rem; color: var(--text);">Zero Judgment Rule</div>
+            <p style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; margin-top: 3px;">
+              These selections are private, encrypted on-device, and will never be shared or used for clinical diagnosis. They exist purely to shelter your nervous system.
+            </p>
+          </div>
+        </div>
+
+        <button class="btn-primary" onclick="saveStep3()">Continue to Trusted Circle →</button>
+      </section>
+
+      <!-- STEP 4: TRUSTED CIRCLE -->
+      <section id="screen-step4" style="display: none;">
+        <div style="margin-bottom: 16px;">
+          <span class="safe-space-badge" style="margin-bottom: 8px;"><span class="pulse-dot"></span> Safe Space • Consent-First</span>
+          <h1 class="page-title" style="margin-top: 6px;">Your Selected Support Network</h1>
+          <p class="page-subtitle">Add up to three people who can hold space when symptoms peak. You don't have to navigate crashes alone.</p>
+        </div>
+
+        <!-- Absolute Consent Rule -->
+        <div class="card" style="background: rgba(74, 140, 110, 0.12); border-color: rgba(74, 140, 110, 0.25); margin-bottom: 16px; display: flex; gap: 12px; align-items: flex-start;">
+          <div style="font-size: 1.5rem;">🤝</div>
+          <div>
+            <div style="font-weight: 700; font-size: 0.88rem; color: #2E7D32;">Absolute Consent Rule</div>
+            <p style="font-size: 0.78rem; color: var(--text); line-height: 1.4; margin-top: 3px;">
+              Only people you choose will receive an alert, and <strong>ONLY</strong> when you explicitly tap to send one. No automated tracking or surprise notifications.
+            </p>
+          </div>
+        </div>
+
+        <!-- Contacts List Container -->
+        <div id="contactsContainer" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px;"></div>
+
+        <!-- Add Contact Button -->
+        <button id="addContactBtn" class="btn-secondary" onclick="addNewContact()" style="margin-bottom: 20px; font-size: 0.85rem;">
+          <span style="font-size: 1.1rem;">+</span> Add another safe tether person
+        </button>
+
+        <!-- Tether Safeguards -->
+        <div style="margin-bottom: 20px;">
+          <div style="font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 8px;">Tether Safeguards</div>
+
+          <label class="card" style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px; cursor: pointer;">
+            <input type="checkbox" id="safeguard72h" checked style="accent-color: var(--primary); margin-top: 3px; width: 18px; height: 18px;" />
+            <div>
+              <div style="font-weight: 700; font-size: 0.86rem;">Enable 72h rule reminder in tether messages</div>
+              <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 2px;">Reminds contacts that high-intensity decisions should wait 72 hours until the follicular shift begins.</div>
+            </div>
+          </label>
+
+          <label class="card" style="display: flex; align-items: flex-start; gap: 12px; cursor: pointer;">
+            <input type="checkbox" id="safeguardVoice" checked style="accent-color: var(--primary); margin-top: 3px; width: 18px; height: 18px;" />
+            <div>
+              <div style="font-weight: 700; font-size: 0.86rem;">Allow tether to send voice notes instead of text</div>
+              <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 2px;">Hearing a steady, familiar voice can decelerate the nervous system faster than written words.</div>
+            </div>
+          </label>
+        </div>
+
+        <!-- Anchor Quote -->
+        <div class="card" style="margin-bottom: 24px; display: flex; align-items: center; gap: 12px; background: var(--input-bg);">
+          <div style="font-size: 1.4rem;">⚓</div>
+          <p style="font-size: 0.82rem; font-style: italic; color: var(--text-muted);">
+            “Your circle doesn't need to fix anything. They simply need to be a warm anchor while the storm passes.”
+          </p>
+        </div>
+
+        <button class="btn-primary" onclick="saveStep4()">Save Trusted Circle & Continue →</button>
+      </section>
+
+      <!-- STEP 5: AFFIRMATIONS POCKET -->
+      <section id="screen-step5" style="display: none;">
+        <div style="margin-bottom: 16px;">
+          <span class="safe-space-badge" style="margin-bottom: 8px;"><span class="pulse-dot"></span> Safe Space • Affirmations Pocket</span>
+          <h1 class="page-title" style="margin-top: 6px;">Your Affirmations Pocket</h1>
+          <p class="page-subtitle">Pre-loaded grounding anchors and proof of your resilience. Add your first personal reminder below.</p>
+        </div>
+
+        <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-muted); margin-bottom: 10px;">
+          PRE-LOADED ANCHORS (SAVED IN POCKET)
+        </div>
+
+        <div id="sampleAnchorsList" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;"></div>
+
+        <!-- Add First Custom Entry -->
+        <div class="card" style="margin-bottom: 24px; border: 1.5px dashed var(--border);">
+          <div style="font-weight: 700; font-size: 0.9rem; margin-bottom: 4px;">Add your own grounding anchor</div>
+          <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 12px;">A memory, a comforting rule, or words that pull you back to safety.</div>
+
+          <div class="form-group">
+            <label class="form-label">Anchor Title</label>
+            <input type="text" id="newAnchorTitle" class="form-input" placeholder="e.g. Remember to drink cold water" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Type</label>
+            <select id="newAnchorType" class="form-select">
+              <option value="anchor">Grounding Anchor</option>
+              <option value="affirmation">Affirmation</option>
+              <option value="rule">Rule (e.g. 72h wait)</option>
+              <option value="memory">Comfort Memory</option>
+              <option value="proof">Proof of Survival</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Gentle Message / Reminder</label>
+            <textarea id="newAnchorDesc" class="form-textarea" rows="2" placeholder="Write something kind to your future self during luteal..."></textarea>
+          </div>
+        </div>
+
+        <button class="btn-primary" onclick="finishOnboarding()">Complete Setup & Enter LutealShield →</button>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="/app.js"></script>
+  <script>
+    let currentStep = 0;
+    const totalSteps = 5;
+    let selectedSymptoms = [];
+    let tetherContacts = [];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // If already onboarded and user didn't specify ?force=1, allow quick jump or stay
+      const urlParams = new URLSearchParams(window.location.search);
+      if (localStorage.getItem('lutealshield_onboarded') === 'true' && urlParams.get('force') !== '1') {
+        // Can jump straight to index
+      }
+
+      // Initialize date picker with default
+      const dateInput = document.getElementById('periodStartDate');
+      if (dateInput) {
+        const cycle = JSON.parse(localStorage.getItem('lutealshield_cycle') || '{}');
+        dateInput.value = cycle.periodStart || new Date(Date.now() - 12 * 86400000).toISOString().split('T')[0];
+        dateInput.addEventListener('change', updatePredictedWindows);
+      }
+
+      // Initialize symptoms chips
+      loadSymptomChips();
+
+      // Initialize contacts
+      loadTetherContacts();
+
+      // Initialize sample anchors
+      loadSampleAnchors();
+
+      updatePredictedWindows();
+    });
+
+    function updateProgressBar() {
+      const bar = document.getElementById('progressBar');
+      const counter = document.getElementById('stepCounter');
+      const back = document.getElementById('backBtn');
+
+      if (currentStep === 0) {
+        bar.style.width = '0%';
+        counter.textContent = 'Welcome';
+        back.style.display = 'none';
+      } else {
+        const pct = (currentStep / totalSteps) * 100;
+        bar.style.width = `${pct}%`;
+        counter.textContent = `STEP ${currentStep} OF ${totalSteps}`;
+        back.style.display = 'inline-flex';
+      }
+    }
+
+    function goToStep(step) {
+      currentStep = step;
+      document.querySelectorAll('main > section').forEach(sec => sec.style.display = 'none');
+      if (step === 0) {
+        document.getElementById('screen-welcome').style.display = 'flex';
+      } else {
+        document.getElementById(`screen-step${step}`).style.display = 'block';
+      }
+      updateProgressBar();
+      window.scrollTo(0, 0);
+    }
+
+    function prevStep() {
+      if (currentStep > 1) {
+        goToStep(currentStep - 1);
+      } else {
+        goToStep(0);
+      }
+    }
+
+    function quickDemoStart() {
+      initStorageDefaults();
+      localStorage.setItem('lutealshield_onboarded', 'true');
+      window.location.href = '/index.html';
+    }
+
+    // Step 1: User Type
+    function updateRadioStyles() {
+      const radios = document.querySelectorAll('input[name="user_type"]');
+      radios.forEach(r => {
+        const card = r.closest('.card');
+        if (r.checked) {
+          card.style.borderColor = 'var(--primary)';
+          card.style.backgroundColor = 'rgba(225, 190, 231, 0.15)';
+        } else {
+          card.style.borderColor = 'var(--border)';
+          card.style.backgroundColor = 'var(--card)';
+        }
+      });
+    }
+
+    function saveStep1() {
+      const selected = document.querySelector('input[name="user_type"]:checked');
+      if (selected) {
+        localStorage.setItem('lutealshield_user_type', selected.value);
+      }
+      goToStep(2);
+    }
+
+    // Step 2: Cycle
+    function updateCycleSliders() {
+      const cLen = document.getElementById('cycleLengthSlider').value;
+      const lLen = document.getElementById('lutealLengthSlider').value;
+      document.getElementById('cycleLengthDisplay').textContent = `${cLen} days`;
+      document.getElementById('lutealLengthDisplay').textContent = `${lLen} days`;
+      updatePredictedWindows();
+    }
+
+    function updatePredictedWindows() {
+      const pDate = document.getElementById('periodStartDate').value;
+      const cLen = parseInt(document.getElementById('cycleLengthSlider').value, 10);
+      const lLen = parseInt(document.getElementById('lutealLengthSlider').value, 10);
+
+      const startDate = new Date(pDate);
+      const today = new Date();
+      const diff = Math.floor((today - startDate) / (1000 * 60 * 60 * 24)) % cLen;
+      const day = diff >= 0 ? diff + 1 : 1;
+
+      const ovDay = cLen - lLen;
+      const redDay = cLen - 6;
+
+      const predPhase = document.getElementById('predPhase');
+      const predEarly = document.getElementById('predEarly');
+      const predRed = document.getElementById('predRed');
+
+      if (day >= redDay) {
+        predPhase.textContent = `Late Luteal / Red Zone (Day ${day})`;
+        predEarly.textContent = `Active Right Now`;
+        predRed.textContent = `In Progress (relief in ~${cLen - day + 1}d)`;
+      } else if (day >= ovDay) {
+        predPhase.textContent = `Early Luteal / Amber Zone (Day ${day})`;
+        predEarly.textContent = `Starts 72h buffer`;
+        predRed.textContent = `In ~${redDay - day} days`;
+      } else {
+        predPhase.textContent = `Follicular / Green Zone (Day ${day})`;
+        predEarly.textContent = `In ~${ovDay - day} days`;
+        predRed.textContent = `In ~${redDay - day} days`;
+      }
+    }
+
+    function saveStep2() {
+      const pDate = document.getElementById('periodStartDate').value;
+      const cLen = parseInt(document.getElementById('cycleLengthSlider').value, 10);
+      const lLen = parseInt(document.getElementById('lutealLengthSlider').value, 10);
+      const sync = document.getElementById('syncHealthToggle').checked;
+
+      const cycle = {
+        periodStart: pDate,
+        cycleLength: cLen,
+        lutealLength: lLen,
+        syncHealth: sync
+      };
+
+      localStorage.setItem('lutealshield_cycle', JSON.stringify(cycle));
+      goToStep(3);
+    }
+
+    // Step 3: Symptoms
+    function loadSymptomChips() {
+      const stored = JSON.parse(localStorage.getItem('lutealshield_symptoms') || '[]');
+      selectedSymptoms = stored.length ? stored : [
+        "Rage/Irritability", "Anxiety", "Depression", "Light sensitivity", "Sound sensitivity", "Brain fog"
+      ];
+
+      renderCategoryChips('emotional', document.getElementById('chips-emotional'));
+      renderCategoryChips('physical', document.getElementById('chips-physical'));
+      renderCategoryChips('behavioural', document.getElementById('chips-behavioural'));
+    }
+
+    function renderCategoryChips(cat, container) {
+      container.innerHTML = '';
+      PMDD_SYMPTOMS_CATALOG[cat].forEach(sym => {
+        const chip = document.createElement('div');
+        const isSel = selectedSymptoms.includes(sym);
+        chip.className = `symptom-chip ${isSel ? 'selected' : ''}`;
+        chip.innerHTML = `${isSel ? '✓ ' : '+ '}${sym}`;
+        chip.onclick = () => {
+          if (selectedSymptoms.includes(sym)) {
+            selectedSymptoms = selectedSymptoms.filter(s => s !== sym);
+          } else {
+            selectedSymptoms.push(sym);
+          }
+          const nowSel = selectedSymptoms.includes(sym);
+          chip.className = `symptom-chip ${nowSel ? 'selected' : ''}`;
+          chip.innerHTML = `${nowSel ? '✓ ' : '+ '}${sym}`;
+        };
+        container.appendChild(chip);
+      });
+    }
+
+    function saveStep3() {
+      localStorage.setItem('lutealshield_symptoms', JSON.stringify(selectedSymptoms));
+      goToStep(4);
+    }
+
+    // Step 4: Tether / Trusted Circle
+    function loadTetherContacts() {
+      tetherContacts = JSON.parse(localStorage.getItem('lutealshield_tether') || '[]');
+      if (!tetherContacts.length) {
+        tetherContacts = [
+          { id: '1', name: 'Zinhle', role: 'Best friend', phone: '+27825550192', method: 'call' },
+          { id: '2', name: 'Thando', role: 'Partner', phone: '+27834448219', method: 'whatsapp' },
+          { id: '3', name: 'Mama', role: 'Family', phone: '+27843337100', method: 'call' }
+        ];
+      }
+      renderContacts();
+    }
+
+    function renderContacts() {
+      const container = document.getElementById('contactsContainer');
+      container.innerHTML = '';
+
+      tetherContacts.forEach((c, index) => {
+        const item = document.createElement('div');
+        item.className = 'card';
+        item.style.display = 'flex';
+        item.style.alignItems = 'center';
+        item.style.justifyContent = 'space-between';
+        item.style.padding = '12px 16px';
+
+        const initial = c.name ? c.name.charAt(0).toUpperCase() : '?';
+
+        item.innerHTML = `
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="width: 38px; height: 38px; border-radius: 50%; background: #E1D4F0; color: #2D1B4E; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1rem;">
+              ${initial}
+            </div>
+            <div>
+              <div style="font-weight: 700; font-size: 0.92rem; color: var(--text);">
+                ${c.name} <span style="color: #4A8C6E; font-size: 0.8rem;">✓</span>
+              </div>
+              <div style="font-size: 0.72rem; color: var(--text-muted);">
+                ${c.role} • <span style="text-transform: uppercase;">${c.method || 'CALL'}</span>
+              </div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-size: 0.75rem; background: var(--input-bg); padding: 4px 8px; border-radius: 8px; font-family: monospace;">
+              ${c.phone}
+            </span>
+            <button onclick="removeContact(${index})" style="background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 4px;" title="Remove">✕</button>
+          </div>
+        `;
+        container.appendChild(item);
+      });
+
+      const addBtn = document.getElementById('addContactBtn');
+      if (tetherContacts.length >= 3) {
+        addBtn.style.display = 'none';
+      } else {
+        addBtn.style.display = 'flex';
+      }
+    }
+
+    function addNewContact() {
+      const name = prompt("Enter contact name:");
+      if (!name) return;
+      const role = prompt("Enter relationship (e.g. Partner, Friend, Sibling):", "Friend");
+      const phone = prompt("Enter phone number with country code:", "+27 ");
+      if (name && phone) {
+        tetherContacts.push({
+          id: Date.now().toString(),
+          name,
+          role: role || 'Supporter',
+          phone,
+          method: 'call'
+        });
+        renderContacts();
+      }
+    }
+
+    function removeContact(idx) {
+      tetherContacts.splice(idx, 1);
+      renderContacts();
+    }
+
+    function saveStep4() {
+      localStorage.setItem('lutealshield_tether', JSON.stringify(tetherContacts));
+      const s72 = document.getElementById('safeguard72h').checked;
+      const sVoice = document.getElementById('safeguardVoice').checked;
+
+      const settings = JSON.parse(localStorage.getItem('lutealshield_settings') || '{}');
+      settings.safeguard72h = s72;
+      settings.preferVoiceNotes = sVoice;
+      localStorage.setItem('lutealshield_settings', JSON.stringify(settings));
+
+      goToStep(5);
+    }
+
+    // Step 5: Affirmations Pocket
+    function loadSampleAnchors() {
+      const container = document.getElementById('sampleAnchorsList');
+      const pocket = JSON.parse(localStorage.getItem('lutealshield_pocket') || '[]');
+      container.innerHTML = '';
+
+      pocket.slice(0, 3).forEach(item => {
+        const c = document.createElement('div');
+        c.className = 'card';
+        c.style.padding = '12px 14px';
+        c.innerHTML = `
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+            <span style="font-size: 0.9rem;">${item.type === 'voice_note' ? '🎙️' : item.type === 'rule' ? '⏳' : '⚓'}</span>
+            <span style="font-weight: 700; font-size: 0.86rem; color: var(--text);">${item.title}</span>
+          </div>
+          <p style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.35;">${item.desc}</p>
+        `;
+        container.appendChild(c);
+      });
+    }
+
+    function finishOnboarding() {
+      const title = document.getElementById('newAnchorTitle').value.trim();
+      const desc = document.getElementById('newAnchorDesc').value.trim();
+      const type = document.getElementById('newAnchorType').value;
+
+      if (title && desc) {
+        const pocket = JSON.parse(localStorage.getItem('lutealshield_pocket') || '[]');
+        pocket.unshift({
+          id: Date.now().toString(),
+          title,
+          desc,
+          type,
+          quote: title
+        });
+        localStorage.setItem('lutealshield_pocket', JSON.stringify(pocket));
+      }
+
+      localStorage.setItem('lutealshield_onboarded', 'true');
+      window.location.href = '/index.html';
+    }
+  </script>
+</body>
+</html>

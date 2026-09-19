@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Safe Tether Support • LutealShield</title>
+  <meta name="description" content="Pre-scripted, zero-demand SOS messages for your trusted circle." />
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <meta name="theme-color" content="#2D1B4E" />
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <a href="/index.html" class="icon-btn" aria-label="Go Back">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+        </a>
+        <div class="brand-text-col">
+          <span class="brand-title">Safe Tether</span>
+          <span class="brand-sub">Trusted Support Circle</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <span class="safe-space-badge">
+          <span class="pulse-dot"></span> Consent-First
+        </span>
+      </div>
+    </header>
+
+    <main class="app-content">
+
+      <!-- Header intro -->
+      <section>
+        <h1 class="page-title">Safe Tether Network</h1>
+        <p class="page-subtitle">Pre-written, zero-demand SOS messages for people who love you. Because formulating words during a luteal crash is agonizingly hard.</p>
+      </section>
+
+      <!-- Absolute Consent Rule Card -->
+      <section class="card" style="background: rgba(74, 140, 110, 0.12); border-color: rgba(74, 140, 110, 0.25); display: flex; gap: 12px; align-items: flex-start;">
+        <span style="font-size: 1.4rem;">🤝</span>
+        <div>
+          <div style="font-weight: 700; font-size: 0.88rem; color: #2E7D32;">Absolute Consent Rule</div>
+          <p style="font-size: 0.78rem; color: var(--text); line-height: 1.4; margin-top: 2px;">
+            Nothing is ever sent automatically. You retain 100% control over who receives a message and when it sends.
+          </p>
+        </div>
+      </section>
+
+      <!-- Active Tether Contacts -->
+      <section>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+          <span style="font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted);">
+            YOUR TETHER CONTACTS (MAX 3)
+          </span>
+          <button onclick="editTetherContacts()" style="background: none; border: none; font-size: 0.75rem; font-weight: 700; color: var(--primary); cursor: pointer;">
+            + Edit Contacts
+          </button>
+        </div>
+        <div id="tetherListContainer" style="display: flex; flex-direction: column; gap: 8px;"></div>
+      </section>
+
+      <!-- Message Templates Section -->
+      <section style="margin-top: 10px;">
+        <div style="font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 12px;">
+          PRE-SCRIPTED TEMPLATES (SELECT & SEND)
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+
+          <!-- Template 1: Low Bandwidth -->
+          <div class="card" style="padding: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <span style="font-size: 0.74rem; font-weight: 800; background: rgba(142, 68, 173, 0.12); color: #8E44AD; padding: 3px 8px; border-radius: 999px;">
+                Low Bandwidth Warning
+              </span>
+              <span style="font-size: 0.7rem; color: var(--text-muted);">Gentle heads-up</span>
+            </div>
+            <p id="msg-text-1" style="font-size: 0.84rem; color: var(--text); line-height: 1.45; margin-bottom: 12px; background: var(--input-bg); padding: 10px 12px; border-radius: 10px; font-style: italic;">
+              “Hey! My luteal phase is peaking right now. I have very low bandwidth and brain fog today. Please don't take slow replies personally — I am safe, just resting.”
+            </p>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <button onclick="sendTemplate(1, 'whatsapp')" class="btn-primary" style="flex: 1; min-width: 130px; padding: 8px 12px; font-size: 0.76rem; background: #25D366; color: #FFF;">
+                Send WhatsApp
+              </button>
+              <button onclick="sendTemplate(1, 'sms')" class="btn-secondary" style="flex: 1; min-width: 100px; padding: 8px 12px; font-size: 0.76rem;">
+                SMS
+              </button>
+              <button onclick="copyTemplate(1)" class="btn-secondary" style="width: auto; padding: 8px 12px; font-size: 0.76rem;">
+                📋 Copy
+              </button>
+            </div>
+          </div>
+
+          <!-- Template 2: 72-Hour Rule Reminder -->
+          <div class="card" style="padding: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <span style="font-size: 0.74rem; font-weight: 800; background: rgba(196, 122, 58, 0.12); color: #C47A3A; padding: 3px 8px; border-radius: 999px;">
+                72-Hour Rule Reminder
+              </span>
+              <span style="font-size: 0.7rem; color: var(--text-muted);">Boundary guard</span>
+            </div>
+            <p id="msg-text-2" style="font-size: 0.84rem; color: var(--text); line-height: 1.45; margin-bottom: 12px; background: var(--input-bg); padding: 10px 12px; border-radius: 10px; font-style: italic;">
+              “Hey. My luteal storm has hit. If I text or talk about quitting my job or breaking up, please remind me of my 72-Hour Luteal Rule: no irreversible decisions until my follicular reset.”
+            </p>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <button onclick="sendTemplate(2, 'whatsapp')" class="btn-primary" style="flex: 1; min-width: 130px; padding: 8px 12px; font-size: 0.76rem; background: #25D366; color: #FFF;">
+                Send WhatsApp
+              </button>
+              <button onclick="sendTemplate(2, 'sms')" class="btn-secondary" style="flex: 1; min-width: 100px; padding: 8px 12px; font-size: 0.76rem;">
+                SMS
+              </button>
+              <button onclick="copyTemplate(2)" class="btn-secondary" style="width: auto; padding: 8px 12px; font-size: 0.76rem;">
+                📋 Copy
+              </button>
+            </div>
+          </div>
+
+          <!-- Template 3: Silent Space Request -->
+          <div class="card" style="padding: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <span style="font-size: 0.74rem; font-weight: 800; background: rgba(74, 140, 110, 0.12); color: #4A8C6E; padding: 3px 8px; border-radius: 999px;">
+                Silent Space Request
+              </span>
+              <span style="font-size: 0.7rem; color: var(--text-muted);">Zero verbal demand</span>
+            </div>
+            <p id="msg-text-3" style="font-size: 0.84rem; color: var(--text); line-height: 1.45; margin-bottom: 12px; background: var(--input-bg); padding: 10px 12px; border-radius: 10px; font-style: italic;">
+              “Hey. I am in my Red Zone. I don't have words right now, but knowing you are nearby helps. Can you please check on me with a heart emoji or short voice note? No questions needed.”
+            </p>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <button onclick="sendTemplate(3, 'whatsapp')" class="btn-primary" style="flex: 1; min-width: 130px; padding: 8px 12px; font-size: 0.76rem; background: #25D366; color: #FFF;">
+                Send WhatsApp
+              </button>
+              <button onclick="sendTemplate(3, 'sms')" class="btn-secondary" style="flex: 1; min-width: 100px; padding: 8px 12px; font-size: 0.76rem;">
+                SMS
+              </button>
+              <button onclick="copyTemplate(3)" class="btn-secondary" style="width: auto; padding: 8px 12px; font-size: 0.76rem;">
+                📋 Copy
+              </button>
+            </div>
+          </div>
+
+          <!-- Template 4: Emergency Grounding -->
+          <div class="card" style="padding: 16px; border-color: rgba(139, 42, 42, 0.3);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <span style="font-size: 0.74rem; font-weight: 800; background: rgba(139, 42, 42, 0.15); color: #8B2A2A; padding: 3px 8px; border-radius: 999px;">
+                Crisis Grounding SOS
+              </span>
+              <span style="font-size: 0.7rem; color: #8B2A2A; font-weight: 700;">High intensity</span>
+            </div>
+            <p id="msg-text-4" style="font-size: 0.84rem; color: var(--text); line-height: 1.45; margin-bottom: 12px; background: var(--input-bg); padding: 10px 12px; border-radius: 10px; font-style: italic;">
+              “PMDD Red Zone SOS: I am feeling severe emotional turbulence right now. Please call me or remind me that I have survived 100% of my previous cycles.”
+            </p>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <button onclick="sendTemplate(4, 'whatsapp')" class="btn-primary" style="flex: 1; min-width: 130px; padding: 8px 12px; font-size: 0.76rem; background: #8B2A2A; color: #FFF;">
+                Send WhatsApp SOS
+              </button>
+              <button onclick="sendTemplate(4, 'call')" class="btn-secondary" style="flex: 1; min-width: 100px; padding: 8px 12px; font-size: 0.76rem;">
+                📞 Call Tether
+              </button>
+              <button onclick="copyTemplate(4)" class="btn-secondary" style="width: auto; padding: 8px 12px; font-size: 0.76rem;">
+                📋 Copy
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 24/7 Lifelines -->
+      <section class="card" style="margin-top: 14px; background: var(--input-bg); border: 1.5px solid var(--border);">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+          <span style="font-size: 1.2rem;">📞</span>
+          <span style="font-weight: 700; font-size: 0.9rem; color: var(--text);">24/7 PMDD & Crisis Support Lifelines</span>
+        </div>
+        <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 12px; line-height: 1.4;">
+          Free, confidential support from trained counselors if you need an immediate anchor:
+        </p>
+
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <a href="tel:0800567567" class="card" style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; text-decoration: none; color: inherit;">
+            <div>
+              <div style="font-weight: 700; font-size: 0.85rem;">SADAG PMDD Crisis Line (South Africa)</div>
+              <div style="font-size: 0.72rem; color: var(--text-muted);">24/7 Free Support • 0800 567 567</div>
+            </div>
+            <span style="font-size: 0.76rem; font-weight: 700; color: #4A8C6E;">Tap to Call →</span>
+          </a>
+
+          <a href="tel:988" class="card" style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; text-decoration: none; color: inherit;">
+            <div>
+              <div style="font-weight: 700; font-size: 0.85rem;">Suicide & Crisis Lifeline (US / Global 988)</div>
+              <div style="font-size: 0.72rem; color: var(--text-muted);">Call or text 988 anytime</div>
+            </div>
+            <span style="font-size: 0.76rem; font-weight: 700; color: #4A8C6E;">Tap to Call →</span>
+          </a>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="bottom-nav">
+      <a href="/index.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        <span>Home</span>
+      </a>
+      <a href="/plan.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        <span>Plan</span>
+      </a>
+      <a href="/bloomy.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        <span>Bloomy</span>
+      </a>
+      <a href="/pocket.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"></circle><line x1="12" y1="22" x2="12" y2="8"></line><path d="M5 12H2a10 10 0 0 0 20 0h-3"></path></svg>
+        <span>Pocket</span>
+      </a>
+      <a href="/support.html" class="nav-item active">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        <span>Support</span>
+      </a>
+    </nav>
+  </div>
+
+  <script src="/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      renderTetherContacts();
+    });
+
+    function getTetherContacts() {
+      return JSON.parse(localStorage.getItem('lutealshield_tether') || '[]');
+    }
+
+    function renderTetherContacts() {
+      const container = document.getElementById('tetherListContainer');
+      const contacts = getTetherContacts();
+      container.innerHTML = '';
+
+      if (contacts.length === 0) {
+        container.innerHTML = `
+          <div class="card" style="padding: 12px; font-size: 0.8rem; color: var(--text-muted); text-align: center;">
+            No tether contacts added yet. Tap "+ Edit Contacts" to add your support circle.
+          </div>
+        `;
+        return;
+      }
+
+      contacts.forEach(c => {
+        const item = document.createElement('div');
+        item.className = 'card';
+        item.style.padding = '12px 14px';
+        item.style.display = 'flex';
+        item.style.justifyContent = 'space-between';
+        item.style.alignItems = 'center';
+
+        const initial = (c.name || '?').charAt(0).toUpperCase();
+
+        item.innerHTML = `
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 36px; height: 36px; border-radius: 50%; background: #E1D4F0; color: #2D1B4E; display: flex; align-items: center; justify-content: center; font-weight: 800;">
+              ${initial}
+            </div>
+            <div>
+              <div style="font-weight: 700; font-size: 0.9rem; color: var(--text);">${c.name}</div>
+              <div style="font-size: 0.72rem; color: var(--text-muted);">${c.role} • ${c.phone}</div>
+            </div>
+          </div>
+          <div style="display: flex; gap: 6px;">
+            <a href="tel:${c.phone}" class="icon-btn" style="width: 32px; height: 32px;" title="Call">📞</a>
+            <a href="https://wa.me/${c.phone.replace(/[^0-9]/g, '')}" target="_blank" class="icon-btn" style="width: 32px; height: 32px; color: #25D366;" title="WhatsApp">💬</a>
+          </div>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function editTetherContacts() {
+      window.location.href = '/onboarding.html?force=1';
+    }
+
+    function sendTemplate(num, channel) {
+      const textEl = document.getElementById(`msg-text-${num}`);
+      if (!textEl) return;
+      const rawText = textEl.innerText.replace(/^[“"]|[”"]$/g, '').trim();
+
+      const contacts = getTetherContacts();
+      const firstPhone = contacts.length > 0 ? contacts[0].phone : '';
+      const cleanPhone = firstPhone.replace(/[^0-9]/g, '');
+
+      if (channel === 'whatsapp') {
+        const url = cleanPhone ? `https://wa.me/${cleanPhone}?text=${encodeURIComponent(rawText)}` : `https://wa.me/?text=${encodeURIComponent(rawText)}`;
+        window.open(url, '_blank');
+      } else if (channel === 'sms') {
+        const url = firstPhone ? `sms:${firstPhone}?body=${encodeURIComponent(rawText)}` : `sms:?body=${encodeURIComponent(rawText)}`;
+        window.location.href = url;
+      } else if (channel === 'call') {
+        if (firstPhone) {
+          window.location.href = `tel:${firstPhone}`;
+        } else {
+          alert("Please add a tether contact phone number first.");
+        }
+      }
+    }
+
+    function copyTemplate(num) {
+      const textEl = document.getElementById(`msg-text-${num}`);
+      if (!textEl) return;
+      const rawText = textEl.innerText.replace(/^[“"]|[”"]$/g, '').trim();
+
+      navigator.clipboard.writeText(rawText).then(() => {
+        alert("Template copied to clipboard! You can paste it into any chat.");
+      }).catch(() => {
+        prompt("Copy text below:", rawText);
+      });
+    }
+  </script>
+</body>
+</html>
