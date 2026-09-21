@@ -24,9 +24,6 @@
       <div id="stepCounter" style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin: 0 auto;">
         Welcome
       </div>
-      <a href="/index.html" class="safe-space-badge" style="text-decoration: none;">
-        <span class="pulse-dot"></span> Skip
-      </a>
     </header>
 
     <!-- Progress Track Bar -->
@@ -45,23 +42,23 @@
         <p style="font-size: 0.92rem; color: var(--text-muted); font-weight: 600; margin-bottom: 24px;">The digital seatbelt for PMDD</p>
 
         <div class="card" style="margin-bottom: 26px; text-align: left; padding: 22px;">
-          <div style="width: 38px; height: 38px; border-radius: 50%; background: rgba(225, 190, 231, 0.3); display: flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+          <!--<div style="width: 38px; height: 38px; border-radius: 50%; background: rgba(225, 190, 231, 0.3); display: flex; align-items: center; justify-content: center; margin-bottom: 14px;">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2D1B4E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
             </svg>
-          </div>
+          </div>-->
           <p style="font-family: var(--font-serif); font-style: italic; font-size: 1.1rem; color: var(--primary); margin-bottom: 8px;">
             “When biology shifts, you deserve a plan.”
           </p>
-          <h2 style="font-size: 1.15rem; font-weight: 700; color: var(--text); margin-bottom: 8px;">A safety plan for your PMDD days.</h2>
+          <h2 style="font-size: 1.15rem; font-weight: 700; color: var(--text); margin-bottom: 8px;">Your luteal safety plan.</h2>
           <p style="font-size: 0.86rem; color: var(--text-muted); line-height: 1.45; margin-bottom: 18px;">
-            Prepare for difficult days with early warnings, personal grounding tools, sensory luteal lighting, and trusted support.
+            Built in the light, ready in the dark. LutealShield is a private, on-device toolkit for PMDD emotional safety, grounding, and connection.
           </p>
 
           <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-            <span class="safe-space-badge" style="background: rgba(74, 140, 110, 0.12); color: #4A8C6E; border-color: transparent;">🛡️ Zero Judgment</span>
-            <span class="safe-space-badge" style="background: rgba(196, 122, 58, 0.12); color: #C47A3A; border-color: transparent;">🌊 Low Friction</span>
-            <span class="safe-space-badge" style="background: rgba(142, 68, 173, 0.12); color: #8E44AD; border-color: transparent;">💜 Neuro-Gentle</span>
+            <span class="safe-space-badge" style="background: rgba(74, 140, 110, 0.12); color: #4A8C6E; border-color: transparent;">Encrypted</span>
+            <span class="safe-space-badge" style="background: rgba(196, 122, 58, 0.12); color: #C47A3A; border-color: transparent;">No Demand</span>
+            <span class="safe-space-badge" style="background: rgba(142, 68, 173, 0.12); color: #8E44AD; border-color: transparent;">Built for Low Bandwidth</span>
           </div>
         </div>
 
@@ -82,8 +79,7 @@
       <!-- STEP 1: USER TYPE -->
       <section id="screen-step1" style="display: none;">
         <div style="margin-bottom: 16px;">
-          <span class="safe-space-badge" style="margin-bottom: 8px;"><span class="pulse-dot"></span> Safe Space • Bloomy is listening</span>
-          <h1 class="page-title" style="margin-top: 6px;">What brings you to LutealShield?</h1>
+          <h1 class="page-title" style="margin-top: 6px;">Who are we building this shield for?</h1>
           <p class="page-subtitle">LutealShield supports planning, grounding, and connection. It does not provide medical diagnosis.</p>
         </div>
 
@@ -106,10 +102,10 @@
           </label>
           <!-- Option 3 -->
           <label class="card" style="display: flex; gap: 14px; align-items: flex-start; cursor: pointer; border-width: 1.5px;" id="lbl-type-3">
-            <input type="radio" name="user_type" value="I support someone with PMDD" style="accent-color: var(--primary); margin-top: 4px; width: 18px; height: 18px;" onchange="updateRadioStyles()" />
+            <input type="radio" name="user_type" value="I love someone with PMDD" style="accent-color: var(--primary); margin-top: 4px; width: 18px; height: 18px;" onchange="updateRadioStyles()" />
             <div>
-              <div style="font-weight: 700; font-size: 0.95rem; color: var(--text);">I support someone with PMDD</div>
-              <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 3px;">You want to understand their cycle and be a safe tether.</div>
+              <div style="font-weight: 700; font-size: 0.95rem; color: var(--text);">I love someone with PMDD</div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 3px;">You want to understand their cycle and be their safe space.</div>
             </div>
           </label>
           <!-- Option 4 -->
@@ -128,7 +124,6 @@
       <!-- STEP 2: CYCLE PATTERN -->
       <section id="screen-step2" style="display: none;">
         <div style="margin-bottom: 16px;">
-          <span class="safe-space-badge" style="margin-bottom: 8px;"><span class="pulse-dot"></span> Safe Space • Bloomy is listening</span>
           <h1 class="page-title" style="margin-top: 6px;">Map your rhythm for proactive safety</h1>
           <p class="page-subtitle">Predictions are calculated estimates and can be edited anytime. Your lived experience always takes priority.</p>
         </div>
@@ -203,8 +198,6 @@
       <section id="screen-step3" style="display: none;">
         <div style="margin-bottom: 16px;">
           <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-            <span class="safe-space-badge"><span class="pulse-dot"></span> Safe Space • Personalised Care</span>
-            <span style="font-size: 0.72rem; background: rgba(142, 68, 173, 0.15); color: #8E44AD; padding: 3px 8px; border-radius: 999px; font-weight: 600;">Non-diagnostic</span>
           </div>
           <h1 class="page-title" style="margin-top: 6px;">Which symptoms do you experience during your luteal phase?</h1>
           <p class="page-subtitle">Helps us personalise your safety plan and Bloomy's responses. Not diagnostic.</p>
@@ -212,29 +205,36 @@
 
         <!-- Emotional Group -->
         <div class="symptom-group-title">
-          <span>💖</span> EMOTIONAL
+          <span>🎭</span> EMOTIONAL
         </div>
         <div class="chips-wrap" id="chips-emotional"></div>
 
         <!-- Physical Group -->
         <div class="symptom-group-title">
-          <span>✨</span> PHYSICAL & SENSORY
+          <span>👤</span> PHYSICAL & SENSORY
         </div>
         <div class="chips-wrap" id="chips-physical"></div>
 
-        <!-- Behavioural Group -->
+        <!-- Cognitive Group -->
         <div class="symptom-group-title">
-          <span>💡</span> BEHAVIOURAL & EXECUTIVE
+          <span>🧠</span> COGNITIVE
         </div>
-        <div class="chips-wrap" id="chips-behavioural"></div>
+        <div class="chips-wrap" id="chips-cognitive"></div>
+
+        
+        <!-- Relational Group -->
+        <div class="symptom-group-title">
+          <span>👥</span> RELATIONAL
+        </div>
+        <div class="chips-wrap" id="chips-relational"></div>
 
         <!-- Zero Judgment Rule Card -->
         <div class="card" style="background: var(--input-bg); border-color: var(--border); margin: 20px 0 24px 0; display: flex; gap: 12px; align-items: flex-start;">
           <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--card); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-            🛡️
+            🫂
           </div>
           <div>
-            <div style="font-weight: 700; font-size: 0.88rem; color: var(--text);">Zero Judgment Rule</div>
+            <div style="font-weight: 700; font-size: 0.88rem; color: var(--text);">NO Judgment Zone</div>
             <p style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; margin-top: 3px;">
               These selections are private, encrypted on-device, and will never be shared or used for clinical diagnosis. They exist purely to shelter your nervous system.
             </p>
@@ -247,7 +247,6 @@
       <!-- STEP 4: TRUSTED CIRCLE -->
       <section id="screen-step4" style="display: none;">
         <div style="margin-bottom: 16px;">
-          <span class="safe-space-badge" style="margin-bottom: 8px;"><span class="pulse-dot"></span> Safe Space • Consent-First</span>
           <h1 class="page-title" style="margin-top: 6px;">Your Selected Support Network</h1>
           <p class="page-subtitle">Add up to three people who can hold space when symptoms peak. You don't have to navigate crashes alone.</p>
         </div>
@@ -306,7 +305,6 @@
       <!-- STEP 5: AFFIRMATIONS POCKET -->
       <section id="screen-step5" style="display: none;">
         <div style="margin-bottom: 16px;">
-          <span class="safe-space-badge" style="margin-bottom: 8px;"><span class="pulse-dot"></span> Safe Space • Affirmations Pocket</span>
           <h1 class="page-title" style="margin-top: 6px;">Your Affirmations Pocket</h1>
           <p class="page-subtitle">Pre-loaded grounding anchors and proof of your resilience. Add your first personal reminder below.</p>
         </div>
@@ -517,7 +515,8 @@
 
       renderCategoryChips('emotional', document.getElementById('chips-emotional'));
       renderCategoryChips('physical', document.getElementById('chips-physical'));
-      renderCategoryChips('behavioural', document.getElementById('chips-behavioural'));
+      renderCategoryChips('cognitive', document.getElementById('chips-cognitive'));
+      renderCategoryChips('relational', document.getElementById('chips-relational'));
     }
 
     function renderCategoryChips(cat, container) {
@@ -536,6 +535,7 @@
           const nowSel = selectedSymptoms.includes(sym);
           chip.className = `symptom-chip ${nowSel ? 'selected' : ''}`;
           chip.innerHTML = `${nowSel ? '✓ ' : '+ '}${sym}`;
+           checkSensitiveSymptoms(selectedSymptoms);
         };
         container.appendChild(chip);
       });
