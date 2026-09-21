@@ -1,0 +1,4 @@
+[build]
+  base = "pwa"
+  command = "npm run build"
+  publish = "pwa/dist"
