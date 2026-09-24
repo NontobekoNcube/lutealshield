@@ -1,12 +1,16 @@
+import random
 import os
+import time
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from dotenv import load_dotenv
-import google.generativeai as genai
+from google import genai
 
 load_dotenv()
+
+client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
 app = Flask(__name__)
 
@@ -19,10 +23,6 @@ limiter = Limiter(
     app=app,
     default_limits=["20 per minute"]
 )
-
-# Gemini setup
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-model = genai.GenerativeModel("gemini-1.5-flash")
 
 # Health check
 @app.route("/api/health", methods=["GET"])
@@ -63,12 +63,28 @@ Your role:
 - Keep responses under 100 words unless the user needs more
 
 User says: {user_message}"""
+    FALLBACK_RESPONSES = [
+        "You've survived every hard day before this one. Your 100% survival rate is still intact. The storm is hormonal, not factual — it will pass.",
+        "Right now your nervous system is in survival mode. That's not weakness, that's chemistry. Take one breath. You don't have to solve everything tonight.",
+        "The feelings are real but they are temporary. Your steady-self wrote you a message on a good day — it's waiting for you in your Pocket."
+    ]
 
-    try:
-        response = model.generate_content(system_prompt)
-        return jsonify({"response": response.text})
-    except Exception:
-        return jsonify({"error": "Bloomy is resting. Please try again shortly."}), 500
+    last_error = None
+    for attempt in range(3):
+        try:
+            chat = client.chats.create(model="gemini-3.6-flash")
+            response = chat.send_message(system_prompt)
+            return jsonify({"response": response.text})
+        except Exception as e:
+            last_error = e
+            print(f"Bloomy attempt {attempt + 1} failed: {e}")
+            if "503" in str(e) and attempt < 2:
+                time.sleep(10)
+                continue
+            break
+
+    return jsonify({"response": random.choice(FALLBACK_RESPONSES)})
+
 
 if __name__ == "__main__":
     app.run(debug=False)
