@@ -145,16 +145,15 @@
       const symptoms = JSON.parse(localStorage.getItem('lutealshield_symptoms') || '[]');
       const pocket = JSON.parse(localStorage.getItem('lutealshield_pocket') || '[]');
       const currentZone = localStorage.getItem('lutealshield_zone') || 'green';
-
-      try {
-        const response = await fetch('/api/bloomy', {
+        try {
+        const response = await fetch('https://lutealshield.onrender.com/api/bloomy', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             message: text,
-            user_symptoms: symptoms,
-            vault_entries: pocket,
-            current_zone: currentZone
+            symptoms: symptoms,
+            pocket: pocket,
+            zone: currentZone
           })
         });
 
@@ -164,7 +163,6 @@
         appendBloomyMessage(data.response || "I hear you softly, and I am right here with you.");
       } catch (err) {
         typingEl.remove();
-        // Fallback response matching prompt specifications
         appendBloomyMessage("Bloomy is resting 💜 Look through your Affirmations Pocket while you wait.");
       }
     }
