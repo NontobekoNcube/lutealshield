@@ -52,108 +52,151 @@ const PMDD_SYMPTOMS_CATALOG = {
   ]
 };
 
-// Initialize Storage with Realistic PMDD Defaults if clean
+const STORAGE_KEYS = {
+  zone: 'lutealshield_zone',
+  userType: 'lutealshield_user_type',
+  cycle: 'lutealshield_cycle',
+  symptoms: 'lutealshield_symptoms',
+  tether: 'lutealshield_tether',
+  pocket: 'lutealshield_pocket',
+  settings: 'lutealshield_settings',
+  onboarded: 'lutealshield_onboarded',
+  profileMeta: 'lutealshield_profile_meta',
+  onboardingProgress: 'lutealshield_onboarding_progress'
+};
+
+const APP_DEFAULT_SETTINGS = {
+  autoDarkMode: true,
+  amberGlow: true,
+  reduceMotion: false,
+  largerText: false,
+  quietMode: false,
+  lowFrictionLanguage: true,
+  biometricLock: false,
+  safeguard72h: true,
+  preferVoiceNotes: true
+};
+
+const STARTER_ANCHORS = [
+  { id: 'starter-rule', type: 'rule', title: 'The 72-Hour Luteal Rule', desc: 'Wait 72 hours before making an irreversible decision. The storm is temporary.', quote: 'Wait 72 hours before deciding.' },
+  { id: 'starter-proof', type: 'proof', title: 'Historic Survival Proof', desc: 'Every previous luteal crash ended. The calm returned each time.', quote: 'The calm has returned before.' },
+  { id: 'starter-anchor', type: 'anchor', title: 'Sensory Permission', desc: 'It is okay to dim the lights, reduce noise, cancel plans, and rest without guilt.', quote: 'Permission granted to rest.' }
+];
+
+const DEMO_PROFILE = {
+  userType: 'I have PMDD',
+  cycle: { periodStart: new Date(Date.now() - 12 * 86400000).toISOString().split('T')[0], cycleLength: 28, lutealLength: 14, syncHealth: false },
+  symptoms: ['Rage/Irritability', 'Anxiety', 'Depression', 'Light sensitivity', 'Sound sensitivity', 'Brain fog'],
+  tether: [
+    { id: 'demo-1', name: 'Zinhle', role: 'Best friend', phone: '+27825550192', method: 'call' },
+    { id: 'demo-2', name: 'Thando', role: 'Partner', phone: '+27834448219', method: 'whatsapp' },
+    { id: 'demo-3', name: 'Mama', role: 'Family', phone: '+27843337100', method: 'call' }
+  ],
+  pocket: STARTER_ANCHORS
+};
+
+function readText(key, fallback = '') {
+  const value = localStorage.getItem(key);
+  return value === null ? fallback : value;
+}
+
+function writeText(key, value) {
+  localStorage.setItem(key, String(value));
+}
+
+function readJSON(key, fallback) {
+  try {
+    const value = localStorage.getItem(key);
+    return value === null ? fallback : JSON.parse(value);
+  } catch (error) {
+    console.warn(`Ignoring invalid local data for ${key}`, error);
+    return fallback;
+  }
+}
+
+function writeJSON(key, value) {
+  localStorage.setItem(key, JSON.stringify(value));
+}
+
+function getUserType() { return readText(STORAGE_KEYS.userType); }
+function saveUserType(value) { writeText(STORAGE_KEYS.userType, value); }
+function getCycle() { return readJSON(STORAGE_KEYS.cycle, null); }
+function saveCycle(value) { writeJSON(STORAGE_KEYS.cycle, value); }
+function getSymptoms() { return readJSON(STORAGE_KEYS.symptoms, []); }
+function saveSymptoms(value) { writeJSON(STORAGE_KEYS.symptoms, value); }
+function getTether() { return readJSON(STORAGE_KEYS.tether, []); }
+function saveTether(value) { writeJSON(STORAGE_KEYS.tether, value); }
+function getPocket() { return readJSON(STORAGE_KEYS.pocket, []); }
+function savePocket(value) { writeJSON(STORAGE_KEYS.pocket, value); }
+function getSettings() { return readJSON(STORAGE_KEYS.settings, { ...APP_DEFAULT_SETTINGS }); }
+function saveSettings(value) { writeJSON(STORAGE_KEYS.settings, value); }
+function getProfileMeta() { return readJSON(STORAGE_KEYS.profileMeta, null); }
+function saveProfileMeta(value) { writeJSON(STORAGE_KEYS.profileMeta, value); }
+function getOnboardingProgress() { return readJSON(STORAGE_KEYS.onboardingProgress, null); }
+function saveOnboardingProgress(value) { writeJSON(STORAGE_KEYS.onboardingProgress, value); }
+function clearOnboardingProgress() { localStorage.removeItem(STORAGE_KEYS.onboardingProgress); }
+
+function isValidStoredCycle(cycle) {
+  if (!cycle || !/^\d{4}-\d{2}-\d{2}$/.test(cycle.periodStart || '')) return false;
+  const start = new Date(`${cycle.periodStart}T00:00:00`);
+  const today = new Date();
+  today.setHours(23, 59, 59, 999);
+  return !Number.isNaN(start.getTime()) && start <= today
+    && Number.isInteger(cycle.cycleLength) && cycle.cycleLength >= 21 && cycle.cycleLength <= 40
+    && Number.isInteger(cycle.lutealLength) && cycle.lutealLength >= 10 && cycle.lutealLength <= 18
+    && cycle.lutealLength < cycle.cycleLength;
+}
+
+function hasCompletedUserProfile() {
+  const meta = getProfileMeta();
+  const symptoms = getSymptoms();
+  const tether = getTether();
+  const pocket = getPocket();
+  return readText(STORAGE_KEYS.onboarded) === 'true'
+    && meta?.source === 'user'
+    && Boolean(getUserType())
+    && isValidStoredCycle(getCycle())
+    && Array.isArray(symptoms) && symptoms.length > 0
+    && Array.isArray(tether)
+    && Array.isArray(pocket);
+}
+
+function completeOnboarding() {
+  saveProfileMeta({ version: 1, source: 'user', completedAt: new Date().toISOString() });
+  writeText(STORAGE_KEYS.onboarded, 'true');
+}
+
+function seedDemoData() {
+  saveUserType(DEMO_PROFILE.userType);
+  saveCycle(DEMO_PROFILE.cycle);
+  saveSymptoms(DEMO_PROFILE.symptoms);
+  saveTether(DEMO_PROFILE.tether);
+  savePocket(DEMO_PROFILE.pocket);
+  saveProfileMeta({ version: 1, source: 'demo', completedAt: new Date().toISOString() });
+  writeText(STORAGE_KEYS.onboarded, 'true');
+}
+
+function resetDemoData() {
+  if (getProfileMeta()?.source !== 'demo') return false;
+  Object.values(STORAGE_KEYS).forEach(key => localStorage.removeItem(key));
+  initStorageDefaults();
+  return true;
+}
+
+// Personal profile data is created only by onboarding or explicit demo seeding.
 function initStorageDefaults() {
-  if (!localStorage.getItem('lutealshield_zone')) {
-    localStorage.setItem('lutealshield_zone', 'green');
-  }
-  if (!localStorage.getItem('lutealshield_user_type')) {
-    localStorage.setItem('lutealshield_user_type', 'I have PMDD');
-  }
-  if (!localStorage.getItem('lutealshield_cycle')) {
-    localStorage.setItem('lutealshield_cycle', JSON.stringify({
-      periodStart: new Date(Date.now() - 12 * 86400000).toISOString().split('T')[0],
-      cycleLength: 28,
-      lutealLength: 14,
-      syncHealth: false
-    }));
-  }
-  if (!localStorage.getItem('lutealshield_symptoms')) {
-    localStorage.setItem('lutealshield_symptoms', JSON.stringify([
-      "Rage/Irritability",
-      "Anxiety",
-      "Depression",
-      "Light sensitivity",
-      "Sound sensitivity",
-      "Brain fog",
-      "Social withdrawal",
-      "Sleep disturbance"
-    ]));
-  }
-  if (!localStorage.getItem('lutealshield_tether')) {
-    localStorage.setItem('lutealshield_tether', JSON.stringify([
-      { id: '1', name: 'Zinhle', role: 'Best friend', phone: '+27825550192', method: 'call' },
-      { id: '2', name: 'Thando', role: 'Partner', phone: '+27834448219', method: 'whatsapp' },
-      { id: '3', name: 'Mama', role: 'Family', phone: '+27843337100', method: 'call' }
-    ]));
-  }
-  if (!localStorage.getItem('lutealshield_pocket')) {
-    localStorage.setItem('lutealshield_pocket', JSON.stringify([
-      {
-        id: '1',
-        type: 'voice_note',
-        title: "Mom's Voice Note",
-        desc: "You are loved, you are safe, this feeling will pass as your hormones reset.",
-        quote: "Mom's Voice Note • 0:42",
-        duration: "0:42"
-      },
-      {
-        id: '2',
-        type: 'rule',
-        title: "The 72-Hour Luteal Rule",
-        desc: "Your steady-self made a covenant: 'Wait 72 hours before quitting your job, breaking up, or confronting someone. The storm is chemical, not factual.'",
-        quote: "Wait 72 hours before quitting. The storm is chemical, not factual."
-      },
-      {
-        id: '3',
-        type: 'proof',
-        title: "Graduation Proof: 100% Historic Survival Rate",
-        desc: "You have weathered every single luteal crash before this one. 100% survival record.",
-        quote: "100% historic cycle survival rate."
-      },
-      {
-        id: '4',
-        type: 'memory',
-        title: "Porch Sunlight After Bleeding",
-        desc: "Sitting on the porch with warm tea last month when bleeding arrived. The calm returned within 2 hours.",
-        quote: "The calm returned within 2 hours."
-      },
-      {
-        id: '5',
-        type: 'anchor',
-        title: "Sensory Permission",
-        desc: "It is okay to put on noise-cancelling headphones, dim every light, and cancel plans without guilt.",
-        quote: "Permission granted to rest."
-      },
-      {
-        id: '6',
-        type: 'affirmation',
-        title: "Steady Baseline Covenant",
-        desc: "My worth does not decrease when my progesterone drops. I am simply navigating biological turbulence.",
-        quote: "Biological turbulence is temporary."
-      }
-    ]));
-  }
-  if (!localStorage.getItem('lutealshield_settings')) {
-    localStorage.setItem('lutealshield_settings', JSON.stringify({
-      autoDarkMode: true,
-      amberGlow: true,
-      reduceMotion: false,
-      largerText: false,
-      quietMode: false,
-      lowFrictionLanguage: true,
-      biometricLock: false,
-      safeguard72h: true,
-      preferVoiceNotes: true
-    }));
-  }
+  if (!localStorage.getItem(STORAGE_KEYS.zone)) writeText(STORAGE_KEYS.zone, 'green');
+  if (!localStorage.getItem(STORAGE_KEYS.settings)) saveSettings({ ...APP_DEFAULT_SETTINGS });
+  if (!localStorage.getItem(STORAGE_KEYS.symptoms)) saveSymptoms([]);
+  if (!localStorage.getItem(STORAGE_KEYS.tether)) saveTether([]);
+  if (!localStorage.getItem(STORAGE_KEYS.pocket)) savePocket([]);
 }
 
 // Global Zone Initialization - runs on every page load
 function initZone() {
   initStorageDefaults();
   const zone = localStorage.getItem('lutealshield_zone') || 'green';
-  const settings = JSON.parse(localStorage.getItem('lutealshield_settings') || '{}');
+  const settings = getSettings();
 
   document.documentElement.setAttribute('data-zone', zone);
 
@@ -212,7 +255,7 @@ function setZone(newZone) {
 
 // Cycle calculation helper
 function getCycleData() {
-  const cycle = JSON.parse(localStorage.getItem('lutealshield_cycle') || '{"cycleLength": 28, "lutealLength": 14}');
+  const cycle = getCycle() || { cycleLength: 28, lutealLength: 14 };
   const periodStart = new Date(cycle.periodStart || Date.now() - 12 * 86400000);
   const now = new Date();
   const diffDays = Math.floor((now - periodStart) / (1000 * 60 * 60 * 24)) % (cycle.cycleLength || 28);

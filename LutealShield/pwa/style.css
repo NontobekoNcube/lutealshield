@@ -857,6 +857,37 @@ body {
   box-shadow: 0 0 0 3px rgba(45, 27, 78, 0.1);
 }
 
+.form-input.is-invalid, .form-textarea.is-invalid, .form-select.is-invalid {
+  border-color: #8B2A2A !important;
+  box-shadow: 0 0 0 3px rgba(139, 42, 42, 0.1);
+}
+
+.form-error, .step-error {
+  color: #8B2A2A;
+  font-size: 0.76rem;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.step-error {
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: 10px;
+  background: rgba(139, 42, 42, 0.1);
+  margin-bottom: 10px;
+}
+
+.dev-reset-button {
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.72rem;
+  text-decoration: underline;
+  margin-bottom: 12px;
+}
+
 .btn-primary {
   width: 100%;
   padding: 14px 20px;

@@ -56,7 +56,7 @@
           </p>
 
           <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-            <span class="safe-space-badge" style="background: rgba(74, 140, 110, 0.12); color: #4A8C6E; border-color: transparent;">Encrypted</span>
+            <span class="safe-space-badge" style="background: rgba(74, 140, 110, 0.12); color: #4A8C6E; border-color: transparent;">On-device</span>
             <span class="safe-space-badge" style="background: rgba(196, 122, 58, 0.12); color: #C47A3A; border-color: transparent;">No Demand</span>
             <span class="safe-space-badge" style="background: rgba(142, 68, 173, 0.12); color: #8E44AD; border-color: transparent;">Built for Low Bandwidth</span>
           </div>
@@ -66,13 +66,16 @@
           Get started <span style="font-size: 1.1rem;">→</span>
         </button>
 
-        <button class="btn-secondary" onclick="quickDemoStart()" style="margin-bottom: 18px;">
+        <button class="btn-secondary" onclick="continueExistingProfile()" style="margin-bottom: 10px;">
           I already have an account
         </button>
 
+        <p id="existingProfileMessage" class="step-error" role="alert" aria-live="polite" hidden></p>
+        <button id="resetDemoBtn" class="dev-reset-button" onclick="handleResetDemoData()" hidden>Reset demo data</button>
+
         <p style="font-size: 0.74rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px; justify-content: center;">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-          Your most sensitive health and vault information stays encrypted on your device.
+          Your sensitive health and pocket information stays on this device.
         </p>
       </section>
 
@@ -86,7 +89,7 @@
         <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px;">
           <!-- Option 1 -->
           <label class="card" style="display: flex; gap: 14px; align-items: flex-start; cursor: pointer; border-width: 1.5px;" id="lbl-type-1">
-            <input type="radio" name="user_type" value="I have PMDD" checked style="accent-color: var(--primary); margin-top: 4px; width: 18px; height: 18px;" onchange="updateRadioStyles()" />
+            <input type="radio" name="user_type" value="I have PMDD" style="accent-color: var(--primary); margin-top: 4px; width: 18px; height: 18px;" onchange="updateRadioStyles()" />
             <div>
               <div style="font-weight: 700; font-size: 0.95rem; color: var(--text);">I have PMDD</div>
               <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 3px;">You have a diagnosis and want a proactive emotional seatbelt.</div>
@@ -118,6 +121,7 @@
           </label>
         </div>
 
+        <p id="step1Error" class="step-error" role="alert" aria-live="polite" hidden></p>
         <button class="btn-primary" onclick="saveStep1()">Continue →</button>
       </section>
 
@@ -135,6 +139,7 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
             <input type="date" id="periodStartDate" class="form-input" style="border: none; padding: 0; background: transparent; font-weight: 600;" />
           </div>
+          <p id="periodStartError" class="form-error" role="alert" hidden></p>
         </div>
 
         <!-- Average Cycle Length -->
@@ -161,10 +166,10 @@
         <div class="card" style="margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
           <div style="padding-right: 12px;">
             <div style="font-weight: 700; font-size: 0.88rem;">Sync Google Health Connect</div>
-            <div style="font-size: 0.74rem; color: var(--text-muted);">Optional: automatically pull logged cycle dates locally.</div>
+            <div style="font-size: 0.74rem; color: var(--text-muted);">Not available yet. Cycle details stay on this device.</div>
           </div>
           <label class="toggle-switch">
-            <input type="checkbox" id="syncHealthToggle" />
+            <input type="checkbox" id="syncHealthToggle" disabled />
             <span class="toggle-slider"></span>
           </label>
         </div>
@@ -191,6 +196,7 @@
           </div>
         </div>
 
+        <p id="step2Error" class="step-error" role="alert" aria-live="polite" hidden></p>
         <button class="btn-primary" onclick="saveStep2()">Continue to Symptoms →</button>
       </section>
 
@@ -241,6 +247,7 @@
           </div>
         </div>
 
+        <p id="step3Error" class="step-error" role="alert" aria-live="polite" hidden></p>
         <button class="btn-primary" onclick="saveStep3()">Continue to Trusted Circle →</button>
       </section>
 
@@ -299,6 +306,7 @@
           </p>
         </div>
 
+        <p id="step4Error" class="step-error" role="alert" aria-live="polite" hidden></p>
         <button class="btn-primary" onclick="saveStep4()">Save Trusted Circle & Continue →</button>
       </section>
 
@@ -306,11 +314,11 @@
       <section id="screen-step5" style="display: none;">
         <div style="margin-bottom: 16px;">
           <h1 class="page-title" style="margin-top: 6px;">Your Affirmations Pocket</h1>
-          <p class="page-subtitle">Pre-loaded grounding anchors and proof of your resilience. Add your first personal reminder below.</p>
+          <p class="page-subtitle">Starter grounding anchors and proof of resilience. Add your first personal reminder below.</p>
         </div>
 
         <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-muted); margin-bottom: 10px;">
-          PRE-LOADED ANCHORS (SAVED IN POCKET)
+          STARTER ANCHORS (ADDED WHEN SETUP IS COMPLETE)
         </div>
 
         <div id="sampleAnchorsList" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;"></div>
@@ -342,6 +350,7 @@
           </div>
         </div>
 
+        <p id="step5Error" class="step-error" role="alert" aria-live="polite" hidden></p>
         <button class="btn-primary" onclick="finishOnboarding()">Complete Setup & Enter LutealShield →</button>
       </section>
 
@@ -349,7 +358,7 @@
   </div>
 
   <script src="/app.js"></script>
-  <script>
+  <script type="application/x-lutealshield-legacy">
     let currentStep = 0;
     const totalSteps = 5;
     let selectedSymptoms = [];
@@ -682,5 +691,42 @@
       window.location.href = '/index.html';
     }
   </script>
+
+  <div id="contactModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle" onclick="handleContactModalBackdrop(event)">
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h2 id="contactModalTitle" style="font-size: 1.1rem;">Add a safe tether person</h2>
+        <button class="icon-btn" type="button" onclick="closeContactModal()" aria-label="Close contact form">✕</button>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="contactName">Name</label>
+        <input id="contactName" class="form-input" type="text" maxlength="80" autocomplete="name" />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="contactRole">Relationship</label>
+        <input id="contactRole" class="form-input" type="text" maxlength="80" placeholder="Friend, partner, sibling..." />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="contactPhone">Phone number</label>
+        <input id="contactPhone" class="form-input" type="tel" maxlength="24" autocomplete="tel" placeholder="+27 82 123 4567" />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="contactMethod">Preferred contact method</label>
+        <select id="contactMethod" class="form-select">
+          <option value="call">Phone call</option>
+          <option value="whatsapp">WhatsApp</option>
+          <option value="sms">SMS</option>
+        </select>
+      </div>
+      <p id="contactFormError" class="step-error" role="alert" aria-live="polite" hidden></p>
+      <div style="display: flex; gap: 10px;">
+        <button class="btn-secondary" type="button" onclick="closeContactModal()">Cancel</button>
+        <button class="btn-primary" type="button" onclick="saveNewContact()">Add Contact</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/onboarding.js"></script>
 </body>
 </html>
