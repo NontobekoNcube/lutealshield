@@ -1042,7 +1042,9 @@ body {
   display: flex;
   flex-direction: column;
   height: calc(100vh - 150px);
-  justify-content: space-between;
+  justify-content: flex-start;
+  padding: 0 16px;
+  overflow-y: auto;
 }
 
 .chat-messages {
@@ -1052,6 +1054,28 @@ body {
   display: flex;
   flex-direction: column;
   gap: 14px;
+}
+
+.chat-suggestions-scroll {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px 0;
+  flex-shrink: 0;
+  background: var(--bg);
+  position: relative;
+  z-index: 5;
+}
+
+.chat-suggestion-chip {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 0.78rem;
+  color: var(--text);
+  cursor: pointer;
+  white-space: nowrap;
 }
 
 .message {
