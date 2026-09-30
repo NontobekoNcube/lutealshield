@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>CleverSpender — Onboarding</title>
+  <meta name="description" content="Small nudges. Big change. Set up your mindful spending preferences.">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#006437">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="icon-192.png">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .onboarding-screen {
+      display: none;
+      flex-direction: column;
+      flex: 1;
+      width: 100%;
+      min-height: 100vh;
+      min-height: 100dvh;
+      padding: 1.5rem 1.25rem 2rem 1.25rem;
+      position: relative;
+    }
+    .onboarding-screen.active {
+      display: flex;
+    }
+    .welcome-bg {
+      background: linear-gradient(160deg, #004a27 0%, var(--om-green) 50%, #002212 100%);
+      color: var(--white);
+      justify-content: space-between;
+      align-items: center;
+      text-align: center;
+      overflow: hidden;
+    }
+    .ripple-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px dashed rgba(68, 254, 142, 0.25);
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+
+    <!-- STEP 1: Welcome Screen -->
+    <div id="step-1" class="onboarding-screen welcome-bg active">
+      <!-- Ambient ripple circles -->
+      <div class="ripple-ring" style="width: 280px; height: 280px; top: 18%; left: 50%; transform: translateX(-50%);"></div>
+      <div class="ripple-ring" style="width: 420px; height: 420px; top: 8%; left: 50%; transform: translateX(-50%);"></div>
+
+      <!-- Top status -->
+      <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; z-index: 10;">
+        <span class="badge" style="background: rgba(0, 34, 18, 0.4); color: var(--minty); backdrop-filter: blur(8px);">
+          <span class="pulse-dot"></span> Ready to grow
+        </span>
+        <span class="badge" style="background: rgba(255, 255, 255, 0.15); color: var(--white);">
+          Step 1 of 3
+        </span>
+      </div>
+
+      <!-- Center Logo & Branding -->
+      <div style="display: flex; flex-direction: column; align-items: center; z-index: 10; margin: auto 0;">
+        <div style="position: relative; margin-bottom: 1.5rem;">
+          <div style="width: 108px; height: 108px; border-radius: 28px; background: var(--white); padding: 10px; box-shadow: 0 16px 36px rgba(0, 34, 18, 0.4); display: flex; align-items: center; justify-content: center;">
+            <img src="icon-192.png" alt="CleverSpender logo" style="width: 100%; height: 100%; object-fit: contain; border-radius: 20px;">
+          </div>
+          <span class="badge" style="position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%); background: var(--minty); color: var(--midnight); box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
+            <span class="material-symbols-outlined" style="font-size: 14px; font-variation-settings: 'FILL' 1;">check_circle</span> Active
+          </span>
+        </div>
+
+        <h1 style="font-size: 32px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.4rem; color: var(--white);">
+          CleverSpender
+        </h1>
+
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 0.8rem;">
+          <span style="font-size: 18px; font-weight: 700; color: var(--minty);">Small nudges.</span>
+          <span style="color: var(--pistachio);">•</span>
+          <span style="font-size: 18px; font-weight: 700; color: var(--acid-yellow);">Big change.</span>
+        </div>
+
+        <p style="font-size: 14px; color: #a1d9bd; max-width: 290px; line-height: 1.5; margin-bottom: 1.8rem;">
+          Your personalised spending companion designed to nurture mindful wealth without friction.
+        </p>
+
+        <div style="background: rgba(255, 255, 255, 0.12); backdrop-filter: blur(10px); padding: 10px 18px; border-radius: 1rem; display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--white);">
+          <span>🌱</span> Micro-habits built for calm finances
+        </div>
+      </div>
+
+      <!-- Bottom CTAs -->
+      <div style="width: 100%; display: flex; flex-direction: column; gap: 0.8rem; z-index: 10;">
+        <button id="welcome-get-started" class="btn" style="background-color: var(--white); color: var(--midnight); font-size: 16px;">
+          <span>Let's get started</span>
+          <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+
+        <div style="display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 11px; color: rgba(255, 255, 255, 0.75);">
+          <span class="material-symbols-outlined" style="font-size: 14px; color: var(--minty); font-variation-settings: 'FILL' 1;">verified_user</span>
+          <span>Inspired by OM Bank mindful financial wellness</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2: Why Chips (Multi-select) -->
+    <div id="step-2" class="onboarding-screen" style="background-color: var(--bg);">
+      <!-- Header -->
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+        <button id="step2-back-btn" style="background: none; border: none; cursor: pointer; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--midnight);">
+          <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+        <span class="badge badge-om">Step 2 of 3</span>
+        <div style="width: 36px;"></div>
+      </div>
+
+      <!-- Encouragement Banner -->
+      <div class="card" style="background: rgba(255, 255, 255, 0.7); display: flex; align-items: flex-start; gap: 12px; margin-bottom: 1.25rem;">
+        <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--minty); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+          <span class="material-symbols-outlined" style="color: var(--midnight); font-size: 20px;">psychology</span>
+        </div>
+        <div>
+          <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--om-green); letter-spacing: 0.05em;">Personalizing Your Journey</span>
+          <p style="font-size: 12px; color: rgba(0, 34, 18, 0.7); margin-top: 2px;">
+            We tailor your daily mindful nudges around these answers. You can change them anytime!
+          </p>
+        </div>
+      </div>
+
+      <!-- Title & Subtitle -->
+      <div style="margin-bottom: 1.25rem;">
+        <h2 style="font-size: 24px; font-weight: 800; color: var(--midnight); line-height: 1.25;">
+          Why do you want to spend smarter?
+        </h2>
+        <p style="font-size: 13px; color: rgba(0, 34, 18, 0.65); margin-top: 4px; display: flex; align-items: center; gap: 6px;">
+          <span class="pulse-dot"></span> Choose all that apply to your journey
+        </p>
+      </div>
+
+      <!-- Selectable Option Cards (Multi-Select, No text input) -->
+      <div id="why-options-list" style="display: flex; flex-direction: column; gap: 0.75rem; flex: 1;">
+        <!-- Option 1 -->
+        <div class="card why-card" data-val="Save more" style="cursor: pointer; display: flex; align-items: center; justify-content: space-between; padding: 1rem; border: 2px solid transparent; transition: all 0.2s ease;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="width: 44px; height: 44px; border-radius: 12px; background: #FFF4E5; display: flex; align-items: center; justify-content: center; font-size: 22px;">
+              💰
+            </div>
+            <div>
+              <div style="font-size: 15px; font-weight: 700; color: var(--midnight);">Save more</div>
+              <div style="font-size: 12px; color: rgba(0, 34, 18, 0.6);">Build your emergency safety cushion</div>
+            </div>
+          </div>
+          <div class="why-checkbox" style="width: 26px; height: 26px; border-radius: 50%; border: 2px solid rgba(0, 34, 18, 0.2); display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;">
+            <span class="material-symbols-outlined" style="font-size: 18px; color: var(--white); display: none;">check</span>
+          </div>
+        </div>
+
+        <!-- Option 2 -->
+        <div class="card why-card" data-val="Reach a goal" style="cursor: pointer; display: flex; align-items: center; justify-content: space-between; padding: 1rem; border: 2px solid transparent; transition: all 0.2s ease;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="width: 44px; height: 44px; border-radius: 12px; background: #E8F4FD; display: flex; align-items: center; justify-content: center; font-size: 22px;">
+              🎯
+            </div>
+            <div>
+              <div style="font-size: 15px; font-weight: 700; color: var(--midnight);">Reach a goal</div>
+              <div style="font-size: 12px; color: rgba(0, 34, 18, 0.6);">Vacation, dream purchase, or home</div>
+            </div>
+          </div>
+          <div class="why-checkbox" style="width: 26px; height: 26px; border-radius: 50%; border: 2px solid rgba(0, 34, 18, 0.2); display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;">
+            <span class="material-symbols-outlined" style="font-size: 18px; color: var(--white); display: none;">check</span>
+          </div>
+        </div>
+
+        <!-- Option 3 -->
+        <div class="card why-card" data-val="Stop impulse buying" style="cursor: pointer; display: flex; align-items: center; justify-content: space-between; padding: 1rem; border: 2px solid transparent; transition: all 0.2s ease;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="width: 44px; height: 44px; border-radius: 12px; background: #FDE8E8; display: flex; align-items: center; justify-content: center; font-size: 22px;">
+              🛑
+            </div>
+            <div>
+              <div style="font-size: 15px; font-weight: 700; color: var(--midnight);">Stop impulse buying</div>
+              <div style="font-size: 12px; color: rgba(0, 34, 18, 0.6);">Pause before checkout on late-night splurges</div>
+            </div>
+          </div>
+          <div class="why-checkbox" style="width: 26px; height: 26px; border-radius: 50%; border: 2px solid rgba(0, 34, 18, 0.2); display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;">
+            <span class="material-symbols-outlined" style="font-size: 18px; color: var(--white); display: none;">check</span>
+          </div>
+        </div>
+
+        <!-- Option 4 -->
+        <div class="card why-card" data-val="Build better habits" style="cursor: pointer; display: flex; align-items: center; justify-content: space-between; padding: 1rem; border: 2px solid transparent; transition: all 0.2s ease;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="width: 44px; height: 44px; border-radius: 12px; background: #E8FDEE; display: flex; align-items: center; justify-content: center; font-size: 22px;">
+              🌱
+            </div>
+            <div>
+              <div style="font-size: 15px; font-weight: 700; color: var(--midnight);">Build better habits</div>
+              <div style="font-size: 12px; color: rgba(0, 34, 18, 0.6);">Master intentional micro-actions daily</div>
+            </div>
+          </div>
+          <div class="why-checkbox" style="width: 26px; height: 26px; border-radius: 50%; border: 2px solid rgba(0, 34, 18, 0.2); display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;">
+            <span class="material-symbols-outlined" style="font-size: 18px; color: var(--white); display: none;">check</span>
+          </div>
+        </div>
+
+        <!-- Option 5 -->
+        <div class="card why-card" data-val="Pay off debt" style="cursor: pointer; display: flex; align-items: center; justify-content: space-between; padding: 1rem; border: 2px solid transparent; transition: all 0.2s ease;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="width: 44px; height: 44px; border-radius: 12px; background: #F3E8FD; display: flex; align-items: center; justify-content: center; font-size: 22px;">
+              💳
+            </div>
+            <div>
+              <div style="font-size: 15px; font-weight: 700; color: var(--midnight);">Pay off debt</div>
+              <div style="font-size: 12px; color: rgba(0, 34, 18, 0.6);">Free up monthly income with confidence</div>
+            </div>
+          </div>
+          <div class="why-checkbox" style="width: 26px; height: 26px; border-radius: 50%; border: 2px solid rgba(0, 34, 18, 0.2); display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;">
+            <span class="material-symbols-outlined" style="font-size: 18px; color: var(--white); display: none;">check</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Human reassurance quote card -->
+      <div class="card" style="background: rgba(255, 255, 255, 0.85); display: flex; align-items: center; gap: 10px; padding: 0.85rem 1rem; margin-top: 1rem;">
+        <span class="material-symbols-outlined" style="color: var(--om-green); font-variation-settings: 'FILL' 1;">favorite</span>
+        <p style="font-size: 12px; color: rgba(0, 34, 18, 0.75); line-height: 1.4;">
+          <strong>No judgment here.</strong> Small, consistent shifts create life-changing momentum over time.
+        </p>
+      </div>
+
+      <!-- Sticky Bottom Action -->
+      <div style="margin-top: 1.25rem;">
+        <button id="step2-continue-btn" class="btn btn-primary" style="display: flex; justify-content: space-between;">
+          <span class="badge" id="selected-count-badge" style="background: var(--minty); color: var(--midnight);">0 selected</span>
+          <span>Continue to Next Step</span>
+          <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 3: Setup Method Selection (Manual vs Statement) -->
+    <div id="step-3" class="onboarding-screen" style="background-color: var(--bg);">
+      <!-- Header -->
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+        <button id="step3-back-btn" style="background: none; border: none; cursor: pointer; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--midnight);">
+          <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+        <span class="badge badge-om">Step 3 of 3</span>
+        <div style="width: 36px;"></div>
+      </div>
+
+      <div style="margin-bottom: 1.25rem;">
+        <h2 style="font-size: 24px; font-weight: 800; color: var(--midnight); line-height: 1.25;">
+          How would you like to set up your nudges?
+        </h2>
+        <p style="font-size: 13px; color: rgba(0, 34, 18, 0.65); margin-top: 4px;">
+          Choose the approach that fits your comfort level. You can always change this later.
+        </p>
+      </div>
+
+      <!-- 2 Method Selection Cards -->
+      <div style="display: flex; flex-direction: column; gap: 1rem; flex: 1;">
+        <!-- Card 1: Manual -->
+        <div id="method-manual-card" class="card method-card" data-method="manual" style="cursor: pointer; border: 2px solid var(--om-green); background: linear-gradient(135deg, #ffffff, #eaf6ef); transition: all 0.2s ease;">
+          <div style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 0.75rem;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <div style="width: 44px; height: 44px; border-radius: 12px; background: var(--minty); display: flex; align-items: center; justify-content: center; color: var(--midnight);">
+                <span class="material-symbols-outlined" style="font-size: 24px;">edit_note</span>
+              </div>
+              <div>
+                <div style="display: flex; gap: 6px; margin-bottom: 2px;">
+                  <span class="badge badge-pistachio">Manual Setup</span>
+                  <span class="badge badge-muted">⚡ 2 min</span>
+                </div>
+                <h3 style="font-size: 16px; font-weight: 700; color: var(--midnight);">Tell me what to nudge me about</h3>
+              </div>
+            </div>
+            <div class="method-radio" style="width: 24px; height: 24px; border-radius: 50%; background: var(--om-green); color: var(--white); display: flex; align-items: center; justify-content: center;">
+              <span class="material-symbols-outlined" style="font-size: 16px;">check</span>
+            </div>
+          </div>
+          <p style="font-size: 13px; color: rgba(0, 34, 18, 0.7); line-height: 1.4; margin-bottom: 0.85rem;">
+            Pick your trigger moments, custom spending categories, and daily check-in times directly.
+          </p>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap; font-size: 11px; font-weight: 600; color: var(--om-green);">
+            <span style="display: flex; align-items: center; gap: 2px;"><span class="material-symbols-outlined" style="font-size: 14px;">check</span> Takes 2 mins</span>
+            <span style="display: flex; align-items: center; gap: 2px;"><span class="material-symbols-outlined" style="font-size: 14px;">lock</span> 100% Private</span>
+            <span style="display: flex; align-items: center; gap: 2px;"><span class="material-symbols-outlined" style="font-size: 14px;">tune</span> Full manual control</span>
+          </div>
+        </div>
+
+        <!-- Card 2: Statement -->
+        <div id="method-statement-card" class="card method-card" data-method="statement" style="cursor: pointer; border: 2px solid transparent; background: var(--white); transition: all 0.2s ease;">
+          <div style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 0.75rem;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(0, 34, 18, 0.08); display: flex; align-items: center; justify-content: center; color: var(--midnight);">
+                <span class="material-symbols-outlined" style="font-size: 24px;">insights</span>
+              </div>
+              <div>
+                <div style="display: flex; gap: 6px; margin-bottom: 2px;">
+                  <span class="badge badge-muted">Upload CSV</span>
+                  <span class="badge" style="background: rgba(30, 233, 124, 0.25); color: var(--om-green);">Deep Analysis</span>
+                </div>
+                <h3 style="font-size: 16px; font-weight: 700; color: var(--midnight);">Analyse my bank statement</h3>
+              </div>
+            </div>
+            <div class="method-radio" style="width: 24px; height: 24px; border-radius: 50%; border: 2px solid rgba(0, 34, 18, 0.2); display: flex; align-items: center; justify-content: center;">
+              <span class="material-symbols-outlined" style="font-size: 16px; display: none;">check</span>
+            </div>
+          </div>
+          <p style="font-size: 13px; color: rgba(0, 34, 18, 0.7); line-height: 1.4; margin-bottom: 0.85rem;">
+            Import your recent transactions statement to spot recurring leaks and smart savings pockets instantly.
+          </p>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap; font-size: 11px; font-weight: 600; color: rgba(0, 34, 18, 0.7);">
+            <span style="display: flex; align-items: center; gap: 2px;"><span class="material-symbols-outlined" style="font-size: 14px;">auto_fix_high</span> Detects subscriptions</span>
+            <span style="display: flex; align-items: center; gap: 2px;"><span class="material-symbols-outlined" style="font-size: 14px;">bolt</span> Instant tailored insights</span>
+          </div>
+        </div>
+
+        <!-- Quick recommendation card -->
+        <div class="card" style="background: rgba(255, 255, 255, 0.7); display: flex; gap: 10px; align-items: flex-start; padding: 0.85rem 1rem;">
+          <span class="material-symbols-outlined" style="color: var(--om-green); font-size: 20px;">lightbulb</span>
+          <p style="font-size: 12px; color: rgba(0, 34, 18, 0.8); line-height: 1.45;">
+            <strong>Quick recommendation:</strong> New to nudge budgeting? Start with <strong>Manual Setup</strong>. You can connect accounts or upload statements whenever you're ready!
+          </p>
+        </div>
+      </div>
+
+      <!-- Trust note -->
+      <div style="display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 11px; color: rgba(0, 34, 18, 0.6); margin: 0.8rem 0;">
+        <span class="material-symbols-outlined" style="font-size: 14px; color: var(--om-green);">shield</span>
+        <span>Bank-grade encryption. Your financial data is never sold or shared.</span>
+      </div>
+
+      <!-- Final Submit CTA -->
+      <div>
+        <button id="finish-onboarding-btn" class="btn btn-primary">
+          <span id="finish-btn-text">Continue with Manual Setup</span>
+          <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    // 3-step state management
+    let selectedWhy = ['Save more', 'Reach a goal', 'Build better habits'];
+    let selectedMethod = 'manual';
+
+    const step1 = document.getElementById('step-1');
+    const step2 = document.getElementById('step-2');
+    const step3 = document.getElementById('step-3');
+
+    // Step 1 -> Step 2
+    document.getElementById('welcome-get-started').addEventListener('click', () => {
+      step1.classList.remove('active');
+      step2.classList.add('active');
+      updateWhyUI();
+    });
+
+    // Step 2 Back -> Step 1
+    document.getElementById('step2-back-btn').addEventListener('click', () => {
+      step2.classList.remove('active');
+      step1.classList.add('active');
+    });
+
+    // Why cards selection
+    const whyCards = document.querySelectorAll('.why-card');
+    whyCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const val = card.getAttribute('data-val');
+        const idx = selectedWhy.indexOf(val);
+        if (idx > -1) {
+          selectedWhy.splice(idx, 1);
+        } else {
+          selectedWhy.push(val);
+        }
+        updateWhyUI();
+      });
+    });
+
+    function updateWhyUI() {
+      const badge = document.getElementById('selected-count-badge');
+      const continueBtn = document.getElementById('step2-continue-btn');
+
+      whyCards.forEach(card => {
+        const val = card.getAttribute('data-val');
+        const isSelected = selectedWhy.includes(val);
+        const checkbox = card.querySelector('.why-checkbox');
+        const checkIcon = checkbox.querySelector('.material-symbols-outlined');
+
+        if (isSelected) {
+          card.style.background = 'linear-gradient(135deg, #ffffff, #d9f7e5)';
+          card.style.borderColor = 'var(--om-green)';
+          checkbox.style.background = 'var(--om-green)';
+          checkbox.style.borderColor = 'var(--om-green)';
+          checkIcon.style.display = 'block';
+        } else {
+          card.style.background = 'var(--white)';
+          card.style.borderColor = 'transparent';
+          checkbox.style.background = 'transparent';
+          checkbox.style.borderColor = 'rgba(0, 34, 18, 0.2)';
+          checkIcon.style.display = 'none';
+        }
+      });
+
+      badge.textContent = `${selectedWhy.length} selected`;
+      if (selectedWhy.length === 0) {
+        continueBtn.disabled = true;
+        continueBtn.style.opacity = '0.5';
+      } else {
+        continueBtn.disabled = false;
+        continueBtn.style.opacity = '1';
+      }
+    }
+
+    // Step 2 Continue -> Step 3
+    document.getElementById('step2-continue-btn').addEventListener('click', () => {
+      if (selectedWhy.length === 0) return;
+      localStorage.setItem(KEYS.why, JSON.stringify(selectedWhy));
+      step2.classList.remove('active');
+      step3.classList.add('active');
+    });
+
+    // Step 3 Back -> Step 2
+    document.getElementById('step3-back-btn').addEventListener('click', () => {
+      step3.classList.remove('active');
+      step2.classList.add('active');
+    });
+
+    // Setup method toggle
+    const manualCard = document.getElementById('method-manual-card');
+    const statementCard = document.getElementById('method-statement-card');
+    const finishBtnText = document.getElementById('finish-btn-text');
+
+    function selectMethod(method) {
+      selectedMethod = method;
+      localStorage.setItem(KEYS.setupMethod, method);
+
+      if (method === 'manual') {
+        manualCard.style.borderColor = 'var(--om-green)';
+        manualCard.style.background = 'linear-gradient(135deg, #ffffff, #eaf6ef)';
+        manualCard.querySelector('.method-radio').style.background = 'var(--om-green)';
+        manualCard.querySelector('.method-radio').style.color = 'var(--white)';
+        manualCard.querySelector('.method-radio .material-symbols-outlined').style.display = 'block';
+
+        statementCard.style.borderColor = 'transparent';
+        statementCard.style.background = 'var(--white)';
+        statementCard.querySelector('.method-radio').style.background = 'transparent';
+        statementCard.querySelector('.method-radio .material-symbols-outlined').style.display = 'none';
+
+        finishBtnText.textContent = 'Continue with Manual Setup';
+      } else {
+        statementCard.style.borderColor = 'var(--om-green)';
+        statementCard.style.background = 'linear-gradient(135deg, #ffffff, #eaf6ef)';
+        statementCard.querySelector('.method-radio').style.background = 'var(--om-green)';
+        statementCard.querySelector('.method-radio').style.color = 'var(--white)';
+        statementCard.querySelector('.method-radio .material-symbols-outlined').style.display = 'block';
+
+        manualCard.style.borderColor = 'transparent';
+        manualCard.style.background = 'var(--white)';
+        manualCard.querySelector('.method-radio').style.background = 'transparent';
+        manualCard.querySelector('.method-radio .material-symbols-outlined').style.display = 'none';
+
+        finishBtnText.textContent = 'Continue to Bank Statement Scan';
+      }
+    }
+
+    manualCard.addEventListener('click', () => selectMethod('manual'));
+    statementCard.addEventListener('click', () => selectMethod('statement'));
+
+    // Step 3 Finish -> Register user -> Redirect
+    document.getElementById('finish-onboarding-btn').addEventListener('click', async () => {
+      const btn = document.getElementById('finish-onboarding-btn');
+      btn.disabled = true;
+      btn.innerHTML = `<span class="material-symbols-outlined pulse-dot"></span> Setting up your profile...`;
+
+      try {
+        await apiRegisterUser({
+          name: localStorage.getItem(KEYS.userName) || 'Alex Morgan',
+          email: localStorage.getItem(KEYS.userEmail) || 'alex.morgan@cleverspender.app',
+          why: selectedWhy,
+          setup_method: selectedMethod
+        });
+      } catch (e) {
+        console.warn('Register fallback to local storage:', e);
+      }
+
+      localStorage.setItem(KEYS.onboarded, 'true');
+
+      if (selectedMethod === 'statement') {
+        window.location.replace('statement.html');
+      } else {
+        window.location.replace('setup.html');
+      }
+    });
+
+    // Auto-select initial options
+    updateWhyUI();
+  </script>
+</body>
+</html>

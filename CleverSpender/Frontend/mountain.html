@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>CleverSpender — Mountain Climber</title>
+  <meta name="description" content="Elevate savings, ascend together on Mount Fuji trail. Pure CSS gamified tracking.">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#006437">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="icon-192.png">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Mountain Scene with Pure CSS Elevation System */
+    .mountain-viewport {
+      position: relative;
+      width: 100%;
+      height: 310px;
+      border-radius: 1.5rem;
+      background: linear-gradient(180deg, #d4ebd8 0%, #e8f5ec 45%, #ffffff 100%);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      border: 1px solid rgba(0, 34, 18, 0.06);
+    }
+    .css-peak-base {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 175px solid transparent;
+      border-right: 175px solid transparent;
+      border-bottom: 270px solid rgba(0, 100, 55, 0.16);
+    }
+    .css-peak-inner {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 125px solid transparent;
+      border-right: 125px solid transparent;
+      border-bottom: 240px solid rgba(0, 100, 55, 0.22);
+    }
+    .css-snowcap {
+      position: absolute;
+      top: 38px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 42px solid transparent;
+      border-right: 42px solid transparent;
+      border-bottom: 50px solid #FFFFFF;
+      opacity: 0.95;
+    }
+    .css-trail-path {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    .elevation-checkpoint {
+      position: absolute;
+      font-size: 9px;
+      font-weight: 700;
+      color: rgba(0, 34, 18, 0.6);
+      background: rgba(255, 255, 255, 0.7);
+      padding: 1px 5px;
+      border-radius: 4px;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body data-page="mountain">
+  <div class="app-container">
+
+    <!-- Top Header -->
+    <header class="app-header">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <a href="index.html" style="background: none; border: none; cursor: pointer; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--midnight); text-decoration: none;" aria-label="Home">
+          <span class="material-symbols-outlined">arrow_back</span>
+        </a>
+        <div class="brand-text-col">
+          <span class="brand-title">Mountain Climber</span>
+          <span style="font-size: 10px; color: var(--om-green); font-weight: 700;">Elevate savings, ascend together</span>
+        </div>
+      </div>
+      <div class="badge badge-om" style="padding: 4px 10px;">
+        <span>🌿 OM Bank</span>
+      </div>
+    </header>
+
+    <main class="main-content">
+
+      <!-- Leaderboard Segmented Switcher (Public vs Friends locked) -->
+      <div style="display: flex; background: rgba(0, 34, 18, 0.08); padding: 4px; border-radius: 1rem; gap: 4px;">
+        <button id="toggle-public-btn" class="btn btn-sm btn-primary" style="flex: 1; height: 36px; border-radius: 0.75rem;">
+          Public Peak
+        </button>
+        <button id="toggle-friends-btn" class="btn btn-sm" style="flex: 1; height: 36px; background: transparent; color: rgba(0, 34, 18, 0.6); border-radius: 0.75rem; gap: 6px;">
+          <span class="material-symbols-outlined" style="font-size: 16px;">lock</span>
+          <span>Friends</span>
+          <span class="badge" style="background: var(--minty); color: var(--midnight); font-size: 9px; padding: 1px 5px;">OM VIP</span>
+        </button>
+      </div>
+
+      <!-- Mountain Visualization (Built with Pure CSS Positioning) -->
+      <div class="mountain-viewport">
+        <!-- CSS Mountain Geometry -->
+        <div class="css-peak-base"></div>
+        <div class="css-peak-inner"></div>
+        <div class="css-snowcap"></div>
+
+        <!-- SVG Trail Path (dashed guide connecting stations) -->
+        <svg class="css-trail-path" viewBox="0 0 340 310" preserveAspectRatio="none">
+          <path d="M 70 270 Q 120 250 200 230 T 115 170 Q 150 130 215 105 T 170 45" fill="none" stroke="#006437" stroke-width="2.5" stroke-dasharray="4 6" opacity="0.4" />
+        </svg>
+
+        <!-- Elevation checkpoints -->
+        <div class="elevation-checkpoint" style="top: 15px; left: 18px;">
+          🚩 Summit 3,776m
+        </div>
+        <div class="elevation-checkpoint" style="top: 15px; right: 18px; color: var(--om-green);">
+          Season 4 • Day 18
+        </div>
+        <div class="elevation-checkpoint" style="top: 98px; right: 40px;">
+          Stn 8 (3,100m)
+        </div>
+        <div class="elevation-checkpoint" style="top: 185px; left: 35px;">
+          Stn 6 (2,400m)
+        </div>
+        <div class="elevation-checkpoint" style="bottom: 50px; left: 45px;">
+          Base (1,200m)
+        </div>
+
+        <!-- CLIMBERS (CSS Positioned by altitude / score) -->
+
+        <!-- 1. Chloe T. (#1 Apex - Near summit at ~15% from top, 50% left) -->
+        <div class="climber-node" style="top: 48px; left: 50%;" title="Chloe T. (#1)">
+          <div class="climber-avatar" style="border-color: var(--minty);">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1fahHzArDt7CEGTazf8Ka9oJzdp1Pbz7zOZ--D9Zdt-2ZKRytDjETfRLyy54Hfwv5AKLGba1gVq29vHbb-9ytcXNqylL1a5k6OCBj8Sb-G3z7B1Snoy-panhlaOT1gWOl19nGQxQ4ZsyXn6tTSNSSF9YiiVTz-sO-3y2Ojt4XRlh0ldIF89NlzW9Hx53MOLZN6xzWAlaWkqa9FRyijc9u2lwlw-QC-GUjkPvjql6yi7A6Z8rXPmk6dw" alt="Chloe">
+          </div>
+          <span class="climber-tag">#1 4.8k</span>
+        </div>
+
+        <!-- 2. David K. (#2 - Station 8 at ~34% top, 65% left) -->
+        <div class="climber-node" style="top: 104px; left: 64%;" title="David K. (#2)">
+          <div class="climber-avatar">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAz7oltPxffWU-5MHGoDY_uCDGKfDPOnZg0H6aqgu-E5lVVlvNOX77ACH57VE5lB9yn_2gw6g9_tfdaoeemGFWqfs0Wjh8NTe8bvdpTkiCirlVXgkoZtBmIIy1yV8n9llfQl1B_McU7uJ5SbrpJi5fOjreY5i4aBHi5Zr5gmavZ1YDWc8q51QJVkbB7Yca4iueeRlXNLUAjcl_ko126lnTJRENOE5Z4cu1Ji9S9KCZ_oDpOF1p_7q33Kw" alt="David">
+          </div>
+          <span class="climber-tag" style="background: rgba(0, 34, 18, 0.7);">#2</span>
+        </div>
+
+        <!-- 3. Liam (#11 - Just ahead of user at ~46% top, 38% left) -->
+        <div class="climber-node" style="top: 142px; left: 38%;" title="Liam (#11)">
+          <div class="climber-avatar" style="width: 26px; height: 26px;">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQHpeB75un_tMNM0C5VLsjzn7IHUS2PzPmTC0GChDiyom9Dq8RpF-fVJ5jqRKjugR0leuLRR5gI6HaTF31a5AMigOC1KYkmOCBMgcyA7ew8T_ER9kg46VFpYmffDgEkSJ23tm7sDOyAa-uPpC2BVR8LFxKGXhFMWY6dulIZiURxhO7Bemesn6F0kAc2EXhmG01VkpbLNKg_uyjfROocNsj_of6UJmvaez-6DSf83-_9eymAWHgdm1s2Q" alt="Liam">
+          </div>
+          <span class="climber-tag">#11</span>
+        </div>
+
+        <!-- 4. USER: Alex (You) - HIGHLIGHTED WITH ACID-YELLOW GLOW at Station 6 (~58% top, 46% left) -->
+        <div id="user-climber-node" class="climber-node user-climber" style="top: 178px; left: 46%;" title="Alex (You)">
+          <div class="climber-avatar">
+            <span style="font-weight: 800; font-size: 13px; color: var(--white);">ME</span>
+          </div>
+          <span class="climber-tag">You • #12</span>
+        </div>
+
+        <!-- 5. Priya (#13 - Below user at ~74% top, 62% left) -->
+        <div class="climber-node" style="top: 226px; left: 62%;" title="Priya (#13)">
+          <div class="climber-avatar" style="width: 26px; height: 26px;">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCY-mv4dCkXtXzznjlRytKQYUqFW7XV-NROCnbqoJmddUv6KfNFaO4Ivg50QIebdggIEW-7qH0SzuxXTUOrl5Xjj7Gk43E-hUFINPmUbK7KzEO5dxTnEWvVXe1-y-EPdBQ6mIE87M65NDuL65cRkPUK6w4qpDgfNy13qrNSHavlE4VOYgOX64aqQUrLOxoH3zhNyXpl3T_soqqNHZhpf8AgsNj13YvCfKt4CvFgpdtOngKxou9PUZ-Ugg" alt="Priya">
+          </div>
+          <span class="climber-tag" style="background: rgba(0, 34, 18, 0.6);">#13</span>
+        </div>
+
+        <!-- Bottom Motivation banner inside mountain scene -->
+        <div style="position: absolute; bottom: 8px; left: 8px; right: 8px; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(8px); border-radius: 1rem; padding: 8px 12px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <div style="width: 28px; height: 28px; border-radius: 8px; background: var(--om-green); color: var(--white); display: flex; align-items: center; justify-content: center;">
+              <span class="material-symbols-outlined" style="font-size: 16px;">trending_up</span>
+            </div>
+            <div>
+              <div style="font-size: 12px; font-weight: 700; color: var(--midnight);" id="leapfrog-text">320m to reach Liam (#11)</div>
+              <div style="font-size: 10px; color: rgba(0, 34, 18, 0.65);">Save $12 on lunch today to leapfrog</div>
+            </div>
+          </div>
+          <button id="btn-log-savings" class="btn btn-sm btn-minty" style="height: 30px; padding: 0 10px; font-size: 11px;">
+            Log +$15
+          </button>
+        </div>
+      </div>
+
+      <!-- Stats Row (3 Metrics) -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.6rem;">
+        <div class="card" style="padding: 0.9rem; text-align: center;">
+          <span style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: rgba(0, 34, 18, 0.6);">Mindful Rate</span>
+          <div style="font-size: 22px; font-weight: 800; color: var(--om-green); margin: 2px 0;">78%</div>
+          <span style="font-size: 10px; font-weight: 700; color: var(--om-green);">↑ +4% wk</span>
+        </div>
+
+        <div class="card" style="padding: 0.9rem; text-align: center;">
+          <span style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: rgba(0, 34, 18, 0.6);">Active Days</span>
+          <div style="font-size: 22px; font-weight: 800; color: var(--midnight); margin: 2px 0;" id="mountain-days-val">34</div>
+          <span style="font-size: 10px; color: rgba(0, 34, 18, 0.65);">Peak streak</span>
+        </div>
+
+        <div class="card" style="padding: 0.9rem; text-align: center;">
+          <span style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: rgba(0, 34, 18, 0.6);">Global Pos</span>
+          <div style="font-size: 22px; font-weight: 800; color: var(--midnight); margin: 2px 0;" id="mountain-rank-val">#12</div>
+          <span style="font-size: 10px; color: rgba(0, 34, 18, 0.65);">of 847 climbers</span>
+        </div>
+      </div>
+
+      <!-- Friends Locked VIP Card -->
+      <div id="friends-locked-card" class="card" style="display: none; background: #eaf6ef; border: 1.5px dashed var(--om-green); padding: 1.25rem;">
+        <div style="display: flex; gap: 12px; align-items: flex-start;">
+          <div style="width: 44px; height: 44px; border-radius: 12px; background: var(--om-green); color: var(--white); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <span class="material-symbols-outlined" style="font-size: 24px;">lock</span>
+          </div>
+          <div>
+            <div style="display: flex; gap: 6px; align-items: center; margin-bottom: 2px;">
+              <h3 style="font-size: 15px; font-weight: 800; color: var(--midnight);">Private Friends Climbs</h3>
+              <span class="badge badge-minty">OM VIP</span>
+            </div>
+            <p style="font-size: 12px; color: rgba(0, 34, 18, 0.75); line-height: 1.45;">
+              Connect your OM Bank checking account to challenge coworkers, customize your climber gear, and get 2.4% apex APY.
+            </p>
+            <a href="profile.html" class="btn btn-sm btn-primary" style="margin-top: 10px; display: inline-flex; width: auto;">
+              Explore OM Bank Perks
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top 5 List Below Mountain -->
+      <div id="leaderboard-list-section" style="display: flex; flex-direction: column; gap: 0.65rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 4px;">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <h2 style="font-size: 17px; font-weight: 800; color: var(--midnight);">Today's Top Ascenders</h2>
+            <span class="pulse-dot"></span>
+          </div>
+          <span style="font-size: 11px; color: rgba(0, 34, 18, 0.6);">Live updates</span>
+        </div>
+
+        <div id="leaderboard-items-container" style="display: flex; flex-direction: column; gap: 0.5rem;">
+          <!-- Dynamically filled with top 5 ascenders -->
+        </div>
+
+        <!-- Pinned Current User Card at Station 6 -->
+        <div class="card" style="background: linear-gradient(135deg, #e9ffed, #d1f7dc); border: 2px solid var(--om-green); padding: 0.9rem 1.1rem; display: flex; justify-content: space-between; align-items: center;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 15px; font-weight: 800; color: var(--om-green);">#12</span>
+            <div style="width: 38px; height: 38px; border-radius: 50%; background: var(--om-green); color: var(--white); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px;">
+              AL
+            </div>
+            <div>
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <span style="font-size: 14px; font-weight: 800; color: var(--midnight);">Alex (You)</span>
+                <span class="badge badge-minty" style="font-size: 9px; padding: 1px 6px;">You</span>
+              </div>
+              <div style="font-size: 11px; color: rgba(0, 34, 18, 0.65);">2,400m • 78% mindful</div>
+            </div>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-size: 12px; font-weight: 800; color: var(--om-green);">+60m logged</div>
+            <span style="font-size: 10px; color: rgba(0, 34, 18, 0.6);">Top 15%</span>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Bottom Nav -->
+    <nav class="bottom-nav">
+      <a href="index.html" class="nav-item">
+        <span class="material-symbols-outlined">cottage</span>
+        <span>Home</span>
+      </a>
+      <a href="nudge.html" class="nav-item">
+        <span class="material-symbols-outlined">bolt</span>
+        <span>Nudges</span>
+      </a>
+      <a href="mountain.html" class="nav-item active">
+        <span class="material-symbols-outlined">landscape</span>
+        <span>Mountain</span>
+      </a>
+      <a href="rewards.html" class="nav-item">
+        <span class="material-symbols-outlined">emoji_events</span>
+        <span>Rewards</span>
+      </a>
+      <a href="profile.html" class="nav-item">
+        <span class="material-symbols-outlined">account_circle</span>
+        <span>Profile</span>
+      </a>
+    </nav>
+
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    async function loadMountain() {
+      const ascenders = await apiGetLeaderboardPublic();
+      renderLeaderboard(ascenders);
+    }
+
+    function renderLeaderboard(list) {
+      const container = document.getElementById('leaderboard-items-container');
+      container.innerHTML = '';
+
+      const top5 = list.filter(item => !item.is_user).slice(0, 5);
+      const medals = ['🥇', '🥈', '🥉', '4', '5'];
+
+      top5.forEach((user, idx) => {
+        const row = document.createElement('div');
+        row.className = 'card';
+        row.style.cssText = 'padding: 0.85rem 1rem; display: flex; justify-content: space-between; align-items: center; border-radius: 1rem;';
+
+        const medal = medals[idx] || (idx + 1);
+        const deltaBadge = user.badge ? `<span class="badge badge-minty">${user.badge}</span>` :
+                           user.delta ? `<span class="badge badge-muted" style="font-weight: 700;">${user.delta}</span>` : '';
+
+        row.innerHTML = `
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 16px; font-weight: 800; width: 20px; text-align: center;">${medal}</span>
+            <div style="width: 36px; height: 36px; border-radius: 50%; overflow: hidden; background: #eee;">
+              <img src="${user.avatar}" alt="${user.name}" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div>
+              <div style="font-size: 14px; font-weight: 700; color: var(--midnight);">${user.name}</div>
+              <div style="font-size: 11px; color: rgba(0, 34, 18, 0.6);">${user.elevation}m • ${user.mindful_pct}% mindful</div>
+            </div>
+          </div>
+          ${deltaBadge}
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    // Toggle Public vs Friends
+    const pubBtn = document.getElementById('toggle-public-btn');
+    const friendBtn = document.getElementById('toggle-friends-btn');
+    const lockedCard = document.getElementById('friends-locked-card');
+
+    pubBtn.addEventListener('click', () => {
+      pubBtn.className = 'btn btn-sm btn-primary';
+      pubBtn.style.background = 'var(--om-green)';
+      pubBtn.style.color = 'var(--white)';
+      friendBtn.className = 'btn btn-sm';
+      friendBtn.style.background = 'transparent';
+      friendBtn.style.color = 'rgba(0, 34, 18, 0.6)';
+      lockedCard.style.display = 'none';
+      document.getElementById('leaderboard-list-section').style.display = 'flex';
+    });
+
+    friendBtn.addEventListener('click', () => {
+      friendBtn.className = 'btn btn-sm btn-primary';
+      friendBtn.style.background = 'var(--om-green)';
+      friendBtn.style.color = 'var(--white)';
+      pubBtn.className = 'btn btn-sm';
+      pubBtn.style.background = 'transparent';
+      pubBtn.style.color = 'rgba(0, 34, 18, 0.6)';
+      lockedCard.style.display = 'block';
+    });
+
+    // Log +$15 Savings Leapfrog interaction
+    document.getElementById('btn-log-savings').addEventListener('click', () => {
+      awardXP(15);
+      showXPToast(15, '🚀 Climbed +150m! Passed Liam to #11');
+
+      const userClimber = document.getElementById('user-climber-node');
+      userClimber.style.top = '132px';
+      userClimber.style.left = '42%';
+      userClimber.querySelector('.climber-tag').textContent = 'You • #11';
+
+      document.getElementById('mountain-rank-val').textContent = '#11';
+      document.getElementById('leapfrog-text').textContent = '110m to reach Top 10!';
+      document.getElementById('btn-log-savings').disabled = true;
+      document.getElementById('btn-log-savings').textContent = 'Ascended!';
+      document.getElementById('btn-log-savings').style.background = 'var(--pistachio)';
+    });
+
+    document.addEventListener('DOMContentLoaded', loadMountain);
+  </script>
+</body>
+</html>

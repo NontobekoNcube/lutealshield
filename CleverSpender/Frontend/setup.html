@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>CleverSpender — Nudge Setup</title>
+  <meta name="description" content="Set up your mindful spending triggers, schedules, and savings goals.">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#006437">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="icon-192.png">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .wizard-step {
+      display: none;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .wizard-step.active {
+      display: flex;
+    }
+    .time-card {
+      background: var(--white);
+      border: 2px solid transparent;
+      border-radius: 1rem;
+      padding: 1rem;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 96px;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-soft);
+    }
+    .time-card.selected {
+      border-color: var(--om-green);
+      background: #eaf6ef;
+      box-shadow: 0 4px 12px rgba(0, 100, 55, 0.15);
+    }
+    .day-pill {
+      flex: 1;
+      height: 38px;
+      border-radius: 9999px;
+      border: none;
+      background: rgba(0, 34, 18, 0.08);
+      color: rgba(0, 34, 18, 0.7);
+      font-weight: 700;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .day-pill.selected {
+      background: var(--pistachio);
+      color: var(--midnight);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body data-page="nudges">
+  <div class="app-container">
+
+    <!-- Top Header -->
+    <header class="app-header">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <button onclick="history.back()" style="background: none; border: none; cursor: pointer; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--midnight);" aria-label="Go Back">
+          <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+        <div class="brand-icon-wrap" style="width: 28px; height: 28px;">
+          <img src="icon-192.png" alt="CleverSpender logo">
+        </div>
+        <span style="font-size: 16px; font-weight: 700; color: var(--midnight);">Nudge Setup</span>
+      </div>
+      <a href="profile.html" class="avatar-badge-btn" aria-label="Profile">
+        <span class="material-symbols-outlined" style="font-size: 18px;">person</span>
+      </a>
+    </header>
+
+    <main class="main-content">
+
+      <!-- Progress Header -->
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span class="badge badge-om" id="step-badge-indicator">
+            <span class="material-symbols-outlined" style="font-size: 14px; font-variation-settings: 'FILL' 1;">tune</span>
+            <span id="step-number-text">Step 1 of 3</span>
+          </span>
+          <span id="step-pct-text" style="font-size: 12px; font-weight: 700; color: rgba(0, 34, 18, 0.65);">33% completed</span>
+        </div>
+        <div style="width: 100%; height: 8px; background: rgba(0, 34, 18, 0.08); border-radius: 9999px; overflow: hidden;">
+          <div id="setup-progress-bar" style="width: 33.33%; height: 100%; background: linear-gradient(90deg, var(--om-green), var(--minty)); border-radius: 9999px; transition: width 0.3s ease;"></div>
+        </div>
+      </div>
+
+      <!-- STEP 1: Time Window + Days -->
+      <div id="wizard-step-1" class="wizard-step active">
+        <div>
+          <span style="font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--om-green); letter-spacing: 0.05em;">Step 1</span>
+          <h2 style="font-size: 20px; font-weight: 800; color: var(--midnight); margin-top: 2px;">When do you want your nudges?</h2>
+        </div>
+
+        <!-- Time windows 2x2 grid -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+          <div class="time-card" data-window="Morning" data-range="08:00 - 11:00">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 22px;">🌅</span>
+              <span class="material-symbols-outlined check-mark" style="font-size: 18px; color: var(--om-green); display: none;">check_circle</span>
+            </div>
+            <div>
+              <div style="font-size: 14px; font-weight: 700; color: var(--midnight);">Morning</div>
+              <div style="font-size: 11px; color: rgba(0, 34, 18, 0.6);">08:00 - 11:00</div>
+            </div>
+          </div>
+
+          <div class="time-card selected" data-window="Afternoon" data-range="12:00 - 15:00">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 22px;">☀️</span>
+              <span class="material-symbols-outlined check-mark" style="font-size: 18px; color: var(--om-green);">check_circle</span>
+            </div>
+            <div>
+              <div style="font-size: 14px; font-weight: 700; color: var(--midnight);">Afternoon</div>
+              <div style="font-size: 11px; color: rgba(0, 34, 18, 0.6);">12:00 - 15:00</div>
+            </div>
+          </div>
+
+          <div class="time-card" data-window="Evening" data-range="17:00 - 20:00">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 22px;">🌆</span>
+              <span class="material-symbols-outlined check-mark" style="font-size: 18px; color: var(--om-green); display: none;">check_circle</span>
+            </div>
+            <div>
+              <div style="font-size: 14px; font-weight: 700; color: var(--midnight);">Evening</div>
+              <div style="font-size: 11px; color: rgba(0, 34, 18, 0.6);">17:00 - 20:00</div>
+            </div>
+          </div>
+
+          <div class="time-card" data-window="Night" data-range="21:00 - 23:00">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 22px;">🌙</span>
+              <span class="material-symbols-outlined check-mark" style="font-size: 18px; color: var(--om-green); display: none;">check_circle</span>
+            </div>
+            <div>
+              <div style="font-size: 14px; font-weight: 700; color: var(--midnight);">Night</div>
+              <div style="font-size: 11px; color: rgba(0, 34, 18, 0.6);">21:00 - 23:00</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Repeat on Days -->
+        <div class="card" style="padding: 1rem;">
+          <span style="font-size: 13px; font-weight: 700; color: var(--midnight); display: block; margin-bottom: 0.65rem;">Repeat on days</span>
+          <div style="display: flex; gap: 5px;">
+            <button type="button" class="day-pill selected" data-day="Mon">Mon</button>
+            <button type="button" class="day-pill selected" data-day="Tue">Tue</button>
+            <button type="button" class="day-pill selected" data-day="Wed">Wed</button>
+            <button type="button" class="day-pill selected" data-day="Thu">Thu</button>
+            <button type="button" class="day-pill selected" data-day="Fri">Fri</button>
+            <button type="button" class="day-pill" data-day="Sat">Sat</button>
+            <button type="button" class="day-pill" data-day="Sun">Sun</button>
+          </div>
+        </div>
+
+        <button id="step1-next-btn" class="btn btn-primary" type="button">
+          <span>Continue to Focus Categories</span>
+          <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+      </div>
+
+      <!-- STEP 2: Focus Chips -->
+      <div id="wizard-step-2" class="wizard-step">
+        <div>
+          <span style="font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--om-green); letter-spacing: 0.05em;">Step 2</span>
+          <h2 style="font-size: 20px; font-weight: 800; color: var(--midnight); margin-top: 2px;">What do you want to be nudged about?</h2>
+          <p style="font-size: 12px; color: rgba(0, 34, 18, 0.65); margin-top: 4px;">Choose the trigger category where you feel most impulse pull</p>
+        </div>
+
+        <div class="chip-grid" id="focus-chip-container" style="gap: 0.75rem;">
+          <button type="button" class="chip selected" data-focus="Coffee">
+            <span>☕</span> <span>Coffee</span>
+          </button>
+          <button type="button" class="chip" data-focus="Takeaways">
+            <span>🍔</span> <span>Takeaways</span>
+          </button>
+          <button type="button" class="chip" data-focus="Online shopping">
+            <span>🛍️</span> <span>Online shopping</span>
+          </button>
+          <button type="button" class="chip" data-focus="Subscriptions">
+            <span>📱</span> <span>Subscriptions</span>
+          </button>
+          <button type="button" class="chip" data-focus="Impulse buys">
+            <span>👟</span> <span>Impulse buys</span>
+          </button>
+        </div>
+
+        <div class="card" style="background: rgba(255, 255, 255, 0.7); display: flex; gap: 10px; align-items: center; padding: 0.85rem 1rem;">
+          <span class="material-symbols-outlined" style="color: var(--om-green);">insights</span>
+          <p style="font-size: 12px; color: rgba(0, 34, 18, 0.75);">
+            Nudges trigger gently before high-risk checkout windows, offering a quick breathing space.
+          </p>
+        </div>
+
+        <div style="display: flex; gap: 0.75rem;">
+          <button id="step2-prev-btn" class="btn btn-secondary" style="flex: 1;" type="button">Back</button>
+          <button id="step2-next-btn" class="btn btn-primary" style="flex: 2;" type="button">
+            <span>Continue to Goal</span>
+            <span class="material-symbols-outlined">arrow_forward</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 3: Goal Chips + Summary Blueprint -->
+      <div id="wizard-step-3" class="wizard-step">
+        <div>
+          <span style="font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--om-green); letter-spacing: 0.05em;">Step 3</span>
+          <h2 style="font-size: 20px; font-weight: 800; color: var(--midnight); margin-top: 2px;">What are you protecting this money for?</h2>
+          <p style="font-size: 12px; color: rgba(0, 34, 18, 0.65); margin-top: 4px;">An emotional savings anchor keeps your motivation resilient</p>
+        </div>
+
+        <div class="chip-grid" id="goal-chip-container" style="gap: 0.75rem;">
+          <button type="button" class="chip selected" data-goal="Trip">
+            <span>✈️</span> <span>Trip</span>
+          </button>
+          <button type="button" class="chip" data-goal="Savings">
+            <span>💰</span> <span>Savings</span>
+          </button>
+          <button type="button" class="chip" data-goal="Rent">
+            <span>🏠</span> <span>Rent</span>
+          </button>
+          <button type="button" class="chip" data-goal="Groceries">
+            <span>🛒</span> <span>Groceries</span>
+          </button>
+          <button type="button" class="chip" data-goal="Education">
+            <span>🎓</span> <span>Education</span>
+          </button>
+          <button type="button" class="chip" data-goal="Debt">
+            <span>💳</span> <span>Debt</span>
+          </button>
+        </div>
+
+        <!-- Goal Anchor Inspiration Card -->
+        <div class="card" style="background: #eaf4ee; display: flex; align-items: center; gap: 12px; padding: 0.9rem;">
+          <div style="width: 52px; height: 52px; border-radius: 12px; overflow: hidden; flex-shrink: 0; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbEdeuxGf6qmBX7NhKR30S4RsnstDwTcf3jsG-0ADG-_IisBNhkxdNPSMSFvQPPQRis9XigrgqMFRWKsTVI07X8Re7IXpyLMg-N3PyPvFsGuHiPkgg5CYz6jz4CKmFHraYBTgPx4Oq5Op94zfmrGzQ3AvSW8aJt8lMimxnaADvzriUL47NSB0IzaW6yz9dvketwUz0iykB_4Saau1CW9JQqHYpTbRG3fZ-Xvkfl4unKjxnijnf_B1bjQ" alt="Goal Anchor" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+          <div>
+            <span style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: var(--om-green); letter-spacing: 0.05em;">Goal Anchor</span>
+            <div style="font-size: 14px; font-weight: 700; color: var(--midnight);" id="goal-anchor-title">Summer Amalfi Holiday</div>
+            <div style="font-size: 11px; color: rgba(0, 34, 18, 0.7);">$182 saved so far • <strong style="color: var(--om-green);">+$8/nudge</strong></div>
+          </div>
+        </div>
+
+        <!-- Summary Preview Box -->
+        <div class="card" style="background: var(--white); border: 1.5px solid rgba(0, 100, 55, 0.2); padding: 1.1rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span class="material-symbols-outlined" style="font-size: 18px; color: var(--om-green); font-variation-settings: 'FILL' 1;">lightbulb</span>
+              <span style="font-size: 12px; font-weight: 800; text-transform: uppercase; color: var(--om-green); letter-spacing: 0.05em;">Nudge Blueprint</span>
+            </div>
+            <span class="badge badge-minty">Active Ready</span>
+          </div>
+          <p id="summary-blueprint-text" style="font-size: 14px; color: var(--midnight); line-height: 1.45;">
+            You'll be nudged every <strong>Mon-Fri</strong> in the <strong>Afternoon (12:00 – 15:00)</strong> about <strong>☕ Coffee</strong> to protect your <strong>✈️ Trip</strong>.
+          </p>
+        </div>
+
+        <div style="display: flex; gap: 0.75rem;">
+          <button id="step3-prev-btn" class="btn btn-secondary" style="flex: 1;" type="button">Back</button>
+          <button id="save-nudge-btn" class="btn btn-primary" style="flex: 2;" type="button">
+            <span>Save Nudge & Activate</span>
+            <span class="material-symbols-outlined">check</span>
+          </button>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Bottom Nav -->
+    <nav class="bottom-nav">
+      <a href="index.html" class="nav-item">
+        <span class="material-symbols-outlined">cottage</span>
+        <span>Home</span>
+      </a>
+      <a href="nudge.html" class="nav-item active">
+        <span class="material-symbols-outlined">bolt</span>
+        <span>Nudges</span>
+      </a>
+      <a href="mountain.html" class="nav-item">
+        <span class="material-symbols-outlined">landscape</span>
+        <span>Mountain</span>
+      </a>
+      <a href="rewards.html" class="nav-item">
+        <span class="material-symbols-outlined">emoji_events</span>
+        <span>Rewards</span>
+      </a>
+      <a href="profile.html" class="nav-item">
+        <span class="material-symbols-outlined">account_circle</span>
+        <span>Profile</span>
+      </a>
+    </nav>
+
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    let currentStep = 1;
+    let selectedWindow = 'Afternoon';
+    let selectedRange = '12:00 - 15:00';
+    let selectedDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+    let selectedFocus = 'Coffee';
+    let selectedGoal = 'Trip';
+
+    // Wizard navigation
+    const step1El = document.getElementById('wizard-step-1');
+    const step2El = document.getElementById('wizard-step-2');
+    const step3El = document.getElementById('wizard-step-3');
+    const progressBar = document.getElementById('setup-progress-bar');
+    const stepBadge = document.getElementById('step-number-text');
+    const stepPct = document.getElementById('step-pct-text');
+
+    function setStep(step) {
+      currentStep = step;
+      [step1El, step2El, step3El].forEach(s => s.classList.remove('active'));
+
+      if (step === 1) {
+        step1El.classList.add('active');
+        progressBar.style.width = '33.33%';
+        stepBadge.textContent = 'Step 1 of 3';
+        stepPct.textContent = '33% completed';
+      } else if (step === 2) {
+        step2El.classList.add('active');
+        progressBar.style.width = '66.66%';
+        stepBadge.textContent = 'Step 2 of 3';
+        stepPct.textContent = '66% completed';
+      } else if (step === 3) {
+        step3El.classList.add('active');
+        progressBar.style.width = '100%';
+        stepBadge.textContent = 'Step 3 of 3';
+        stepPct.textContent = '100% completed';
+        updateSummary();
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.getElementById('step1-next-btn').addEventListener('click', () => setStep(2));
+    document.getElementById('step2-prev-btn').addEventListener('click', () => setStep(1));
+    document.getElementById('step2-next-btn').addEventListener('click', () => setStep(3));
+    document.getElementById('step3-prev-btn').addEventListener('click', () => setStep(2));
+
+    // Time window selection
+    document.querySelectorAll('.time-card').forEach(card => {
+      card.addEventListener('click', () => {
+        document.querySelectorAll('.time-card').forEach(c => {
+          c.classList.remove('selected');
+          c.querySelector('.check-mark').style.display = 'none';
+        });
+        card.classList.add('selected');
+        card.querySelector('.check-mark').style.display = 'block';
+        selectedWindow = card.getAttribute('data-window');
+        selectedRange = card.getAttribute('data-range');
+        updateSummary();
+      });
+    });
+
+    // Day pills selection
+    document.querySelectorAll('.day-pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        const day = pill.getAttribute('data-day');
+        const idx = selectedDays.indexOf(day);
+        if (idx > -1) {
+          selectedDays.splice(idx, 1);
+          pill.classList.remove('selected');
+        } else {
+          selectedDays.push(day);
+          pill.classList.add('selected');
+        }
+        updateSummary();
+      });
+    });
+
+    // Focus chips
+    document.querySelectorAll('#focus-chip-container .chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('#focus-chip-container .chip').forEach(c => c.classList.remove('selected'));
+        chip.classList.add('selected');
+        selectedFocus = chip.getAttribute('data-focus');
+        updateSummary();
+      });
+    });
+
+    // Goal chips
+    document.querySelectorAll('#goal-chip-container .chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('#goal-chip-container .chip').forEach(c => c.classList.remove('selected'));
+        chip.classList.add('selected');
+        selectedGoal = chip.getAttribute('data-goal');
+        document.getElementById('goal-anchor-title').textContent = `${selectedGoal} Savings Cushion`;
+        updateSummary();
+      });
+    });
+
+    function updateSummary() {
+      const summaryText = document.getElementById('summary-blueprint-text');
+      if (!summaryText) return;
+
+      const daysStr = selectedDays.length === 7 ? 'Every day' :
+                      selectedDays.length === 5 && ['Mon','Tue','Wed','Thu','Fri'].every(d => selectedDays.includes(d)) ? 'Mon-Fri' :
+                      selectedDays.length === 0 ? 'Paused' : selectedDays.join(', ');
+
+      summaryText.innerHTML = `You'll be nudged every <strong>${daysStr}</strong> in the <strong>${selectedWindow} (${selectedRange})</strong> about <strong>${selectedFocus}</strong> to protect your <strong>${selectedGoal}</strong>.`;
+    }
+
+    // Save reminder & activate
+    document.getElementById('save-nudge-btn').addEventListener('click', async () => {
+      const btn = document.getElementById('save-nudge-btn');
+      btn.disabled = true;
+      btn.innerHTML = `<span class="material-symbols-outlined pulse-dot"></span> Activating Nudge...`;
+
+      const userId = localStorage.getItem(KEYS.userId) || 'usr_default';
+      const payload = {
+        user_id: userId,
+        time_window: selectedWindow,
+        time_range: selectedRange,
+        days: selectedDays,
+        focus: selectedFocus,
+        goal: selectedGoal
+      };
+
+      try {
+        await apiSetupReminder(payload);
+      } catch (err) {
+        console.warn('API error during setup:', err);
+      }
+
+      showXPToast(15, '✨ Nudge Activated! +15 XP');
+      setTimeout(() => {
+        window.location.replace('index.html');
+      }, 1000);
+    });
+
+    // Pre-fill from detected patterns if available
+    function checkPreFill() {
+      const patterns = localStorage.getItem(KEYS.patterns);
+      if (patterns) {
+        try {
+          const parsed = JSON.parse(patterns);
+          const firstChecked = parsed.find(p => p.checked);
+          if (firstChecked) {
+            selectedFocus = firstChecked.name.replace(' Runs', '');
+            document.querySelectorAll('#focus-chip-container .chip').forEach(chip => {
+              if (chip.getAttribute('data-focus').toLowerCase().includes(selectedFocus.toLowerCase())) {
+                chip.click();
+              }
+            });
+          }
+        } catch (e) {}
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      checkPreFill();
+      updateSummary();
+    });
+  </script>
+</body>
+</html>

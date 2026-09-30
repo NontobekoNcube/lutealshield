@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>CleverSpender — Rewards</title>
+  <meta name="description" content="Unlock mindful trophies, badges, and send peer encouragement gifts.">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#006437">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="icon-192.png">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .friend-avatar-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      min-width: 56px;
+    }
+    .friend-avatar-wrap {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      padding: 2px;
+      background: transparent;
+      border: 2px solid transparent;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+    .friend-avatar-btn.selected .friend-avatar-wrap {
+      border-color: var(--minty);
+      background: var(--pistachio);
+      box-shadow: 0 0 10px rgba(30, 233, 124, 0.4);
+    }
+    .friend-avatar-wrap img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .friend-check-badge {
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      width: 16px;
+      height: 16px;
+      background: var(--om-green);
+      color: var(--minty);
+      border-radius: 50%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    .friend-avatar-btn.selected .friend-check-badge {
+      display: flex;
+    }
+  </style>
+</head>
+<body data-page="rewards">
+  <div class="app-container">
+
+    <!-- Top Header -->
+    <header class="app-header">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <a href="index.html" style="background: none; border: none; cursor: pointer; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--midnight); text-decoration: none;" aria-label="Home">
+          <span class="material-symbols-outlined">arrow_back</span>
+        </a>
+        <span style="font-size: 16px; font-weight: 700; color: var(--midnight);">Rewards</span>
+      </div>
+      <a href="profile.html" class="avatar-badge-btn" aria-label="Profile">
+        <span class="material-symbols-outlined" style="font-size: 18px;">person</span>
+      </a>
+    </header>
+
+    <main class="main-content">
+
+      <!-- Header Title & XP Pill -->
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <span style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: var(--om-green); letter-spacing: 0.06em;">Trophies & Perks</span>
+          <h1 style="font-size: 24px; font-weight: 800; color: var(--midnight); display: flex; align-items: center; gap: 6px; margin-top: 2px;">
+            Your Rewards <span style="font-size: 22px;">🏆</span>
+          </h1>
+        </div>
+
+        <div style="background: var(--white); border-radius: 9999px; padding: 6px 14px; box-shadow: var(--shadow-soft); display: flex; flex-direction: column; align-items: flex-end; gap: 4px;">
+          <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 800;">
+            <span class="pulse-dot"></span>
+            <span style="color: var(--om-green);">Lvl <span id="reward-level-num">3</span></span>
+            <span style="color: rgba(0,34,18,0.3);">•</span>
+            <span style="color: var(--midnight);" id="reward-xp-num">420 XP</span>
+          </div>
+          <div style="width: 70px; height: 5px; background: rgba(0,34,18,0.1); border-radius: 9999px; overflow: hidden;">
+            <div id="xp-progress-bar" style="width: 70%; height: 100%; background: linear-gradient(90deg, var(--minty), var(--pistachio)); border-radius: 9999px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Next Reward Goal Banner -->
+      <div class="card card-hero-green" style="padding: 1.15rem; border-radius: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+        <div style="max-width: 72%;">
+          <span class="badge" style="background: var(--minty); color: var(--midnight); font-size: 10px; margin-bottom: 4px;">
+            <span class="material-symbols-outlined" style="font-size: 12px;">auto_awesome</span> Next Reward at 500 XP
+          </span>
+          <h2 style="font-size: 17px; font-weight: 800; color: var(--white); margin: 3px 0;">Summit Pioneer Badge</h2>
+          <p style="font-size: 11px; color: #a1d9bd; line-height: 1.35;">
+            Only 80 XP left to unlock automated coffee round swaps!
+          </p>
+        </div>
+        <div style="width: 52px; height: 52px; border-radius: 16px; background: rgba(255, 255, 255, 0.15); display: flex; align-items: center; justify-content: center; font-size: 26px;">
+          🧭
+        </div>
+      </div>
+
+      <!-- My Collection (Earned vs Unearned Badges) -->
+      <div>
+        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.65rem;">
+          <div>
+            <h2 style="font-size: 17px; font-weight: 800; color: var(--midnight);">My Collection</h2>
+            <span style="font-size: 11px; color: rgba(0, 34, 18, 0.65);" id="badges-unlocked-summary">3 of 8 Badges Unlocked</span>
+          </div>
+          <span style="font-size: 11px; font-weight: 700; color: var(--om-green); cursor: pointer;">View All ›</span>
+        </div>
+
+        <div id="badges-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+          <!-- Badge 1: Streak Master (Earned) -->
+          <div class="card" style="padding: 1rem; display: flex; flex-direction: column; justify-content: space-between; height: 140px; border-radius: 1.25rem;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <div style="width: 40px; height: 40px; border-radius: 12px; background: linear-gradient(135deg, var(--minty), var(--pistachio)); display: flex; align-items: center; justify-content: center; font-size: 20px;">
+                🔥
+              </div>
+              <span class="badge badge-minty">
+                <span class="material-symbols-outlined" style="font-size: 12px; font-variation-settings: 'FILL' 1;">verified</span> Earned
+              </span>
+            </div>
+            <div>
+              <div style="font-size: 14px; font-weight: 700; color: var(--midnight);">Streak Master</div>
+              <div style="font-size: 11px; color: rgba(0, 34, 18, 0.6);">7-day mindful track</div>
+            </div>
+            <div style="border-top: 1px solid rgba(0,34,18,0.06); padding-top: 4px; font-size: 10px; font-weight: 700; color: var(--om-green);">
+              Earned Jun 12
+            </div>
+          </div>
+
+          <!-- Badge 2: Milestone Coin (Earned) -->
+          <div class="card" style="padding: 1rem; display: flex; flex-direction: column; justify-content: space-between; height: 140px; border-radius: 1.25rem;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <div style="width: 40px; height: 40px; border-radius: 12px; background: linear-gradient(135deg, var(--pistachio), var(--minty)); display: flex; align-items: center; justify-content: center; font-size: 20px;">
+                🪙
+              </div>
+              <span class="badge badge-minty">
+                <span class="material-symbols-outlined" style="font-size: 12px; font-variation-settings: 'FILL' 1;">verified</span> Earned
+              </span>
+            </div>
+            <div>
+              <div style="font-size: 14px; font-weight: 700; color: var(--midnight);">Milestone Coin</div>
+              <div style="font-size: 11px; color: rgba(0, 34, 18, 0.6);">£100 saved in pocket</div>
+            </div>
+            <div style="border-top: 1px solid rgba(0,34,18,0.06); padding-top: 4px; font-size: 10px; font-weight: 700; color: var(--om-green);">
+              Earned Jun 18
+            </div>
+          </div>
+
+          <!-- Badge 3: Top Climber (Earned) -->
+          <div class="card" style="padding: 1rem; display: flex; flex-direction: column; justify-content: space-between; height: 140px; border-radius: 1.25rem;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <div style="width: 40px; height: 40px; border-radius: 12px; background: var(--acid-yellow); display: flex; align-items: center; justify-content: center; font-size: 20px;">
+                🏔️
+              </div>
+              <span class="badge badge-minty">
+                <span class="material-symbols-outlined" style="font-size: 12px; font-variation-settings: 'FILL' 1;">verified</span> Earned
+              </span>
+            </div>
+            <div>
+              <div style="font-size: 14px; font-weight: 700; color: var(--midnight);">Top Climber</div>
+              <div style="font-size: 11px; color: rgba(0, 34, 18, 0.6);">Top 5% elevation ascent</div>
+            </div>
+            <div style="border-top: 1px solid rgba(0,34,18,0.06); padding-top: 4px; font-size: 10px; font-weight: 700; color: var(--om-green);">
+              Earned Jun 22
+            </div>
+          </div>
+
+          <!-- Badge 4: Zen Spender (Locked) -->
+          <div class="card" style="padding: 1rem; display: flex; flex-direction: column; justify-content: space-between; height: 140px; border-radius: 1.25rem; opacity: 0.85;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <div style="width: 40px; height: 40px; border-radius: 12px; background: rgba(0,34,18,0.08); display: flex; align-items: center; justify-content: center; font-size: 20px; filter: grayscale(1);">
+                🌱
+              </div>
+              <span class="badge badge-muted">
+                <span class="material-symbols-outlined" style="font-size: 12px;">lock</span> 18/30
+              </span>
+            </div>
+            <div>
+              <div style="font-size: 14px; font-weight: 700; color: var(--midnight);">Zen Spender</div>
+              <div style="font-size: 11px; color: rgba(0, 34, 18, 0.6);">30 mindful swaps</div>
+            </div>
+            <div style="width: 100%; height: 4px; background: rgba(0,34,18,0.08); border-radius: 9999px; overflow: hidden;">
+              <div style="width: 60%; height: 100%; background: var(--om-green);"></div>
+            </div>
+          </div>
+
+          <!-- Badge 5: Cafe Hero (Locked) -->
+          <div class="card" style="padding: 1rem; display: flex; flex-direction: column; justify-content: space-between; height: 140px; border-radius: 1.25rem; opacity: 0.85;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <div style="width: 40px; height: 40px; border-radius: 12px; background: rgba(0,34,18,0.08); display: flex; align-items: center; justify-content: center; font-size: 20px; filter: grayscale(1);">
+                ☕
+              </div>
+              <span class="badge badge-muted">
+                <span class="material-symbols-outlined" style="font-size: 12px;">lock</span> 7/10
+              </span>
+            </div>
+            <div>
+              <div style="font-size: 14px; font-weight: 700; color: var(--midnight);">Cafe Hero</div>
+              <div style="font-size: 11px; color: rgba(0, 34, 18, 0.6);">Skip 10 takeaway coffees</div>
+            </div>
+            <div style="width: 100%; height: 4px; background: rgba(0,34,18,0.08); border-radius: 9999px; overflow: hidden;">
+              <div style="width: 70%; height: 100%; background: var(--om-green);"></div>
+            </div>
+          </div>
+
+          <!-- Badge 6: Impulse Shield (Locked) -->
+          <div class="card" style="padding: 1rem; display: flex; flex-direction: column; justify-content: space-between; height: 140px; border-radius: 1.25rem; opacity: 0.85;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <div style="width: 40px; height: 40px; border-radius: 12px; background: rgba(0,34,18,0.08); display: flex; align-items: center; justify-content: center; font-size: 20px; filter: grayscale(1);">
+                🛡️
+              </div>
+              <span class="badge badge-muted">
+                <span class="material-symbols-outlined" style="font-size: 12px;">lock</span> Locked
+              </span>
+            </div>
+            <div>
+              <div style="font-size: 14px; font-weight: 700; color: var(--midnight);">Impulse Shield</div>
+              <div style="font-size: 11px; color: rgba(0, 34, 18, 0.6);">Survive weekend splurge</div>
+            </div>
+            <div style="font-size: 10px; color: rgba(0,34,18,0.5);">Resets Friday 18:00</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Send a Nudge Gift (Peer Encouragement Card) -->
+      <div class="card" style="border-radius: 1.5rem; padding: 1.25rem; display: flex; flex-direction: column; gap: 0.85rem;">
+        <div>
+          <span style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: var(--om-green); letter-spacing: 0.05em;">Peer Encouragement</span>
+          <h2 style="font-size: 18px; font-weight: 800; color: var(--midnight); margin-top: 2px;">Send a Nudge Gift 🎁</h2>
+          <p style="font-size: 12px; color: rgba(0, 34, 18, 0.7);">Cheer on a friend with a mindful perk or cheer badge!</p>
+        </div>
+
+        <!-- Choose Friend Selector -->
+        <div>
+          <span style="font-size: 12px; font-weight: 700; color: var(--midnight); display: block; margin-bottom: 6px;">Choose friend:</span>
+          <div style="display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px;">
+            <button type="button" class="friend-avatar-btn selected" data-friend="Mbali">
+              <div class="friend-avatar-wrap">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEplGvISZjVyO2GeDE5G6fr8_Wy5iCyaV7QC993mcfV4CgvBwp-pxoYQ-zfcoUdrnUkh1Gwn0Sv0AO1bacNrN-nP0Hdu3KF6Dqua2bPH_BIKiOlfXMerIq5h8arF2gHfeK1-fIpLdVjmMyDgs2P6kURt2mRHcPEQ3DbjZQaDJ7Gb8MwVOVor5cVHQcy4LOXqapc-HnrhigpUqWYnQACKxigsDc2KGZiyzh3V9tc892WvZNyunllGd8Bg" alt="Mbali">
+                <div class="friend-check-badge"><span class="material-symbols-outlined" style="font-size: 12px;">check</span></div>
+              </div>
+              <span style="font-size: 11px; font-weight: 700; color: var(--om-green);">Mbali</span>
+            </button>
+
+            <button type="button" class="friend-avatar-btn" data-friend="Tariq">
+              <div class="friend-avatar-wrap">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZNzsJCWeJ-nB9n_V0iOH9-cTNI5vhNt9MSuTPgkuDy3cQSNG-11wt2hTaCjX-a2Qm6DGGnnAC2-vCbFvhKuzPB0ADBzHvfLWKPxYbu2eIWUaHPMHmkOv8Y1TZMaKwtalVOjMxN4rTgEbO-uZgKptNWtiFDpb8nXIJ-OxP4B1Wso8VL3mT_v3kqlvpH6pR_MhkQ8zebaQfTZBN1oO9jZ-l1x3QNr0CArBHkdWuPcpwKw4uLuDlVJ_ybw" alt="Tariq">
+                <div class="friend-check-badge"><span class="material-symbols-outlined" style="font-size: 12px;">check</span></div>
+              </div>
+              <span style="font-size: 11px; color: rgba(0, 34, 18, 0.7);">Tariq</span>
+            </button>
+
+            <button type="button" class="friend-avatar-btn" data-friend="Sofia">
+              <div class="friend-avatar-wrap">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOQovtEY5oHYbILV124uYMxRGGupLYZ9mKrpHlxvqcpd25lBdLkXRUujEilFZR6u8mYBYj5n2G7AI6iZ99SJum7hmcnqJpEMfhFS4Be87wjoy6bW-K8miuwkKkdzoJ4UVeEbZR7LWpuUR6XCJVtet3VsfL6GduPfQoYZwfDAAy7Qc7wZIPUiSs4thVasHxHhipmEXq82Yif-Jm1tRGkvWGcP8lqhltXneGnyaTU8Q2eZMKwiE4CvMlTA" alt="Sofia">
+                <div class="friend-check-badge"><span class="material-symbols-outlined" style="font-size: 12px;">check</span></div>
+              </div>
+              <span style="font-size: 11px; color: rgba(0, 34, 18, 0.7);">Sofia</span>
+            </button>
+
+            <button type="button" class="friend-avatar-btn" data-friend="Chris">
+              <div class="friend-avatar-wrap">
+                <div style="width: 100%; height: 100%; border-radius: 50%; background: #eaf6ef; color: var(--om-green); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px;">
+                  C
+                </div>
+                <div class="friend-check-badge"><span class="material-symbols-outlined" style="font-size: 12px;">check</span></div>
+              </div>
+              <span style="font-size: 11px; color: rgba(0, 34, 18, 0.7);">Chris</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Select cheer perk -->
+        <div>
+          <span style="font-size: 12px; font-weight: 700; color: var(--midnight); display: block; margin-bottom: 6px;">Select cheer perk:</span>
+          <div class="chip-grid" id="reward-perk-chips">
+            <button type="button" class="chip selected" data-perk="Virtual Flat White (+15 XP)">
+              <span>☕</span> <span>Virtual Flat White (+15 XP)</span>
+            </button>
+            <button type="button" class="chip" data-perk="Streak Booster">
+              <span>🔥</span> <span>Streak Booster</span>
+            </button>
+            <button type="button" class="chip" data-perk="High-Five Badge">
+              <span>🧗</span> <span>High-Five Badge</span>
+            </button>
+            <button type="button" class="chip" data-perk="Ramen Voucher Perk">
+              <span>🌟</span> <span>Ramen Voucher Perk</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Send CTA -->
+        <button id="btn-send-gift" class="btn btn-primary" type="button">
+          <span class="material-symbols-outlined" style="font-size: 18px;">send</span>
+          <span id="send-gift-btn-text">Send Reward to Mbali (+5 XP for you)</span>
+          <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
+        </button>
+      </div>
+
+      <!-- Recent Gifting & Social Feed -->
+      <div class="card" style="border-radius: 1.5rem; padding: 1.1rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+          <h2 style="font-size: 16px; font-weight: 800; color: var(--midnight);">Gifting & Social Feed</h2>
+          <span class="badge badge-om">Live Pulse</span>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+          <!-- Item 1 -->
+          <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.65rem; border-bottom: 1px solid rgba(0, 34, 18, 0.06);">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(30, 233, 124, 0.2); color: var(--om-green); display: flex; align-items: center; justify-content: center;">
+                <span class="material-symbols-outlined" style="font-size: 20px;">featured_seasonal_and_gifts</span>
+              </div>
+              <div>
+                <div style="font-size: 13px; font-weight: 600; color: var(--midnight);">
+                  You sent <strong style="color: var(--om-green);">Mbali</strong> a Streak Badge
+                </div>
+                <div style="font-size: 11px; color: rgba(0, 34, 18, 0.6);">2 days ago • Perk redeemed</div>
+              </div>
+            </div>
+            <span class="badge badge-minty">+5 XP</span>
+          </div>
+
+          <!-- Item 2 -->
+          <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.65rem; border-bottom: 1px solid rgba(0, 34, 18, 0.06);">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(195, 255, 135, 0.3); color: var(--midnight); display: flex; align-items: center; justify-content: center;">
+                <span class="material-symbols-outlined" style="font-size: 20px;">celebration</span>
+              </div>
+              <div>
+                <div style="font-size: 13px; font-weight: 600; color: var(--midnight);">
+                  <strong>Tariq</strong> cheered your £4.50 Japan savings swap!
+                </div>
+                <div style="font-size: 11px; color: rgba(0, 34, 18, 0.6);">3 days ago • Mountain goal</div>
+              </div>
+            </div>
+            <span style="font-size: 18px;">👏</span>
+          </div>
+
+          <!-- Item 3 -->
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(30, 233, 124, 0.2); color: var(--om-green); display: flex; align-items: center; justify-content: center;">
+                <span class="material-symbols-outlined" style="font-size: 20px;">pan_tool</span>
+              </div>
+              <div>
+                <div style="font-size: 13px; font-weight: 600; color: var(--midnight);">
+                  <strong>Sofia</strong> sent you a High-Five Badge
+                </div>
+                <div style="font-size: 11px; color: rgba(0, 34, 18, 0.6);">5 days ago • Weekend Shield</div>
+              </div>
+            </div>
+            <span class="badge badge-minty">+10 XP</span>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Bottom Nav -->
+    <nav class="bottom-nav">
+      <a href="index.html" class="nav-item">
+        <span class="material-symbols-outlined">cottage</span>
+        <span>Home</span>
+      </a>
+      <a href="nudge.html" class="nav-item">
+        <span class="material-symbols-outlined">bolt</span>
+        <span>Nudges</span>
+      </a>
+      <a href="mountain.html" class="nav-item">
+        <span class="material-symbols-outlined">landscape</span>
+        <span>Mountain</span>
+      </a>
+      <a href="rewards.html" class="nav-item active">
+        <span class="material-symbols-outlined">emoji_events</span>
+        <span>Rewards</span>
+      </a>
+      <a href="profile.html" class="nav-item">
+        <span class="material-symbols-outlined">account_circle</span>
+        <span>Profile</span>
+      </a>
+    </nav>
+
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    let selectedFriend = 'Mbali';
+    let selectedPerk = 'Virtual Flat White (+15 XP)';
+
+    async function loadRewardsScreen() {
+      const data = await apiGetRewards(localStorage.getItem(KEYS.userId) || 'usr_default');
+      if (data) {
+        document.getElementById('reward-xp-num').textContent = `${data.xp || 420} XP`;
+        document.getElementById('reward-level-num').textContent = `${data.level || 3}`;
+      }
+    }
+
+    // Friend selector
+    document.querySelectorAll('.friend-avatar-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.friend-avatar-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        selectedFriend = btn.getAttribute('data-friend');
+        document.getElementById('send-gift-btn-text').textContent = `Send Reward to ${selectedFriend} (+5 XP for you)`;
+      });
+    });
+
+    // Perk chips
+    document.querySelectorAll('#reward-perk-chips .chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('#reward-perk-chips .chip').forEach(c => c.classList.remove('selected'));
+        chip.classList.add('selected');
+        selectedPerk = chip.getAttribute('data-perk');
+      });
+    });
+
+    // Send Gift CTA
+    document.getElementById('btn-send-gift').addEventListener('click', async () => {
+      const btn = document.getElementById('btn-send-gift');
+      btn.disabled = true;
+      btn.innerHTML = `<span class="material-symbols-outlined pulse-dot"></span> Sending gift...`;
+
+      try {
+        await apiSendReward({
+          friend: selectedFriend,
+          perk: selectedPerk
+        });
+      } catch (err) {
+        console.warn(err);
+      }
+
+      showXPToast(5, `🎁 Gift delivered to ${selectedFriend}! +5 XP`);
+      btn.innerHTML = `<span class="material-symbols-outlined">check_circle</span> Gift Delivered!`;
+      btn.style.background = 'var(--minty)';
+      btn.style.color = 'var(--midnight)';
+
+      loadRewardsScreen();
+
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.innerHTML = `
+          <span class="material-symbols-outlined" style="font-size: 18px;">send</span>
+          <span id="send-gift-btn-text">Send Another (+5 XP)</span>
+          <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
+        `;
+        btn.style.background = 'var(--om-green)';
+        btn.style.color = 'var(--white)';
+      }, 2500);
+    });
+
+    document.addEventListener('DOMContentLoaded', loadRewardsScreen);
+  </script>
+</body>
+</html>

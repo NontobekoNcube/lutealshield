@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>CleverSpender — Home Dashboard</title>
+  <meta name="description" content="Small nudges. Big change. Your mindful spending companion.">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#006437">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="icon-192.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="home">
+  <div class="app-container">
+
+    <!-- Top Header -->
+    <header class="app-header">
+      <a href="index.html" class="header-brand">
+        <div class="brand-icon-wrap">
+          <img src="icon-192.png" alt="CleverSpender logo">
+        </div>
+        <div class="brand-text-col">
+          <span class="brand-super">CleverSpender</span>
+          <span class="brand-title" id="header-greeting">Hey, Alex</span>
+        </div>
+      </a>
+      <div class="header-actions">
+        <button id="pwa-install-btn" class="btn btn-sm" style="display: none; background: var(--minty); color: var(--midnight); font-weight: 700; gap: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+          <span class="material-symbols-outlined" style="font-size: 16px;">download</span>
+          <span>Install</span>
+        </button>
+        <a href="profile.html" class="avatar-badge-btn" aria-label="Profile">
+          <span class="material-symbols-outlined" style="font-size: 18px;">person</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+      <!-- PWA In-App Install Banner (Appears when installable) -->
+      <div id="pwa-install-banner" class="install-banner" style="display: none;">
+        <div class="install-banner-content">
+          <div style="width: 36px; height: 36px; border-radius: 10px; background: var(--minty); display: flex; align-items: center; justify-content: center; color: var(--midnight); flex-shrink: 0;">
+            <span class="material-symbols-outlined" style="font-size: 22px;">phone_android</span>
+          </div>
+          <div>
+            <div style="font-size: 14px; font-weight: 700;">Install CleverSpender</div>
+            <div style="font-size: 12px; color: rgba(255, 255, 255, 0.75);">Instant access & offline nudges</div>
+          </div>
+        </div>
+        <button onclick="triggerPWAInstall()" class="btn btn-sm btn-minty" style="width: auto;">
+          Install
+        </button>
+      </div>
+
+      <!-- Top Hero Greeting Card -->
+      <div class="card card-hero-green" style="padding: 1.25rem; border-radius: 1.5rem; position: relative;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--minty); color: var(--midnight); display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
+              A
+            </div>
+            <div>
+              <div style="display: flex; align-items: center; gap: 4px;">
+                <h1 style="font-size: 20px; font-weight: 800; color: var(--white); margin: 0;" id="hero-user-name">Hey, Alex</h1>
+                <span style="font-size: 18px;">👋</span>
+              </div>
+              <span style="font-size: 12px; color: #a1d9bd; font-weight: 500;">3 nudges running silently</span>
+            </div>
+          </div>
+          <div style="width: 38px; height: 38px; border-radius: 12px; background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; padding: 4px;">
+            <img src="icon-192.png" alt="CleverSpender logo" style="width: 100%; height: 100%; object-fit: contain; border-radius: 8px;">
+          </div>
+        </div>
+
+        <!-- Micro stats strip -->
+        <div style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid rgba(255, 255, 255, 0.12); display: flex; align-items: center; justify-content: space-between;">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span class="material-symbols-outlined" style="font-size: 18px; color: var(--minty);">savings</span>
+            <span style="font-size: 13px; color: var(--white);">Saved this week: <strong style="color: var(--minty); font-weight: 800;">£126.40</strong></span>
+          </div>
+          <span class="badge" style="background: rgba(255, 255, 255, 0.2); color: var(--white);">On track</span>
+        </div>
+      </div>
+
+      <!-- Active Nudge Card (Tactile White Surface, green left bar) -->
+      <div class="card" style="padding: 0; display: flex; overflow: hidden; border-radius: 1.5rem;">
+        <div style="width: 6px; background-color: var(--om-green); flex-shrink: 0;"></div>
+        <div style="flex: 1; padding: 1.1rem; display: flex; flex-direction: column; gap: 0.65rem;">
+          <!-- Tags and active pill -->
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 6px;">
+            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+              <span class="badge badge-om" id="nudge-focus-badge">
+                <span>☕</span> <span id="nudge-focus-text">Coffee & Takeaways</span>
+              </span>
+              <span class="badge badge-muted" id="nudge-goal-badge">
+                <span>✈️</span> <span id="nudge-goal-text">Trip to Japan</span>
+              </span>
+            </div>
+            <!-- Interactive active toggle button -->
+            <button id="home-nudge-toggle-btn" class="badge" style="border: none; cursor: pointer; background: var(--minty); color: var(--midnight); gap: 4px; padding: 4px 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.1);">
+              <span class="material-symbols-outlined" style="font-size: 14px; font-variation-settings: 'FILL' 1;">check_circle</span>
+              <span id="home-nudge-status-text">Active</span>
+            </button>
+          </div>
+
+          <!-- Prompt content -->
+          <div>
+            <span style="font-size: 12px; font-weight: 600; color: rgba(0, 34, 18, 0.55); text-transform: uppercase; letter-spacing: 0.04em;">Active Smart Nudge</span>
+            <p id="home-nudge-prompt" style="font-size: 16px; font-weight: 700; color: var(--midnight); margin-top: 2px; line-height: 1.35;">
+              "Walking past Gail’s? Save £4.80 for the Tokyo Ramen Fund."
+            </p>
+          </div>
+
+          <!-- Next check-in & quick actions -->
+          <div style="display: flex; align-items: center; justify-content: space-between; padding-top: 4px;">
+            <div style="display: flex; align-items: center; gap: 4px; background: rgba(0, 34, 18, 0.05); padding: 3px 10px; border-radius: 9999px; color: var(--om-green); font-size: 11px; font-weight: 700;">
+              <span class="material-symbols-outlined" style="font-size: 14px;">schedule</span>
+              <span id="home-nudge-next-time">Next check-in: Today, 2:15 PM</span>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <a href="nudge.html" class="avatar-badge-btn" style="width: 32px; height: 32px; background: var(--minty); color: var(--midnight); border: none;" title="Go to Active Nudge">
+                <span class="material-symbols-outlined" style="font-size: 16px;">bolt</span>
+              </a>
+              <a href="setup.html" class="avatar-badge-btn" style="width: 32px; height: 32px; background: rgba(0, 34, 18, 0.08); color: var(--midnight); border: none;" title="Tune Nudge">
+                <span class="material-symbols-outlined" style="font-size: 16px;">tune</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mount Fuji Ascent Mini Card (Acid Yellow / Gamification Glow) -->
+      <a href="mountain.html" class="card card-tertiary-glow" style="text-decoration: none; display: flex; flex-direction: column; gap: 0.65rem; border-radius: 1.5rem;">
+        <div style="display: flex; align-items: flex-start; justify-content: space-between;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 44px; height: 44px; border-radius: 14px; background: rgba(255, 255, 255, 0.85); display: flex; align-items: center; justify-content: center; font-size: 22px; box-shadow: 0 2px 6px rgba(0,0,0,0.06);">
+              🏔️
+            </div>
+            <div>
+              <span style="font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--om-green);">Mount Fuji Ascent</span>
+              <div style="font-size: 17px; font-weight: 800; color: var(--midnight);">Position #12 of 847</div>
+              <span style="font-size: 11px; color: rgba(0, 34, 18, 0.7);">CleverSpenders climbing today</span>
+            </div>
+          </div>
+          <span class="material-symbols-outlined" style="color: var(--midnight); font-size: 22px;">chevron_right</span>
+        </div>
+
+        <div style="background: rgba(255, 255, 255, 0.9); padding: 8px 12px; border-radius: 12px; display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; color: var(--midnight);">
+          <span class="material-symbols-outlined" style="color: var(--om-green); font-size: 18px; font-variation-settings: 'FILL' 1;">trending_up</span>
+          <span>More mindful than <strong style="color: var(--om-green);">67% of users</strong> this week! 📈</span>
+        </div>
+
+        <!-- Elevation Progress Bar -->
+        <div>
+          <div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; color: rgba(0, 34, 18, 0.75); margin-bottom: 3px;">
+            <span>Station 6 (2,400m)</span>
+            <span>78%</span>
+          </div>
+          <div style="width: 100%; height: 8px; background: rgba(255, 255, 255, 0.6); border-radius: 9999px; overflow: hidden;">
+            <div style="width: 78%; height: 100%; background: var(--om-green); border-radius: 9999px;"></div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Gamification Streak Card -->
+      <div class="card" style="background: var(--pistachio); border-radius: 1.5rem; display: flex; align-items: center; gap: 12px; padding: 1rem 1.1rem;">
+        <div style="width: 44px; height: 44px; border-radius: 14px; background: var(--white); display: flex; align-items: center; justify-content: center; font-size: 24px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); flex-shrink: 0;">
+          🔥
+        </div>
+        <div style="flex: 1;">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span style="font-size: 17px; font-weight: 800; color: var(--midnight);"><span id="home-streak-number">7</span>-Day Streak</span>
+            <span class="badge" style="background: var(--om-green); color: var(--white); font-size: 10px; padding: 2px 7px;">Lvl 3</span>
+          </div>
+          <p style="font-size: 12px; color: rgba(0, 34, 18, 0.8); line-height: 1.35; margin-top: 2px;">
+            Keep going! You're saving an avg of <strong style="color: var(--om-green);">£18/day</strong> compared to last month.
+          </p>
+        </div>
+      </div>
+
+      <!-- Smart Suggestion Micro-Nudge Pill -->
+      <div class="card" style="background: rgba(255, 255, 255, 0.7); padding: 0.75rem 1rem; border-radius: 1.25rem; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+        <div style="display: flex; align-items: center; gap: 8px; min-width: 0;">
+          <span class="material-symbols-outlined" style="color: var(--om-green); font-size: 20px;">lightbulb</span>
+          <span style="font-size: 12px; color: var(--midnight); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+            Tip: Round up lunch spend to stash £2.10
+          </span>
+        </div>
+        <button id="stash-tip-btn" class="btn btn-sm btn-minty" style="height: 28px; padding: 0 10px; font-size: 11px;">
+          Stash
+        </button>
+      </div>
+
+      <!-- Explore Hub 2x2 Grid -->
+      <div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem; padding: 0 2px;">
+          <h2 style="font-size: 17px; font-weight: 800; color: var(--midnight);">Explore Hub</h2>
+          <span style="font-size: 11px; font-weight: 700; color: var(--om-green);">Personalized</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+          <!-- Card 1: View Nudges -->
+          <a href="nudge.html" class="card" style="text-decoration: none; display: flex; flex-direction: column; justify-content: space-between; height: 130px; padding: 1rem; transition: transform 0.15s ease;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(30, 233, 124, 0.2); color: var(--om-green); display: flex; align-items: center; justify-content: center;">
+                <span class="material-symbols-outlined" style="font-size: 20px;">bolt</span>
+              </div>
+              <span class="badge badge-minty">Active</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+              <div>
+                <div style="font-size: 15px; font-weight: 700; color: var(--midnight);">View Nudges</div>
+                <div style="font-size: 11px; color: rgba(0, 34, 18, 0.6);">Rules & habits</div>
+              </div>
+              <span class="material-symbols-outlined" style="font-size: 18px; color: rgba(0, 34, 18, 0.4);">arrow_forward</span>
+            </div>
+          </a>
+
+          <!-- Card 2: My Mountain -->
+          <a href="mountain.html" class="card" style="text-decoration: none; display: flex; flex-direction: column; justify-content: space-between; height: 130px; padding: 1rem; transition: transform 0.15s ease;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <div style="width: 38px; height: 38px; border-radius: 10px; background: var(--acid-yellow); color: var(--midnight); display: flex; align-items: center; justify-content: center;">
+                <span class="material-symbols-outlined" style="font-size: 20px;">landscape</span>
+              </div>
+              <span class="badge badge-muted">Rank #12</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+              <div>
+                <div style="font-size: 15px; font-weight: 700; color: var(--midnight);">My Mountain</div>
+                <div style="font-size: 11px; color: rgba(0, 34, 18, 0.6);">Elevation trail</div>
+              </div>
+              <span class="material-symbols-outlined" style="font-size: 18px; color: rgba(0, 34, 18, 0.4);">arrow_forward</span>
+            </div>
+          </a>
+
+          <!-- Card 3: Rewards -->
+          <a href="rewards.html" class="card" style="text-decoration: none; display: flex; flex-direction: column; justify-content: space-between; height: 130px; padding: 1rem; transition: transform 0.15s ease;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(0, 100, 55, 0.12); color: var(--om-green); display: flex; align-items: center; justify-content: center;">
+                <span class="material-symbols-outlined" style="font-size: 20px; font-variation-settings: 'FILL' 1;">military_tech</span>
+              </div>
+              <span class="badge badge-minty" id="home-xp-badge">420 XP</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+              <div>
+                <div style="font-size: 15px; font-weight: 700; color: var(--midnight);">Rewards</div>
+                <div style="font-size: 11px; color: rgba(0, 34, 18, 0.6);">Badges & perks</div>
+              </div>
+              <span class="material-symbols-outlined" style="font-size: 18px; color: rgba(0, 34, 18, 0.4);">arrow_forward</span>
+            </div>
+          </a>
+
+          <!-- Card 4: Statement Scan -->
+          <a href="statement.html" class="card" style="text-decoration: none; display: flex; flex-direction: column; justify-content: space-between; height: 130px; padding: 1rem; transition: transform 0.15s ease;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(30, 233, 124, 0.15); color: var(--om-green); display: flex; align-items: center; justify-content: center;">
+                <span class="material-symbols-outlined" style="font-size: 20px;">auto_graph</span>
+              </div>
+              <span class="pulse-dot"></span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+              <div>
+                <div style="font-size: 15px; font-weight: 700; color: var(--midnight);">Statement</div>
+                <div style="font-size: 11px; color: rgba(0, 34, 18, 0.6);">Smart scan</div>
+              </div>
+              <span class="material-symbols-outlined" style="font-size: 18px; color: rgba(0, 34, 18, 0.4);">arrow_forward</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Today's Micro-Wins Feed -->
+      <div class="card" style="border-radius: 1.5rem; padding: 1.1rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span class="material-symbols-outlined" style="color: var(--om-green); font-size: 20px;">stars</span>
+            <h3 style="font-size: 16px; font-weight: 800; color: var(--midnight);">Today's Micro-Wins</h3>
+          </div>
+          <a href="insights.html" style="font-size: 11px; font-weight: 700; color: var(--om-green); text-decoration: none;">See Insights</a>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.65rem; border-bottom: 1px solid rgba(0, 34, 18, 0.06);">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <div style="width: 36px; height: 36px; border-radius: 50%; background: rgba(0, 100, 55, 0.08); display: flex; align-items: center; justify-content: center; font-size: 16px;">
+                ☕
+              </div>
+              <div>
+                <div style="font-size: 14px; font-weight: 700; color: var(--midnight);">Brewed at home</div>
+                <div style="font-size: 11px; color: rgba(0, 34, 18, 0.6);">Avoided high street cafe</div>
+              </div>
+            </div>
+            <span style="font-size: 14px; font-weight: 800; color: var(--om-green);">+£4.20</span>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <div style="width: 36px; height: 36px; border-radius: 50%; background: rgba(0, 100, 55, 0.08); display: flex; align-items: center; justify-content: center; font-size: 16px;">
+                🚶
+              </div>
+              <div>
+                <div style="font-size: 14px; font-weight: 700; color: var(--midnight);">Walked short trip</div>
+                <div style="font-size: 11px; color: rgba(0, 34, 18, 0.6);">Skipped ride-hail surge</div>
+              </div>
+            </div>
+            <span style="font-size: 14px; font-weight: 800; color: var(--om-green);">+£8.50</span>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Bottom Nav -->
+    <nav class="bottom-nav">
+      <a href="index.html" class="nav-item active">
+        <span class="material-symbols-outlined">cottage</span>
+        <span>Home</span>
+      </a>
+      <a href="nudge.html" class="nav-item">
+        <span class="material-symbols-outlined">bolt</span>
+        <span>Nudges</span>
+      </a>
+      <a href="mountain.html" class="nav-item">
+        <span class="material-symbols-outlined">landscape</span>
+        <span>Mountain</span>
+      </a>
+      <a href="rewards.html" class="nav-item">
+        <span class="material-symbols-outlined">emoji_events</span>
+        <span>Rewards</span>
+      </a>
+      <a href="profile.html" class="nav-item">
+        <span class="material-symbols-outlined">account_circle</span>
+        <span>Profile</span>
+      </a>
+    </nav>
+
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    async function loadDashboard() {
+      const userId = localStorage.getItem(KEYS.userId) || 'usr_default';
+
+      // 1. Fetch user
+      const user = await apiGetUser(userId);
+      if (user && user.name) {
+        const firstName = user.name.split(' ')[0];
+        document.getElementById('header-greeting').textContent = `Hey, ${firstName}`;
+        document.getElementById('hero-user-name').textContent = `Hey, ${firstName}`;
+      }
+
+      // 2. Fetch reminder
+      const reminder = await apiGetReminder(userId);
+      if (reminder) {
+        if (reminder.focus) {
+          document.getElementById('nudge-focus-text').textContent = reminder.focus;
+        }
+        if (reminder.goal) {
+          document.getElementById('nudge-goal-text').textContent = reminder.goal;
+        }
+        if (reminder.prompt) {
+          document.getElementById('home-nudge-prompt').textContent = `"${reminder.prompt}"`;
+        }
+        if (reminder.next_checkin) {
+          document.getElementById('home-nudge-next-time').textContent = `Next check-in: ${reminder.next_checkin}`;
+        }
+        updateNudgeStatusUI(reminder.active !== false);
+      }
+
+      // 3. Load streak and XP
+      const streak = getStreak();
+      document.getElementById('home-streak-number').textContent = streak;
+      const xp = localStorage.getItem(KEYS.xp) || '420';
+      document.getElementById('home-xp-badge').textContent = `${xp} XP`;
+    }
+
+    function updateNudgeStatusUI(isActive) {
+      const btn = document.getElementById('home-nudge-toggle-btn');
+      const text = document.getElementById('home-nudge-status-text');
+      if (isActive) {
+        btn.style.background = 'var(--minty)';
+        btn.style.color = 'var(--midnight)';
+        btn.innerHTML = `<span class="material-symbols-outlined" style="font-size: 14px; font-variation-settings: 'FILL' 1;">check_circle</span><span>Active</span>`;
+      } else {
+        btn.style.background = 'rgba(0, 34, 18, 0.15)';
+        btn.style.color = 'var(--midnight)';
+        btn.innerHTML = `<span class="material-symbols-outlined" style="font-size: 14px;">pause_circle</span><span>Paused</span>`;
+      }
+    }
+
+    document.getElementById('home-nudge-toggle-btn').addEventListener('click', async () => {
+      const reminder = JSON.parse(localStorage.getItem(KEYS.reminder) || '{}');
+      const newState = !reminder.active;
+      await apiUpdateReminder(localStorage.getItem(KEYS.userId), { active: newState });
+      updateNudgeStatusUI(newState);
+      showXPToast(0, newState ? 'Nudge Activated' : 'Nudge Paused');
+    });
+
+    document.getElementById('stash-tip-btn').addEventListener('click', () => {
+      awardXP(5);
+      showXPToast(5, 'Stashed £2.10 into Tokyo Fund! +5 XP');
+      document.getElementById('stash-tip-btn').disabled = true;
+      document.getElementById('stash-tip-btn').textContent = 'Stashed!';
+      document.getElementById('stash-tip-btn').style.background = 'var(--pistachio)';
+    });
+
+    document.addEventListener('DOMContentLoaded', loadDashboard);
+  </script>
+</body>
+</html>
