@@ -204,29 +204,30 @@
         </div>
 
         <!-- Emotional Group -->
-        <div class="symptom-group-title">
-          <span>🎭</span> EMOTIONAL
+        <div class="symptom-group-title accordion-header" 
+        onclick="toggleAccordion('chips-emotional', this)">
+         <span>🎭 EMOTIONAL</span>
+         <span class="accordion-arrow">▼</span>
         </div>
-        <div class="chips-wrap" id="chips-emotional"></div>
+        <div class="chips-wrap accordion-body" id="chips-emotional" 
+        style="display:none;"></div>
 
-        <!-- Physical Group -->
-        <div class="symptom-group-title">
-          <span>👤</span> PHYSICAL & SENSORY
-        </div>
-        <div class="chips-wrap" id="chips-physical"></div>
+       <!-- Cognitive Group -->
+       <div class="symptom-group-title accordion-header" 
+       onclick="toggleAccordion('chips-cognitive', this)">
+       <span>🧠 COGNITIVE</span>
+       <span class="accordion-arrow">▼</span>
+       </div>
+       <div class="chips-wrap accordion-body" id="chips-cognitive" 
+       style="display:none;"></div>
 
-        <!-- Cognitive Group -->
-        <div class="symptom-group-title">
-          <span>🧠</span> COGNITIVE
-        </div>
-        <div class="chips-wrap" id="chips-cognitive"></div>
-
-        
-        <!-- Relational Group -->
-        <div class="symptom-group-title">
-          <span>👥</span> RELATIONAL
-        </div>
-        <div class="chips-wrap" id="chips-relational"></div>
+      <!-- Relational Group -->
+      <div class="symptom-group-title accordion-header" onclick="toggleAccordion('chips-relational', this)">
+      <span>👥 RELATIONAL</span>
+      <span class="accordion-arrow">▼</span>
+      </div>
+      <div class="chips-wrap accordion-body" id="chips-relational" 
+      style="display:none;"></div>
 
         <!-- Zero Judgment Rule Card -->
         <div class="card" style="background: var(--input-bg); border-color: var(--border); margin: 20px 0 24px 0; display: flex; gap: 12px; align-items: flex-start;">
