@@ -1234,3 +1234,25 @@ body {
   justify-content: space-between;
   margin-bottom: 8px;
 }
+
+.feedback-btn {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #c9921a, #e6b84a);
+  color: #1a1033;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 12px 24px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(201,146,26,0.4);
+  z-index: 9999;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
