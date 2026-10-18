@@ -600,17 +600,13 @@
       item.classList.toggle('open');
     }
 
-    // Step 4: Tether / Trusted Circle
+    // Step 4: Trusted Circle
     function loadTetherContacts() {
       tetherContacts = JSON.parse(localStorage.getItem('lutealshield_tether') || '[]');
-      if (!tetherContacts.length) {
-        tetherContacts = [
-          { id: '1', name: 'Zinhle', role: 'Best friend', phone: '+27825550192', method: 'call' },
-          { id: '2', name: 'Thando', role: 'Partner', phone: '+27834448219', method: 'whatsapp' },
-          { id: '3', name: 'Mama', role: 'Family', phone: '+27843337100', method: 'call' }
-        ];
-      }
       renderContacts();
+      if (!tetherContacts.length) {
+        addNewContact();
+      }
     }
 
     function renderContacts() {
@@ -660,20 +656,66 @@
     }
 
     function addNewContact() {
-      const name = prompt("Enter contact name:");
-      if (!name) return;
-      const role = prompt("Enter relationship (e.g. Partner, Friend, Sibling):", "Friend");
-      const phone = prompt("Enter phone number with country code:", "+27 ");
-      if (name && phone) {
-        tetherContacts.push({
-          id: Date.now().toString(),
-          name,
-          role: role || 'Supporter',
-          phone,
-          method: 'call'
-        });
-        renderContacts();
+      const container = document.getElementById('contactsContainer');
+      if (tetherContacts.length >= 3) return;
+
+      const form = document.createElement('div');
+      form.className = 'card';
+      form.id = 'new-contact-form';
+      form.style.padding = '16px';
+      form.style.display = 'flex';
+      form.style.flexDirection = 'column';
+      form.style.gap = '10px';
+
+      form.innerHTML = `
+        <input class="form-input" id="nc-name" placeholder="Their name (e.g. Mama)" />
+        <select class="form-select" id="nc-role">
+          <option value="">Select relationship...</option>
+          <option value="Partner">💜 Partner</option>
+          <option value="Best Friend">👯 Best Friend</option>
+          <option value="Mother">👩 Mother</option>
+          <option value="Father">👨 Father</option>
+          <option value="Sister">👧 Sister</option>
+          <option value="Brother">🧑 Brother</option>
+          <option value="Close Friend">🤝 Close Friend</option>
+          <option value="Therapist">🧠 Therapist</option>
+          <option value="Doctor">🩺 Doctor</option>
+          <option value="Other">💙 Other</option>
+        </select>
+        <input class="form-input" id="nc-phone" placeholder="Phone number (+27...)" type="tel" />
+        <select class="form-select" id="nc-method">
+          <option value="whatsapp">💬 WhatsApp</option>
+          <option value="call">📞 Call</option>
+          <option value="sms">📱 SMS</option>
+        </select>
+        <button class="btn-primary" onclick="submitContact()" style="margin-top: 4px;">Save Contact</button>
+      `;
+
+      container.appendChild(form);
+      document.getElementById('addContactBtn').style.display =
+        tetherContacts.length >= 2 ? 'none' : 'flex';
+    }
+
+    function submitContact() {
+      const name = document.getElementById('nc-name').value.trim();
+      const role = document.getElementById('nc-role').value;
+      const phone = document.getElementById('nc-phone').value.trim();
+      const method = document.getElementById('nc-method').value;
+
+      if (!name || !phone) {
+        alert('Please enter a name and phone number.');
+        return;
       }
+
+      tetherContacts.push({
+        id: Date.now().toString(),
+        name,
+        role: role || 'Supporter',
+        phone,
+        method
+      });
+
+      renderContacts();
     }
 
     function removeContact(idx) {

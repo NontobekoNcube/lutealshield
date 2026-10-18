@@ -80,13 +80,6 @@ function initStorageDefaults() {
       "Sleep disturbance"
     ]));
   }
-  if (!localStorage.getItem('lutealshield_tether')) {
-    localStorage.setItem('lutealshield_tether', JSON.stringify([
-      { id: '1', name: 'Zinhle', role: 'Best friend', phone: '+27825550192', method: 'call' },
-      { id: '2', name: 'Thando', role: 'Partner', phone: '+27834448219', method: 'whatsapp' },
-      { id: '3', name: 'Mama', role: 'Family', phone: '+27843337100', method: 'call' }
-    ]));
-  }
   if (!localStorage.getItem('lutealshield_pocket')) {
     localStorage.setItem('lutealshield_pocket', JSON.stringify([
       {
