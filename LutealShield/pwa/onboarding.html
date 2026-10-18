@@ -204,31 +204,80 @@
         </div>
 
         <!-- Emotional Group -->
-        <div class="symptom-group-title accordion-header" 
-        onclick="toggleAccordion('chips-emotional', this)">
-         <span>🎭 EMOTIONAL</span>
-         <span class="accordion-arrow">▼</span>
+        <div class="accordion-item" id="acc-emotional">
+          <div class="accordion-header" onclick="toggleSymptomAccordion('acc-emotional')">
+            <div class="accordion-title-col">
+              <div class="accordion-icon">🎭</div>
+              <div>
+                <div class="accordion-title">Emotional</div>
+                <div class="accordion-sub">Mood & emotional symptoms</div>
+              </div>
+            </div>
+            <svg class="accordion-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+          <div class="accordion-content">
+            <div class="chips-wrap" id="chips-emotional"></div>
+          </div>
         </div>
-        <div class="chips-wrap accordion-body" id="chips-emotional" 
-        style="display:none;"></div>
 
-       <!-- Cognitive Group -->
-       <div class="symptom-group-title accordion-header" 
-       onclick="toggleAccordion('chips-cognitive', this)">
-       <span>🧠 COGNITIVE</span>
-       <span class="accordion-arrow">▼</span>
-       </div>
-       <div class="chips-wrap accordion-body" id="chips-cognitive" 
-       style="display:none;"></div>
+        <!-- Physical Group -->
+        <div class="accordion-item" id="acc-physical">
+          <div class="accordion-header" onclick="toggleSymptomAccordion('acc-physical')">
+            <div class="accordion-title-col">
+              <div class="accordion-icon">👤</div>
+              <div>
+                <div class="accordion-title">Physical & Sensory</div>
+                <div class="accordion-sub">Body & sensory symptoms</div>
+              </div>
+            </div>
+            <svg class="accordion-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+          <div class="accordion-content">
+            <div class="chips-wrap" id="chips-physical"></div>
+          </div>
+        </div>
 
-      <!-- Relational Group -->
-      <div class="symptom-group-title accordion-header" onclick="toggleAccordion('chips-relational', this)">
-      <span>👥 RELATIONAL</span>
-      <span class="accordion-arrow">▼</span>
-      </div>
-      <div class="chips-wrap accordion-body" id="chips-relational" 
-      style="display:none;"></div>
+        <!-- Cognitive Group -->
+        <div class="accordion-item" id="acc-cognitive">
+          <div class="accordion-header" onclick="toggleSymptomAccordion('acc-cognitive')">
+            <div class="accordion-title-col">
+              <div class="accordion-icon">🧠</div>
+              <div>
+                <div class="accordion-title">Cognitive</div>
+                <div class="accordion-sub">Thinking & focus symptoms</div>
+              </div>
+            </div>
+            <svg class="accordion-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+          <div class="accordion-content">
+            <div class="chips-wrap" id="chips-cognitive"></div>
+          </div>
+        </div>
 
+        <!-- Relational Group -->
+        <div class="accordion-item" id="acc-relational">
+          <div class="accordion-header" onclick="toggleSymptomAccordion('acc-relational')">
+            <div class="accordion-title-col">
+              <div class="accordion-icon">👥</div>
+              <div>
+                <div class="accordion-title">Relational</div>
+                <div class="accordion-sub">Social & relational symptoms</div>
+              </div>
+            </div>
+            <svg class="accordion-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+          <div class="accordion-content">
+            <div class="chips-wrap" id="chips-relational"></div>
+          </div>
+        </div>
         <!-- Zero Judgment Rule Card -->
         <div class="card" style="background: var(--input-bg); border-color: var(--border); margin: 20px 0 24px 0; display: flex; gap: 12px; align-items: flex-start;">
           <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--card); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
@@ -545,6 +594,10 @@
     function saveStep3() {
       localStorage.setItem('lutealshield_symptoms', JSON.stringify(selectedSymptoms));
       goToStep(4);
+    }
+     function toggleSymptomAccordion(id) {
+      const item = document.getElementById(id);
+      item.classList.toggle('open');
     }
 
     // Step 4: Tether / Trusted Circle
