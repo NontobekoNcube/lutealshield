@@ -84,46 +84,38 @@ function initStorageDefaults() {
     localStorage.setItem('lutealshield_pocket', JSON.stringify([
       {
         id: '1',
-        type: 'voice_note',
-        title: "Mom's Voice Note",
-        desc: "You are loved, you are safe, this feeling will pass as your hormones reset.",
-        quote: "Mom's Voice Note • 0:42",
-        duration: "0:42"
+        type: 'proof',
+        title: "100% Survival Rate",
+        desc: "You have survived every single luteal crash before this one. Every single one. Your record stands.",
+        quote: "100% historic cycle survival rate."
       },
       {
         id: '2',
         type: 'rule',
         title: "The 72-Hour Luteal Rule",
-        desc: "Your steady-self made a covenant: 'Wait 72 hours before quitting your job, breaking up, or confronting someone. The storm is chemical, not factual.'",
-        quote: "Wait 72 hours before quitting. The storm is chemical, not factual."
+        desc: "Wait 72 hours before quitting your job, ending a relationship, or confronting someone. The storm is chemical, not factual.",
+        quote: "The storm is chemical, not factual."
       },
       {
         id: '3',
-        type: 'proof',
-        title: "Graduation Proof: 100% Historic Survival Rate",
-        desc: "You have weathered every single luteal crash before this one. 100% survival record.",
-        quote: "100% historic cycle survival rate."
+        type: 'anchor',
+        title: "This Is Not Your Personality",
+        desc: "What you are feeling right now is not who you are. It is a hormonal event. It will pass within hours of your period starting.",
+        quote: "This is biology, not identity."
       },
       {
         id: '4',
-        type: 'memory',
-        title: "Porch Sunlight After Bleeding",
-        desc: "Sitting on the porch with warm tea last month when bleeding arrived. The calm returned within 2 hours.",
-        quote: "The calm returned within 2 hours."
+        type: 'affirmation',
+        title: "Steady Baseline Covenant",
+        desc: "My worth does not decrease when my progesterone drops. I am navigating biological turbulence, not falling apart.",
+        quote: "Biological turbulence is temporary."
       },
       {
         id: '5',
         type: 'anchor',
         title: "Sensory Permission",
-        desc: "It is okay to put on noise-cancelling headphones, dim every light, and cancel plans without guilt.",
+        desc: "It is okay to dim the lights, put on headphones, cancel plans, and rest without guilt. Survival is enough.",
         quote: "Permission granted to rest."
-      },
-      {
-        id: '6',
-        type: 'affirmation',
-        title: "Steady Baseline Covenant",
-        desc: "My worth does not decrease when my progesterone drops. I am simply navigating biological turbulence.",
-        quote: "Biological turbulence is temporary."
       }
     ]));
   }
