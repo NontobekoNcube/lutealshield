@@ -359,11 +359,23 @@
           <p class="page-subtitle">This is your pocket of proof. Evidence your PMDD brain can't argue with — that you've survived before, that your life is real, that this feeling is temporary.</p>
         </div>
 
-        <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-muted); margin-bottom: 10px;">
-          PRE-LOADED ANCHORS — universal PMDD truths to get you started
+        <div class="accordion-item" id="acc-preloaded">
+          <div class="accordion-header" onclick="toggleSymptomAccordion('acc-preloaded')">
+            <div class="accordion-title-col">
+              <div class="accordion-icon">⚓</div>
+              <div>
+                <div class="accordion-title">Pre-Loaded Anchors</div>
+                <div class="accordion-sub">Universal PMDD truths to get you started</div>
+              </div>
+            </div>
+            <svg class="accordion-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+          <div class="accordion-content">
+            <div id="sampleAnchorsList" style="display: flex; flex-direction: column; gap: 10px;"></div>
+          </div>
         </div>
-
-        <div id="sampleAnchorsList" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;"></div>
 
         <!-- Add First Custom Entry -->
         <div class="card" style="margin-bottom: 24px; border: 1.5px dashed var(--border);">
