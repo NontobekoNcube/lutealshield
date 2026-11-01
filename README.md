@@ -3,10 +3,10 @@ Lutealshield is a pwa intended to become a mobile app, that helps support women 
 their hardest symptopm window(luteal phase), ground and connect in a low bandwidth manner, during that period.
 
 ## Tech Stack
-Frontend: Vanilla css, javascript and type script
-Backend: Python
-Database: Supabase
-Auth: Coming soon
+1. Frontend: Vanilla css, javascript and type script
+2. Backend: Python
+3. Database: Supabase
+4. Auth: Coming soon
 
 ## User Flow
 1. Welcome to Lutealshield
